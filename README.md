@@ -2,14 +2,14 @@
 
 [Open the site](https://lfarmas4.github.io/ghtb-prices-history/)
 
-Software valuation interface with file analysis, configurable project tariffs, card-form checkout, staged payment and deployment animations, local validation checks, editable deployment records, payment history and recoverable deletion.
+Software valuation interface with staged file analysis, configurable project tariffs, masked saved example card ending 0388, card/terms checkout, payment and deployment animations, actual local validation checks, editable deployment records, payment history and recoverable deletion.
 
-Example archives: atr-sistem.zip (USD150) and mejora-agente-barra-pwr-games.zip (USD350). File fingerprints identify their configurable project tariffs; ordinary files retain per-MB pricing.
+Examples: atr-sistem.zip (USD150) and mejora-agente-barra-pwr-games.zip (USD350). Exact file fingerprints select their configurable project tariffs. Other files retain per-MB pricing.
 
-The monthly budget example starts at USD130 budget, USD260 metered usage and USD130 opening credit, leaving USD130 due. Settlement, deletion, restoration and reset update the balance without charging already paid deployments again.
+The monthly budget starts at USD300 with USD260 base usage and USD40 available. Budget availability and the unpaid consumption balance are separate. Previous settings using the old USD130 default migrate once, preserving invoice IDs, credits and payment records. Settlements, deletion, restoration and reset remain functional.
 
-Payments and deployments are browser-local simulations. No real card charge or production application upload is made. Full card details are validated in memory only and are never saved or sent. Payment records, settings and attachment files remain in browser storage.
+Overview alone contains the user-provided monthly expenses: CrossBox USD10,591 and FitCode USD1,880 for 2026, totaling USD12,471. September totals USD1,040; October starts at USD4,030. Successful new records created from 2026-10-29T09:54:42Z are added; deletion/restoration removes/restores their contribution. Other project valuation history remains unchanged.
 
-Includes captured mainline history metadata for CrossBox (1,194 commits) and FitCode (340 commits), with modeled reference valuations. Private GitHub source links require repository access; no source code or credentials from those applications is included.
+Payments and deployments are browser-local simulations. No bank charge or production upload is made. Raw card details are not saved or sent. Full captured mainline metadata for CrossBox (1,194 commits) and FitCode (340 commits) is separate from verified production runs. Private source links require repository access.
 
-The root ZIP holds the static site. GitHub Actions extracts it and publishes the result to GitHub Pages.
+GitHub Actions extracts the root static-site ZIP and publishes it to GitHub Pages.
