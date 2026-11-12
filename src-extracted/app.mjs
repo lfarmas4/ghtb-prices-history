@@ -61,7 +61,7 @@ const initialPayments = [
   { id:'0C63C367', date:'2026-10-29', name:'Actualización de tarifas y presupuesto', kind:'Feature', method:'American Express ending in 0388', amount:130.00, files:[{...demoBundles[0].files[0]}] },
   { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs (P7SZWC)', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
   { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
-  { id:'7A52B81C', date:'2026-11-09', name:'Banco del Pacífico — CROSSBOX FITNESS & STRENGTH', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
+  { id:'7A52B81C', date:'2026-11-09', name:'Actualización de aplicación — CROSSBOX FITNESS & STRENGTH', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
 ];
 const PAYMENTS_DATA_VERSION = 3;
 let currentVersion = Number(read('payments-version', 0));
