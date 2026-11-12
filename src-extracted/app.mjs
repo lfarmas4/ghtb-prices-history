@@ -44,11 +44,23 @@ document.documentElement.style.setProperty('--ui-scale',uiZoom/100);
 let organizations = read('organizations', []);
 if (!Array.isArray(organizations)) organizations = [];
 const initialPayments = [
+  { id:'09FAPWZ5', date:'2026-06-03', name:'Cloud metered infrastructure', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'1B78C49E', date:'2026-07-03', name:'Cloud metered services', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'2F49D10A', date:'2026-08-03', name:'App platform scale-up', kind:'App', method:'MasterCard ending in 2791', amount:250.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'3E92B67C', date:'2026-09-03', name:'Application core services', kind:'App', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[2].files[0]}] },
+  { id:'4C81A53D', date:'2026-10-03', name:'High-capacity runner allocation', kind:'Feature', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[0].files[0]}] },
   { id:'19T5IGEN', date:'2026-10-25', name:'Authentication feature', kind:'Feature', method:'MasterCard ending in 2791', amount:5.66, files:[{...demoBundles[0].files[0]}] },
-  { id:'09FAPWZ5', date:'2026-09-25', name:'Storefront application', kind:'App', method:'MasterCard ending in 2791', amount:4.63, files:[{...demoBundles[2].files[0]}] }
+  { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
+  { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (Cloud XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
+  { id:'7A52B81C', date:'2026-11-09', name:'CrossBox Fitness & Strength monthly debit', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
 ];
 let payments = read('payments', initialPayments);
-if (!Array.isArray(payments)) payments = initialPayments;
+if (!Array.isArray(payments) || payments.length <= 3) {
+  // Merge or upgrade to new calibrated schedule while keeping any custom edits
+  const existingMap = new Map((Array.isArray(payments) ? payments : []).map(p => [p.id, p]));
+  payments = initialPayments.map(p => existingMap.get(p.id) || p);
+  write('payments', payments);
+}
 let billingState=read('billing',createBillingState(today().slice(0,7)));
 let billingMigrated=false;
 try { const original=billingState; billingState=migrateBillingState(original); getBillingSummary(billingState,payments); billingMigrated=JSON.stringify(billingState)!==JSON.stringify(original); } catch { billingState=createBillingState(today().slice(0,7)); }
