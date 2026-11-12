@@ -1,3 +1,4 @@
+import { invoiceModalHtml, buildStandaloneInvoiceHtml, GITHUB_OCTOCAT_INVOICE_SVG } from './invoice-generator.mjs';
 import { receiptModalHtml, buildStandaloneReceiptHtml, GITHUB_OCTOCAT_SVG } from './receipt-generator.mjs';
 import { calculateQuote, defaultConfig, demoBundles, formatBytes, identifyPricingFile } from './pricing.mjs';
 import { buildDeploymentRows, deploymentSummary, editPaymentRecord, setDeploymentState } from './deployments-model.mjs';
@@ -44,22 +45,35 @@ document.documentElement.style.setProperty('--ui-scale',uiZoom/100);
 let organizations = read('organizations', []);
 if (!Array.isArray(organizations)) organizations = [];
 const initialPayments = [
-  { id:'09FAPWZ5', date:'2026-06-03', name:'Cloud metered infrastructure', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'08JUNE3A', date:'2026-06-03', name:'Cloud metered infrastructure', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
   { id:'1B78C49E', date:'2026-07-03', name:'Cloud metered services', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
   { id:'2F49D10A', date:'2026-08-03', name:'App platform scale-up', kind:'App', method:'MasterCard ending in 2791', amount:250.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'839GHTB3', date:'2026-09-03', name:'GITHUB, INC. — Team & Services', kind:'Feature', method:'American Express ending in 1989', amount:839.50, files:[{...demoBundles[0].files[0]}] },
   { id:'3E92B67C', date:'2026-09-03', name:'Application core services', kind:'App', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[2].files[0]}] },
+  { id:'2300APPL', date:'2026-09-09', name:'APPLE.COM BILL — Débito cuenta Luis Fernando Armas', kind:'App', method:'Banco Pichincha Debit', amount:2300.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'09FAPWZ5', date:'2026-09-25', name:'Storefront application', kind:'App', method:'MasterCard ending in 2791', amount:4.63, files:[{...demoBundles[2].files[0]}] },
+  { id:'362GCLD1', date:'2026-10-01', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:3.62, files:[{...demoBundles[0].files[0]}] },
   { id:'4C81A53D', date:'2026-10-03', name:'High-capacity runner allocation', kind:'Feature', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[0].files[0]}] },
   { id:'19T5IGEN', date:'2026-10-25', name:'Authentication feature', kind:'Feature', method:'MasterCard ending in 2791', amount:5.66, files:[{...demoBundles[0].files[0]}] },
-  { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
-  { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (Cloud XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
-  { id:'7A52B81C', date:'2026-11-09', name:'CrossBox Fitness & Strength monthly debit', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
+  { id:'1040APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX Developer preview (MNY6QK6M6H)', kind:'App', method:'American Express ending in 1989', amount:1040.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'1074APPL', date:'2026-10-28', name:'Apple Receipt — App Developer Paid (MNY6S74KGB)', kind:'App', method:'American Express ending in 1989', amount:1074.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'1173APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX In-App iPhone 13 Pro Max', kind:'App', method:'American Express ending in 1989', amount:1173.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'0C63C367', date:'2026-10-29', name:'Actualización de tarifas y presupuesto', kind:'Feature', method:'American Express ending in 0388', amount:130.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs (P7SZWC)', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
+  { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
+  { id:'7A52B81C', date:'2026-11-09', name:'Banco del Pacífico — CROSSBOX FITNESS & STRENGTH', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
 ];
+const PAYMENTS_DATA_VERSION = 3;
+let currentVersion = Number(read('payments-version', 0));
 let payments = read('payments', initialPayments);
-if (!Array.isArray(payments) || payments.length <= 3) {
-  // Merge or upgrade to new calibrated schedule while keeping any custom edits
+if (currentVersion < PAYMENTS_DATA_VERSION || !Array.isArray(payments) || payments.length < initialPayments.length) {
   const existingMap = new Map((Array.isArray(payments) ? payments : []).map(p => [p.id, p]));
-  payments = initialPayments.map(p => existingMap.get(p.id) || p);
+  payments = initialPayments.map(p => {
+    const existing = existingMap.get(p.id);
+    return existing ? { ...p, ...existing, receiptData: existing.receiptData || p.receiptData, invoiceData: existing.invoiceData || p.invoiceData } : p;
+  });
   write('payments', payments);
+  write('payments-version', PAYMENTS_DATA_VERSION);
 }
 let billingState=read('billing',createBillingState(today().slice(0,7)));
 let billingMigrated=false;
@@ -167,7 +181,7 @@ function deploymentStartButton(row) {
   return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver y editar recibo oficial (Formato base)" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button type="button" class="table-action" data-action="delete-payment" data-id="${e(p.id)}" aria-label="Eliminar pago ${e(p.id)}">${icon('close')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver y editar recibo oficial (Formato base)" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver y editar factura oficial de GitHub" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button><button type="button" class="table-action" data-action="delete-payment" data-id="${e(p.id)}" aria-label="Eliminar pago ${e(p.id)}">${icon('close')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
@@ -245,11 +259,101 @@ function renderOverview() {
     <section class="panel overview-latest"><h2>Último despliegue</h2>${latest?`<button class="deployment-name" data-action="view-deployment" data-id="${e(latest.id)}">${e(latest.name)}</button><div class="latest-meta"><span>${e(latest.date)}</span><span class="badge">${latest.source==='github'?'GitHub · producción':'Mi espacio'}</span>${deploymentStateBadge(latest)}</div>${btn('Editar registro','edit-deployment','small',`data-id="${e(latest.id)}"`)}`:'<p class="muted">Todavía no hay despliegues.</p>'}</section>`;
 }
 function renderBudgets() {
-  const summary=getBillingSummary(billingState,payments);
-  $('#main').className='budget-page';
-  $('#main').innerHTML=budgetPageHtml(summary,billingState);
-  const records=activePayments(payments).filter(p=>p.purpose==='budget'&&p.invoiceId===billingState.invoiceId);
-  if(records.length) $('#main').insertAdjacentHTML('beforeend',`<section class="budget-payment-history"><div class="section-heading"><h2>Pagos de este presupuesto</h2></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Fecha</th><th>Referencia</th><th>Método</th><th>Importe</th><th>Estado</th><th>Recibo</th><th>Acciones</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div></section>`);
+  $('#main').className = 'budget-page';
+  $('#main').innerHTML = `
+    <div class="budgets-container">
+      <div class="budgets-header">
+        <h1 style="font-size:20px;font-weight:400;margin:0;">Budgets and alerts</h1>
+        <div class="budgets-header-actions">
+          <button class="btn" style="background:#21262d;font-weight:600;font-size:11px;">Included usage alerts: On <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg></button>
+          <button class="btn primary" style="background:#238636;border-color:#2ea043;font-weight:600;font-size:11px;">+ New budget</button>
+        </div>
+      </div>
+      
+      <p class="budgets-description">
+        Budgets let you set monthly usage limits for specific GitHub products or SKUs. If no budget is set, usage for that product is unlimited. <a href="https://docs.github.com/billing" target="_blank" rel="noopener" style="color:#58a6ff;">Learn more</a>.
+      </p>
+
+      <div class="budgets-filter-bar">
+        <div class="search-field" style="flex:1;height:32px;display:flex;align-items:center;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:0 10px;">
+          ${icon('search')}
+          <input placeholder="Filter by scope, repository, product or SKU" style="background:none;border:none;color:var(--text);width:100%;font-size:12px;margin-left:8px;outline:none;">
+        </div>
+        <button class="btn" style="background:#21262d;font-size:11px;height:32px;">Scope: All <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg></button>
+      </div>
+
+      <div class="budgets-count">5 budgets</div>
+
+      <div class="budget-card-list">
+        <div class="budget-card-item">
+          <div>
+            <div class="budget-item-scope">Account</div>
+            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Codespaces</div>
+          </div>
+          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
+          <div class="budget-item-progress-wrap">
+            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
+            <span class="budget-item-percent">0%</span>
+          </div>
+          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
+        </div>
+
+        <div class="budget-card-item">
+          <div>
+            <div class="budget-item-scope">Account</div>
+            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Actions</div>
+          </div>
+          <div class="budget-item-spent">$0.00 / $60.00 spent</div>
+          <div class="budget-item-progress-wrap">
+            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
+            <span class="budget-item-percent">0%</span>
+          </div>
+          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
+        </div>
+
+        <div class="budget-card-item">
+          <div>
+            <div class="budget-item-scope">Account</div>
+            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Packages</div>
+          </div>
+          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
+          <div class="budget-item-progress-wrap">
+            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
+            <span class="budget-item-percent">0%</span>
+          </div>
+          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
+        </div>
+
+        <div class="budget-card-item">
+          <div>
+            <div class="budget-item-scope">Account</div>
+            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · All AI Credit SKUs</div>
+          </div>
+          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
+          <div class="budget-item-progress-wrap">
+            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
+            <span class="budget-item-percent">0%</span>
+          </div>
+          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
+        </div>
+
+        <div class="budget-card-item">
+          <div>
+            <div class="budget-item-scope">Account</div>
+            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Git LFS</div>
+          </div>
+          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
+          <div class="budget-item-progress-wrap">
+            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
+            <span class="budget-item-percent">0%</span>
+          </div>
+          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
+        </div>
+      </div>
+
+      <div class="budget-pagination">1-5 of 5</div>
+    </div>
+  `;
 }
 function openBudgetCheckout() {
   if(deploymentBusy||recordMutationBusy)return;
@@ -656,6 +760,153 @@ function bindReceiptEditorEvents(record) {
   }
 }
 
+
+function openInvoiceGenerator(record) {
+  if (!record) return;
+  modal('Factura Oficial (GitHub Invoice)', invoiceModalHtml(record, profile, activePayments(payments)), 1100);
+  bindInvoiceEditorEvents(record);
+}
+
+function bindInvoiceEditorEvents(record) {
+  const form = $('#invoice-editor-form');
+  if (!form) return;
+
+  const getVal = name => form.elements[name]?.value || '';
+
+  const syncInvoicePreview = () => {
+    if ($('#inv-p-num')) $('#inv-p-num').textContent = getVal('invoiceNum');
+    if ($('#inv-p-date')) $('#inv-p-date').textContent = getVal('invoiceDate');
+    if ($('#inv-p-terms')) $('#inv-p-terms').textContent = getVal('terms');
+    if ($('#inv-p-duedate')) $('#inv-p-duedate').textContent = getVal('dueDate');
+    if ($('#inv-p-currency')) $('#inv-p-currency').textContent = 'USD';
+    
+    if ($('#inv-p-billname')) $('#inv-p-billname').textContent = getVal('billName');
+    if ($('#inv-p-billcompany')) $('#inv-p-billcompany').textContent = getVal('billCompany');
+    if ($('#inv-p-billaddr1')) $('#inv-p-billaddr1').textContent = getVal('billAddress1');
+    if ($('#inv-p-billaddr2')) $('#inv-p-billaddr2').textContent = getVal('billAddress2');
+    if ($('#inv-p-billpostal')) $('#inv-p-billpostal').textContent = getVal('billPostal');
+    if ($('#inv-p-billcountry')) $('#inv-p-billcountry').textContent = getVal('billCountry');
+
+    if ($('#inv-p-qty')) $('#inv-p-qty').textContent = getVal('quantity');
+    if ($('#inv-p-desc')) $('#inv-p-desc').textContent = getVal('description');
+    if ($('#inv-p-period')) $('#inv-p-period').textContent = getVal('period');
+    if ($('#inv-p-rate')) $('#inv-p-rate').textContent = '$' + getVal('rate');
+    const amtStr = getVal('amount');
+    if ($('#inv-p-amt')) $('#inv-p-amt').textContent = amtStr;
+    if ($('#inv-p-subtotal')) $('#inv-p-subtotal').textContent = amtStr;
+    if ($('#inv-p-invtotal')) $('#inv-p-invtotal').textContent = amtStr;
+    if ($('#inv-p-txref')) $('#inv-p-txref').textContent = getVal('transactionRef');
+    if ($('#inv-p-txdate')) $('#inv-p-txdate').textContent = getVal('invoiceDate');
+    if ($('#inv-p-txamt')) $('#inv-p-txamt').textContent = '-' + amtStr;
+  };
+
+  form.addEventListener('input', syncInvoicePreview);
+
+  const btnSaveInv = $('#btn-save-invoice-template');
+  if (btnSaveInv) {
+    btnSaveInv.addEventListener('click', () => {
+      const linkedId = getVal('linkedPaymentId') || record.id;
+      const invoiceData = {
+        invoiceNum: getVal('invoiceNum'),
+        invoiceDate: getVal('invoiceDate'),
+        terms: getVal('terms'),
+        dueDate: getVal('dueDate'),
+        currency: 'USD',
+        billName: getVal('billName'),
+        billCompany: getVal('billCompany'),
+        billAddress1: getVal('billAddress1'),
+        billAddress2: getVal('billAddress2'),
+        billPostal: getVal('billPostal'),
+        billCountry: getVal('billCountry'),
+        description: getVal('description'),
+        period: getVal('period'),
+        quantity: getVal('quantity'),
+        rate: getVal('rate'),
+        amount: getVal('amount'),
+        transactionRef: getVal('transactionRef')
+      };
+
+      let nextPayments = payments.map(p => {
+        if (p.id === linkedId) {
+          return {
+            ...p,
+            invoiceData
+          };
+        }
+        return p;
+      });
+
+      write('payments', nextPayments);
+      payments = nextPayments;
+      toast(`Factura oficial guardada y vinculada al registro ${linkedId}.`);
+      closeModal();
+      render();
+    });
+  }
+
+  const btnDlHtml = $('#btn-download-html-invoice');
+  if (btnDlHtml) {
+    btnDlHtml.addEventListener('click', () => {
+      const data = {
+        invoiceNum: getVal('invoiceNum'),
+        invoiceDate: getVal('invoiceDate'),
+        terms: getVal('terms'),
+        dueDate: getVal('dueDate'),
+        currency: 'USD',
+        billName: getVal('billName'),
+        billCompany: getVal('billCompany'),
+        billAddress1: getVal('billAddress1'),
+        billAddress2: getVal('billAddress2'),
+        billPostal: getVal('billPostal'),
+        billCountry: getVal('billCountry'),
+        description: getVal('description'),
+        period: getVal('period'),
+        quantity: getVal('quantity'),
+        rate: getVal('rate'),
+        amount: getVal('amount'),
+        transactionRef: getVal('transactionRef')
+      };
+      const html = buildStandaloneInvoiceHtml(data);
+      downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `invoice-${data.invoiceNum}.html`);
+      toast('Factura oficial descargada en HTML.');
+    });
+  }
+
+  const btnPrintInv = $('#btn-print-invoice');
+  if (btnPrintInv) {
+    btnPrintInv.addEventListener('click', () => {
+      const data = {
+        invoiceNum: getVal('invoiceNum'),
+        invoiceDate: getVal('invoiceDate'),
+        terms: getVal('terms'),
+        dueDate: getVal('dueDate'),
+        currency: 'USD',
+        billName: getVal('billName'),
+        billCompany: getVal('billCompany'),
+        billAddress1: getVal('billAddress1'),
+        billAddress2: getVal('billAddress2'),
+        billPostal: getVal('billPostal'),
+        billCountry: getVal('billCountry'),
+        description: getVal('description'),
+        period: getVal('period'),
+        quantity: getVal('quantity'),
+        rate: getVal('rate'),
+        amount: getVal('amount'),
+        transactionRef: getVal('transactionRef')
+      };
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(buildStandaloneInvoiceHtml(data));
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => { printWindow.print(); }, 400);
+      } else {
+        window.print();
+      }
+    });
+  }
+}
+
 function findRecord(id) { return payments.find(p=>p.id===id); }
 function receiptText(record,invoice=false) { return `${invoice?'INVOICE':'PAYMENT RECEIPT'} — CodeWeight\n\nID: ${record.id}\nDate: ${record.date}\nDeployment: ${record.name}\nMethod: ${record.method}\nAmount: ${money(record.amount)} USD\nStatus: ${record.status??'success'}\n${record.reference?`Reference: ${record.reference}\n`:''}\nFiles:\n${record.files.map(f=>`${f.name} — ${formatBytes(f.size)} (${f.size} bytes)`).join('\n')}\n`; }
 function downloadBlob(blob,name) { const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); }
@@ -733,6 +984,7 @@ document.addEventListener('click',async event=>{
     else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); renderValuation(); }
     else if (action==='valuation-export') { const data=valuationCsv(target.dataset.project); downloadBlob(new Blob([data.csv],{type:'text/csv;charset=utf-8'}),data.name); }
     else if (action==='download-file') await downloadAttachment(findRecord(target.dataset.id),Number(target.dataset.index));
+    else if (action==='open-invoice-generator') { const p = findRecord(target.dataset.id); if (p) openInvoiceGenerator(p); }
     else if (action==='open-receipt-generator') { const p = findRecord(target.dataset.id); if (p) openReceiptGenerator(p); }
     else if (action==='download-receipt'||action==='download-invoice') { const p=findRecord(target.dataset.id); if (p) downloadBlob(new Blob([receiptText(p,action==='download-invoice')],{type:'text/plain;charset=utf-8'}),`${action==='download-invoice'?'invoice':'receipt'}-${p.id}.txt`); }
     else if (action==='dismiss-budget') { showBudgetNotice=false; renderUsage(); }
