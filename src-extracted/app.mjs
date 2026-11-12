@@ -907,6 +907,17 @@ function bindInvoiceEditorEvents(record) {
   }
 }
 
+
+function formatInvoiceDate(isoDate) {
+  try {
+    const [y, m, d] = isoDate.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[Number(m)-1]} ${d}, ${y}`;
+  } catch {
+    return isoDate;
+  }
+}
+
 function findRecord(id) { return payments.find(p=>p.id===id); }
 function receiptText(record,invoice=false) { return `${invoice?'INVOICE':'PAYMENT RECEIPT'} — CodeWeight\n\nID: ${record.id}\nDate: ${record.date}\nDeployment: ${record.name}\nMethod: ${record.method}\nAmount: ${money(record.amount)} USD\nStatus: ${record.status??'success'}\n${record.reference?`Reference: ${record.reference}\n`:''}\nFiles:\n${record.files.map(f=>`${f.name} — ${formatBytes(f.size)} (${f.size} bytes)`).join('\n')}\n`; }
 function downloadBlob(blob,name) { const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); }
@@ -986,7 +997,40 @@ document.addEventListener('click',async event=>{
     else if (action==='download-file') await downloadAttachment(findRecord(target.dataset.id),Number(target.dataset.index));
     else if (action==='open-invoice-generator') { const p = findRecord(target.dataset.id); if (p) openInvoiceGenerator(p); }
     else if (action==='open-receipt-generator') { const p = findRecord(target.dataset.id); if (p) openReceiptGenerator(p); }
-    else if (action==='download-receipt'||action==='download-invoice') { const p=findRecord(target.dataset.id); if (p) downloadBlob(new Blob([receiptText(p,action==='download-invoice')],{type:'text/plain;charset=utf-8'}),`${action==='download-invoice'?'invoice':'receipt'}-${p.id}.txt`); }
+    else if (action==='download-receipt') {
+      const p = findRecord(target.dataset.id);
+      if (p) downloadBlob(new Blob([receiptText(p, false)], { type: 'text/plain;charset=utf-8' }), `receipt-${p.id}.txt`);
+    }
+    else if (action==='download-invoice') {
+      const p = findRecord(target.dataset.id);
+      if (p) {
+        const custom = p.invoiceData || {};
+        const amtNum = Number(p.amount || 5.66).toFixed(2);
+        const invDate = custom.invoiceDate || (p.date ? formatInvoiceDate(p.date) : 'Oct 25, 2026');
+        const invoiceData = {
+          invoiceNum: custom.invoiceNum || `INV16302${p.id || '2783'}`,
+          invoiceDate: invDate,
+          terms: custom.terms || 'Due Upon Receipt',
+          dueDate: custom.dueDate || invDate,
+          currency: 'USD',
+          billName: custom.billName || 'Fernando Armas',
+          billCompany: custom.billCompany || 'ESPE',
+          billAddress1: custom.billAddress1 || 'Casa 345',
+          billAddress2: custom.billAddress2 || 'Sangolquí, Pichincha, Ecuador, Pichincha',
+          billPostal: custom.billPostal || '171103',
+          billCountry: custom.billCountry || 'Ecuador',
+          description: custom.description || (p.purpose === 'budget' ? 'GitHub Actions & Compute Usage' : (p.name || 'GitHub Actions Usage')),
+          period: custom.period || (p.date ? `${p.date.slice(0, 7)}-01 - ${p.date.slice(0, 7)}-30` : 'Sep 01, 2026 - Sep 30, 2026'),
+          quantity: custom.quantity || amtNum,
+          rate: custom.rate || '1.00',
+          amount: custom.amount || `$${amtNum}`,
+          transactionRef: custom.transactionRef || `P-9983${p.id || '6064'}`
+        };
+        const html = buildStandaloneInvoiceHtml(invoiceData);
+        downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `invoice-${invoiceData.invoiceNum}.html`);
+        toast(`Factura oficial ${invoiceData.invoiceNum} descargada.`);
+      }
+    }
     else if (action==='dismiss-budget') { showBudgetNotice=false; renderUsage(); }
     else if (action==='timeframe') modal('Timeframe',`<form id="month-form" class="modal-body"><label class="field">Month<input type="month" name="month" value="${e(usageMonth)}" min="2000-01" max="2100-12" required></label><p class="hint">Selecciona el mes correspondiente a la fecha de tus despliegues y pagos.</p><div class="form-actions"><button class="btn primary">Apply</button></div></form>`);
     else if (action==='account-menu') popover(target,`<div class="popover-title">Signed in as <strong>${e(profile.username)}</strong></div><hr><a href="#public-profile">${icon('person')} Your profile</a><a href="#deployments">${icon('rocket')} Despliegues</a><a href="#payment-history">${icon('card')} Payment history</a><hr><a href="#settings">${icon('gear')} Configuración del espacio</a><button data-action="avatar">${icon('person')} Cambiar foto de perfil</button><button data-action="logo">${icon('page')} Cambiar logo</button>`);
