@@ -172,7 +172,7 @@ function recordRows(records, detailed = false) {
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
   $('#main').className = 'history-page';
-  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th>Receipt</th><th>Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p><div class="history-extra"><p class="muted">Registra un pago anterior y conserva sus archivos de despliegue.</p><div class="history-extra-actions">${btn('Papelera','trash')}${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}${btn(`${icon('receipt')} Formato base`,'open-receipt-generator','',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
+  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th>Receipt</th><th>Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p>`;
 }
 function usageRecords() { return activePayments(payments).filter(p => p.purpose!=='budget' && p.status!=='failed' && p.date.startsWith(usageMonth) && (!usageSearch || `${p.name} ${p.id} ${p.files?.map(f=>f.name).join(' ')}`.toLowerCase().includes(usageSearch.toLowerCase()))); }
 function chartMarkup() {
