@@ -155,12 +155,12 @@ function deploymentStartButton(row) {
   return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Generar nuevo formato de recibo" aria-label="Generar nuevo recibo ${e(p.id)}">${icon('receipt')}</button><button class="table-action" data-action="view-payment" data-id="${e(p.id)}" aria-label="Ver pago y archivos ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button type="button" class="table-action" data-action="delete-payment" data-id="${e(p.id)}" aria-label="Eliminar pago ${e(p.id)}">${icon('close')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver y editar recibo oficial (Formato base)" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button type="button" class="table-action" data-action="delete-payment" data-id="${e(p.id)}" aria-label="Eliminar pago ${e(p.id)}">${icon('close')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
   $('#main').className = 'history-page';
-  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th>Receipt</th><th>Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p><div class="history-extra"><p class="muted">Registra un pago anterior y conserva sus archivos de despliegue.</p><div>${btn('Papelera','trash')} ${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}</div></div>`;
+  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th>Receipt</th><th>Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p><div class="history-extra"><p class="muted">Registra un pago anterior y conserva sus archivos de despliegue.</p><div class="history-extra-actions">${btn('Papelera','trash')}${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}${btn(`${icon('receipt')} Formato base`,'open-receipt-generator','',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
 }
 function usageRecords() { return activePayments(payments).filter(p => p.purpose!=='budget' && p.status!=='failed' && p.date.startsWith(usageMonth) && (!usageSearch || `${p.name} ${p.id} ${p.files?.map(f=>f.name).join(' ')}`.toLowerCase().includes(usageSearch.toLowerCase()))); }
 function chartMarkup() {
@@ -460,7 +460,7 @@ async function beginDeployment(id) {
 
 function openReceiptGenerator(record) {
   if (!record) return;
-  modal('Generador de Recibo Oficial (GitHub)', receiptModalHtml(record, profile), 1080);
+  modal('Generador de Recibo Oficial (GitHub)', receiptModalHtml(record, profile, activePayments(payments)), 1080);
   bindReceiptEditorEvents(record);
 }
 
@@ -469,6 +469,36 @@ function bindReceiptEditorEvents(record) {
   if (!form) return;
 
   const getFormVal = name => form.elements[name]?.value || '';
+
+  const linkedSelect = $('#rcpt-field-linked');
+  if (linkedSelect) {
+    linkedSelect.addEventListener('change', () => {
+      const selectedId = linkedSelect.value;
+      const targetRecord = payments.find(p => p.id === selectedId);
+      if (targetRecord) {
+        const custom = targetRecord.receiptData || {};
+        const dateStr = custom.date || `${targetRecord.date || '2026-10-25'} 10:54AM PDT`;
+        const accountStr = custom.accountBilled || `${profile.username || 'lfarmas4'} (${profile.email || 'luisfernando1942.a@gmail.com'})`;
+        const txStr = custom.transactionId || `ch_3UUVcRJFr6CCHwli${targetRecord.id}`;
+        const chargedStr = custom.chargedTo || (targetRecord.method ? targetRecord.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)');
+        const descStr = custom.description || targetRecord.name || 'GitHub Actions Usage';
+        const periodStr = custom.period || `${(targetRecord.date || '2026-10-25').slice(0,7)}-01 - ${(targetRecord.date || '2026-10-25').slice(0,7)}-30`;
+        const amtStr = custom.amount || `$${Number(targetRecord.amount || 0).toFixed(2)} USD`;
+        const watermarkStr = custom.watermark || 'Thank you.';
+
+        if (form.elements['date']) form.elements['date'].value = dateStr;
+        if (form.elements['accountBilled']) form.elements['accountBilled'].value = accountStr;
+        if (form.elements['transactionId']) form.elements['transactionId'].value = txStr;
+        if (form.elements['chargedTo']) form.elements['chargedTo'].value = chargedStr;
+        if (form.elements['description']) form.elements['description'].value = descStr;
+        if (form.elements['period']) form.elements['period'].value = periodStr;
+        if (form.elements['amount']) form.elements['amount'].value = amtStr;
+        if (form.elements['watermark']) form.elements['watermark'].value = watermarkStr;
+        syncPreview();
+        toast(`Datos cargados del pago ${targetRecord.id}.`);
+      }
+    });
+  }
 
   const syncPreview = () => {
     const dateVal = getFormVal('date');
@@ -479,6 +509,7 @@ function bindReceiptEditorEvents(record) {
     const periodVal = getFormVal('period');
     const amountVal = getFormVal('amount');
     const supportVal = getFormVal('supportUrl');
+    const watermarkVal = getFormVal('watermark');
 
     if ($('#rcpt-preview-date')) $('#rcpt-preview-date').textContent = dateVal;
     if ($('#rcpt-preview-account')) $('#rcpt-preview-account').textContent = accountVal;
@@ -488,6 +519,7 @@ function bindReceiptEditorEvents(record) {
     if ($('#rcpt-preview-period')) $('#rcpt-preview-period').textContent = periodVal;
     if ($('#rcpt-preview-amount')) $('#rcpt-preview-amount').textContent = amountVal;
     if ($('#rcpt-preview-total')) $('#rcpt-preview-total').textContent = amountVal.endsWith('*') ? amountVal : (amountVal + '*');
+    if ($('#rcpt-preview-watermark')) $('#rcpt-preview-watermark').textContent = watermarkVal;
     if ($('#rcpt-preview-support-link')) {
       $('#rcpt-preview-support-link').textContent = supportVal;
       $('#rcpt-preview-support-link').href = supportVal;
@@ -519,6 +551,49 @@ function bindReceiptEditorEvents(record) {
   syncFromPreview('rcpt-preview-period', 'period');
   syncFromPreview('rcpt-preview-amount', 'amount');
   syncFromPreview('rcpt-preview-total', 'amount');
+  syncFromPreview('rcpt-preview-watermark', 'watermark');
+
+  const btnSaveTemplate = $('#btn-save-receipt-template');
+  if (btnSaveTemplate) {
+    btnSaveTemplate.addEventListener('click', () => {
+      const linkedId = getFormVal('linkedPaymentId') || record.id;
+      const receiptData = {
+        title: $('#rcpt-preview-title')?.textContent || 'Receipt',
+        date: getFormVal('date') || $('#rcpt-preview-date')?.textContent,
+        accountBilled: getFormVal('accountBilled') || $('#rcpt-preview-account')?.textContent,
+        transactionId: getFormVal('transactionId') || $('#rcpt-preview-txid')?.textContent,
+        chargedTo: getFormVal('chargedTo') || $('#rcpt-preview-charged')?.textContent,
+        description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
+        period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
+        amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
+        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
+        supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
+      };
+
+      // Also parse amount number if user entered e.g. $130.00 USD
+      const amtMatch = receiptData.amount.match(/([0-9]+(?:\.[0-9]+)?)/);
+      const parsedAmount = amtMatch ? parseFloat(amtMatch[1]) : null;
+
+      let nextPayments = payments.map(p => {
+        if (p.id === linkedId) {
+          return {
+            ...p,
+            receiptData,
+            name: receiptData.description || p.name,
+            amount: parsedAmount !== null ? parsedAmount : p.amount,
+            method: receiptData.chargedTo.includes('(') ? receiptData.chargedTo.replace(/\s*\(.*\)/, ' ending in ' + receiptData.chargedTo.slice(-5,-1)) : p.method
+          };
+        }
+        return p;
+      });
+
+      write('payments', nextPayments);
+      payments = nextPayments;
+      toast(`Formato guardado y vinculado exitosamente al pago ${linkedId}.`);
+      closeModal();
+      render();
+    });
+  }
 
   const btnDownload = $('#btn-download-html-receipt');
   if (btnDownload) {
@@ -532,6 +607,7 @@ function bindReceiptEditorEvents(record) {
         description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
         period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
         amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
+        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
         supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
       };
       const htmlContent = buildStandaloneReceiptHtml(data);
@@ -552,6 +628,7 @@ function bindReceiptEditorEvents(record) {
         description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
         period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
         amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
+        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
         supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
       };
       const printWindow = window.open('', '_blank');
@@ -604,9 +681,9 @@ function renderOther() {
   } else if (activePage==='notifications') {
     $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Deployment activity</h2>${deploymentRows().slice(0,10).map(p=>`<div class="file-row">${icon('rocket')}<div><button class="deployment-name" data-action="view-deployment" data-id="${e(p.id)}">${e(p.name)}</button><div class="muted">${e(p.date)} · ${p.source==='github'?'GitHub':'Mi espacio'}</div></div>${statusBadge(p.status)}</div>`).join('')}</div>`;
   } else if (activePage==='appearance') {
-    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Theme preferences</h2><div class="payment-method">${icon('check')} Dark default <span class="badge" style="margin-left:auto">Active</span></div><p class="muted">A dark appearance across your workspace.</p>${btn('Cambiar imagen del espacio','mascot')}</div>`;
+    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Theme preferences</h2><div class="payment-method">${icon('check')} Dark default <span class="badge" style="margin-left:auto">Active</span></div><p class="muted">A dark appearance across your workspace.</p><div class="form-actions" style="justify-content:flex-start;margin-top:16px;">${btn('Cambiar imagen del espacio','mascot')}${btn('Papelera','trash')}${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}${btn(`${icon('receipt')} Formato base`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
   } else {
-    $('#main').innerHTML=`${heading(title)}<section class="panel"><h2 style="font-size:14px">${e(title)}</h2><p class="muted">Este apartado está preparado para la siguiente etapa de tu plataforma.</p><p class="hint">Ya puedes trabajar con Organizations, Usage, Payment history y Despliegues.</p><div class="form-actions" style="justify-content:flex-start">${btn('Ir a Despliegues','deployments')}${btn('Ver pagos','history')}</div></section>`;
+    $('#main').innerHTML=`${heading(title)}<section class="panel"><h2 style="font-size:14px">${e(title)}</h2><p class="muted">Configuración y herramientas del espacio de trabajo.</p><p class="hint">Gestiona tus organizaciones, consulta el consumo y genera o edita recibos con el formato base oficial.</p><div class="form-actions" style="justify-content:flex-start">${btn('Ir a Despliegues','deployments')}${btn('Ver pagos','history')}${btn(`${icon('receipt')} Generar recibo oficial (Formato base)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></section>`;
   }
 }
 
