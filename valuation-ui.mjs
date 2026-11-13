@@ -237,9 +237,7 @@ export function renderValuationPage({project='crossbox',query='',page=1} = {}) {
   const sourceSha = data.coverage.sourceSha || data.coverage.sourceHeadSha || data.coverage.headSha || data.coverage.tipSha || data.coverage.refSha || data.rows.at(-1)?.sha || '';
   return `<div class="page-heading"><h1>Historial de precios</h1><button class="btn small" data-action="valuation-export" data-project="${data.key}">Exportar CSV</button></div><p class="page-description">Todas las actualizaciones disponibles de tus proyectos y su valor de referencia.</p><div class="valuation-summary-grid">${summaryCard('crossbox')}${summaryCard('fitcode')}</div>${ancestryNotice}${monthlyChart(data)}<div class="section-heading"><h2>Historial completo · ${data.name}</h2><span class="badge">${number(data.rows.length)} commits</span></div><p class="hint">${dates.length ? `${escapeHtml(dates[0])} — ${escapeHtml(dates.at(-1))}` : 'Sin cobertura disponible'} · Rama principal, primer padre · SHA de origen: <code>${escapeHtml(sourceSha || 'no disponible')}</code></p><div class="valuation-controls"><label class="field">Proyecto<select id="valuation-project"><option value="crossbox" ${data.key==='crossbox'?'selected':''}>CrossBox</option><option value="fitcode" ${data.key==='fitcode'?'selected':''}>FitCode</option></select></label><label class="field valuation-search">Buscar por actualización, fecha o SHA<input id="valuation-search" type="search" value="${escapeHtml(query)}" placeholder="Buscar en todo el historial"></label></div><div class="table-wrap"><table class="data-table valuation-full-table"><thead><tr><th>Fecha del commit</th><th>Actualización</th><th>Cambios</th><th>Valor asignado</th></tr></thead><tbody>${visible.map(row => {
   const val = getCommitValue(row);
-  const priceDisplay = val.isDocumented
-    ? `<span style="color:#2ea043;font-weight:600;font-size:13px;">${money(val.amount)}</span>`
-    : `<span style="color:#c9d1d9;font-weight:500;">${money(val.amount)}</span>`;
+  const priceDisplay = `<span style="color:#c9d1d9;font-weight:500;">${money(val.amount)}</span>`;
 
   return `<tr>
     <td>${escapeHtml(commitDate(row))}</td>
