@@ -6,7 +6,33 @@ export const GITHUB_OCTOCAT_INVOICE_SVG = `<svg viewBox="0 0 16 16" width="68" h
 
 export function invoiceModalHtml(record, profile = {}, allPayments = []) {
   const custom = record.invoiceData || {};
-  const invoiceNum = custom.invoiceNum || (record.id ? `INV16302${record.id}` : 'INV163022783');
+  export function generateNumericInvoiceNum(id) {
+  if (!id) return 'INV163022783';
+  if (id === '19T5IGEN') return 'INV163022783';
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = ((hash << 5) - hash) + id.charCodeAt(i);
+    hash |= 0;
+  }
+  const positive = Math.abs(hash);
+  const suffix = String(positive).padStart(6, '0').slice(-6);
+  return `INV1630${suffix}`;
+}
+
+export function generateNumericTransactionRef(id) {
+  if (!id) return 'P-99836064';
+  if (id === '19T5IGEN') return 'P-99836064';
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = ((hash << 3) - hash) + id.charCodeAt(i);
+    hash |= 0;
+  }
+  const positive = Math.abs(hash);
+  const suffix = String(positive).padStart(6, '0').slice(-6);
+  return `P-9983${suffix}`;
+}
+
+  const invoiceNum = custom.invoiceNum || generateNumericInvoiceNum(record.id);
   const invoiceDate = custom.invoiceDate || (record.date ? formatInvoiceDate(record.date) : 'Oct 25, 2026');
   const dueDate = custom.dueDate || invoiceDate;
   const terms = custom.terms || 'Due Upon Receipt';
@@ -25,7 +51,7 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
   const qty = custom.quantity || amtNum;
   const rate = custom.rate || '1.00';
   const amountStr = custom.amount || `$${amtNum}`;
-  const transactionRef = custom.transactionRef || `P-9983${record.id || '6064'}`;
+  const transactionRef = custom.transactionRef || generateNumericTransactionRef(record.id);
 
   const currentRecordId = record.id || '';
   const options = allPayments.map(p => `
