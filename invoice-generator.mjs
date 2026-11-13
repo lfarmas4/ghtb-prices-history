@@ -47,11 +47,14 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
   const billPostal = custom.billPostal || '171103';
   const billCountry = custom.billCountry || 'Ecuador';
 
-  const desc = custom.description || 'GitHub Actions Usage';
-  const period = custom.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`;
+  const sku = custom.sku || record.sku || '';
+  const productLine = custom.productLine || record.productLine || '';
+  const desc = custom.description || record.name || 'GitHub Actions Usage';
+  const period = custom.period || record.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`;
   const amtNum = Number(record.amount || 5.66).toFixed(2);
-  const qty = custom.quantity || amtNum;
-  const rate = custom.rate || '1.00';
+  const qty = custom.quantity || record.quantity || amtNum;
+  const rateRaw = custom.rateStr || custom.rate || record.rateStr || record.rate || '1.00';
+  const rateDisplay = String(rateRaw).startsWith('$') ? String(rateRaw) : `$${rateRaw}`;
   const amountStr = custom.amount || `$${amtNum}`;
   const transactionRef = custom.transactionRef || generateNumericTransactionRef(record.id);
 
@@ -118,21 +121,22 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
           <table class="inv-items-table">
             <thead>
               <tr>
-                <th style="width:15%;">QUANTITY</th>
-                <th style="width:55%;">DESCRIPTION</th>
+                <th style="width:16%;">QUANTITY</th>
+                <th style="width:54%;">DESCRIPTION</th>
                 <th style="width:15%;">RATE</th>
                 <th style="width:15%;text-align:right;">AMOUNT</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td id="inv-p-qty">${escapeHtml(qty)}</td>
+                <td id="inv-p-qty" style="font-weight:600;">${escapeHtml(qty)}</td>
                 <td>
                   <div class="inv-item-title" id="inv-p-desc">${escapeHtml(desc)}</div>
-                  <div class="inv-item-sub" id="inv-p-period">${escapeHtml(period)}</div>
+                  ${sku ? `<div class="inv-item-sub" id="inv-p-sku" style="font-size:11px;color:#57606a;margin-top:2px;">SKU: <span class="mono" style="font-weight:600;color:#24292f;">${escapeHtml(sku)}</span>${productLine ? ` · <span style="color:#0969da;font-weight:500;">${escapeHtml(productLine)}</span>` : ''}</div>` : ''}
+                  <div class="inv-item-sub" id="inv-p-period" style="margin-top:2px;">${escapeHtml(period)}</div>
                 </td>
-                <td id="inv-p-rate">$${escapeHtml(rate)}</td>
-                <td style="text-align:right;" id="inv-p-amt">${escapeHtml(amountStr)}</td>
+                <td id="inv-p-rate" style="font-weight:600;">${escapeHtml(rateDisplay)}</td>
+                <td style="text-align:right;font-weight:600;" id="inv-p-amt">${escapeHtml(amountStr)}</td>
               </tr>
             </tbody>
           </table>
@@ -432,21 +436,22 @@ export function buildStandaloneInvoiceHtml(data) {
     <table class="inv-items-table">
       <thead>
         <tr>
-          <th style="width:15%;">QUANTITY</th>
-          <th style="width:55%;">DESCRIPTION</th>
+          <th style="width:16%;">QUANTITY</th>
+          <th style="width:54%;">DESCRIPTION</th>
           <th style="width:15%;">RATE</th>
           <th style="width:15%;text-align:right;">AMOUNT</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>${escapeHtml(data.quantity)}</td>
+          <td style="font-weight:600;">${escapeHtml(data.quantity)}</td>
           <td>
             <div class="inv-item-title">${escapeHtml(data.description)}</div>
-            <div class="inv-item-sub">${escapeHtml(data.period)}</div>
+            ${data.sku ? `<div class="inv-item-sub" style="font-size:11px;color:#57606a;margin-top:2px;">SKU: <span class="mono" style="font-weight:600;color:#24292f;">${escapeHtml(data.sku)}</span>${data.productLine ? ` · <span style="color:#0969da;font-weight:500;">${escapeHtml(data.productLine)}</span>` : ''}</div>` : ''}
+            <div class="inv-item-sub" style="margin-top:2px;">${escapeHtml(data.period)}</div>
           </td>
-          <td>$${escapeHtml(data.rate)}</td>
-          <td style="text-align:right;">${escapeHtml(data.amount)}</td>
+          <td style="font-weight:600;">${escapeHtml(String(data.rate).startsWith('$') ? data.rate : `$${data.rate}`)}</td>
+          <td style="text-align:right;font-weight:600;">${escapeHtml(data.amount)}</td>
         </tr>
       </tbody>
     </table>

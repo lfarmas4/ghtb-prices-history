@@ -10,8 +10,11 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
   const transactionId = custom.transactionId || record.transactionId || (record.id ? `ch_3UUVcRJFr6CCHwli${record.id}` : 'ch_3UUVcRJFr6CCHwli19T5iGEN');
   const chargedTo = custom.chargedTo || (record.method ? record.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)');
   const dateStr = custom.date || `${record.date || '2026-10-25'} 10:54AM PDT`;
-  const desc = custom.description || 'GitHub Actions Usage';
+  const sku = custom.sku || record.sku || '';
+  const desc = custom.description || record.name || 'GitHub Actions Usage';
   const period = custom.period || record.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`;
+  const qty = custom.quantity || record.quantity || '';
+  const rateStr = custom.rateStr || record.rateStr || '';
   const amountStr = custom.amount || `$${Number(record.amount || 0).toFixed(2)} USD`;
   const watermarkText = custom.watermark || 'Thank you.';
 
@@ -61,7 +64,8 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
               <tr>
                 <td class="rcpt-item-desc">
                   <div class="rcpt-item-name" id="rcpt-preview-desc">${escapeHtml(desc)}</div>
-                  <div class="rcpt-item-sub" id="rcpt-preview-period">${escapeHtml(period)}</div>
+                  ${sku ? `<div class="rcpt-item-sub" id="rcpt-preview-sku" style="font-size:11px;color:#57606a;margin-top:2px;">SKU: <span class="mono" style="font-weight:600;color:#24292f;">${escapeHtml(sku)}</span>${qty ? ` · <strong style="color:#24292f;">${escapeHtml(qty)}</strong>` : ''}${rateStr ? ` @ ${escapeHtml(rateStr)}` : ''}</div>` : ''}
+                  <div class="rcpt-item-sub" id="rcpt-preview-period" style="margin-top:2px;">${escapeHtml(period)}</div>
                 </td>
                 <td class="rcpt-item-amt" id="rcpt-preview-amount">${escapeHtml(amountStr)}</td>
               </tr>
@@ -346,7 +350,8 @@ export function buildStandaloneReceiptHtml(data) {
         <tr>
           <td class="rcpt-item-desc">
             <div class="rcpt-item-name">${escapeHtml(data.description)}</div>
-            <div class="rcpt-item-sub">${escapeHtml(data.period)}</div>
+            ${data.sku ? `<div class="rcpt-item-sub" style="font-size:11px;color:#57606a;margin-top:2px;">SKU: <span class="mono" style="font-weight:600;color:#24292f;">${escapeHtml(data.sku)}</span>${data.quantity ? ` · <strong style="color:#24292f;">${escapeHtml(data.quantity)}</strong>` : ''}${data.rateStr ? ` @ ${escapeHtml(data.rateStr)}` : ''}</div>` : ''}
+            <div class="rcpt-item-sub" style="margin-top:2px;">${escapeHtml(data.period)}</div>
           </td>
           <td class="rcpt-item-amt">${escapeHtml(data.amount)}</td>
         </tr>

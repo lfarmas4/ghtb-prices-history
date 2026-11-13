@@ -45,23 +45,669 @@ document.documentElement.style.setProperty('--ui-scale',uiZoom/100);
 let organizations = read('organizations', []);
 if (!Array.isArray(organizations)) organizations = [];
 const initialPayments = [
-  { id:'08JUNE3A', date:'2026-06-03', name:'Cloud metered infrastructure', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'1B78C49E', date:'2026-07-03', name:'Cloud metered services', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'2F49D10A', date:'2026-08-03', name:'App platform scale-up', kind:'App', method:'MasterCard ending in 2791', amount:250.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'839GHTB3', date:'2026-09-03', name:'GITHUB, INC. — Team & Services', kind:'Feature', method:'American Express ending in 1989', amount:839.50, files:[{...demoBundles[0].files[0]}] },
-  { id:'3E92B67C', date:'2026-09-03', name:'Application core services', kind:'App', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[2].files[0]}] },
-  { id:'2300APPL', date:'2026-09-09', name:'APPLE.COM BILL — Débito cuenta Luis Fernando Armas', kind:'App', method:'Banco Pichincha Debit', amount:2300.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'09FAPWZ5', date:'2026-09-25', name:'Storefront application', kind:'App', method:'MasterCard ending in 2791', amount:4.63, files:[{...demoBundles[2].files[0]}] },
-  { id:'362GCLD1', date:'2026-10-01', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:3.62, files:[{...demoBundles[0].files[0]}] },
-  { id:'4C81A53D', date:'2026-10-03', name:'High-capacity runner allocation', kind:'Feature', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'19T5IGEN', date:'2026-10-25', name:'Authentication feature', kind:'Feature', method:'MasterCard ending in 2791', amount:5.66, files:[{...demoBundles[0].files[0]}] },
-  { id:'1040APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX Developer preview (MNY6QK6M6H)', kind:'App', method:'American Express ending in 1989', amount:1040.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'1074APPL', date:'2026-10-28', name:'Apple Receipt — App Developer Paid (MNY6S74KGB)', kind:'App', method:'American Express ending in 1989', amount:1074.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'1173APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX In-App iPhone 13 Pro Max', kind:'App', method:'American Express ending in 1989', amount:1173.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'0C63C367', date:'2026-10-29', name:'Actualización de tarifas y presupuesto', kind:'Feature', method:'American Express ending in 0388', amount:130.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs (P7SZWC)', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
-  { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
-  { id:'7A52B81C', date:'2026-11-09', name:'Actualización de aplicación — CROSSBOX FITNESS & STRENGTH', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
+  {
+    id: '08JUNE3A',
+    date: '2026-06-03',
+    name: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 180.00,
+    sku: 'actions_linux_4_core',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '11,250 min',
+    rawQty: 11250.0,
+    unitRate: 0.016,
+    rate: '0.016',
+    rateStr: '$0.016/min',
+    period: 'May 01, 2026 - May 31, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux_4_core',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'May 01, 2026 - May 31, 2026',
+      quantity: '11,250 min',
+      rate: '0.016',
+      rateStr: '$0.016/min',
+      unit: 'min',
+      amount: '$180.00',
+      invoiceDate: 'Jun 03, 2026',
+      dueDate: 'Jun 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux_4_core',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'May 01, 2026 - May 31, 2026',
+      quantity: '11,250 min',
+      rateStr: '$0.016/min',
+      amount: '$180.00 USD'
+    }
+  },
+  {
+    id: '1B78C49E',
+    date: '2026-07-03',
+    name: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 180.00,
+    sku: 'actions_linux_4_core',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '11,250 min',
+    rawQty: 11250.0,
+    unitRate: 0.016,
+    rate: '0.016',
+    rateStr: '$0.016/min',
+    period: 'Jun 01, 2026 - Jun 30, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux_4_core',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'Jun 01, 2026 - Jun 30, 2026',
+      quantity: '11,250 min',
+      rate: '0.016',
+      rateStr: '$0.016/min',
+      unit: 'min',
+      amount: '$180.00',
+      invoiceDate: 'Jul 03, 2026',
+      dueDate: 'Jul 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux_4_core',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'Jun 01, 2026 - Jun 30, 2026',
+      quantity: '11,250 min',
+      rateStr: '$0.016/min',
+      amount: '$180.00 USD'
+    }
+  },
+  {
+    id: '2F49D10A',
+    date: '2026-08-03',
+    name: 'GitHub Actions — macOS Runners (iOS Build & Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 250.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '3,125 min',
+    rawQty: 3125.0,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Jul 01, 2026 - Jul 31, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (iOS Build & Deployment Minutes)',
+      period: 'Jul 01, 2026 - Jul 31, 2026',
+      quantity: '3,125 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$250.00',
+      invoiceDate: 'Aug 03, 2026',
+      dueDate: 'Aug 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (iOS Build & Deployment Minutes)',
+      period: 'Jul 01, 2026 - Jul 31, 2026',
+      quantity: '3,125 min',
+      rateStr: '$0.080/min',
+      amount: '$250.00 USD'
+    }
+  },
+  {
+    id: '839GHTB3',
+    date: '2026-09-03',
+    name: 'GitHub Actions — macOS Runners (iOS CI/CD Deployment Minutes)',
+    kind: 'Actions',
+    method: 'American Express ending in 1989',
+    amount: 839.50,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '10,493.75 min',
+    rawQty: 10493.75,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Aug 01, 2026 - Aug 31, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (iOS CI/CD Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '10,493.75 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$839.50',
+      invoiceDate: 'Sep 03, 2026',
+      dueDate: 'Sep 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (iOS CI/CD Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '10,493.75 min',
+      rateStr: '$0.080/min',
+      amount: '$839.50 USD'
+    }
+  },
+  {
+    id: '3E92B67C',
+    date: '2026-09-03',
+    name: 'GitHub Actions — Linux 8-core Runners (High-Performance Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 265.00,
+    sku: 'actions_linux_8_core',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '8,281.25 min',
+    rawQty: 8281.25,
+    unitRate: 0.032,
+    rate: '0.032',
+    rateStr: '$0.032/min',
+    period: 'Aug 01, 2026 - Aug 31, 2026',
+    files: [{ ...demoBundles[2].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux_8_core',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 8-core Runners (High-Performance Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '8,281.25 min',
+      rate: '0.032',
+      rateStr: '$0.032/min',
+      unit: 'min',
+      amount: '$265.00',
+      invoiceDate: 'Sep 03, 2026',
+      dueDate: 'Sep 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux_8_core',
+      description: 'GitHub Actions — Linux 8-core Runners (High-Performance Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '8,281.25 min',
+      rateStr: '$0.032/min',
+      amount: '$265.00 USD'
+    }
+  },
+  {
+    id: '2300APPL',
+    date: '2026-09-09',
+    name: 'GitHub Actions — macOS Runners (Large-Scale iOS Deployment Minutes)',
+    kind: 'Actions',
+    method: 'Banco Pichincha Debit',
+    amount: 2300.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '28,750 min',
+    rawQty: 28750.0,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Aug 01, 2026 - Aug 31, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (Large-Scale iOS Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '28,750 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$2,300.00',
+      invoiceDate: 'Sep 09, 2026',
+      dueDate: 'Sep 09, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (Large-Scale iOS Deployment Minutes)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '28,750 min',
+      rateStr: '$0.080/min',
+      amount: '$2,300.00 USD'
+    }
+  },
+  {
+    id: '09FAPWZ5',
+    date: '2026-09-25',
+    name: 'GitHub Packages — Shared Storage & Container Registry (GB-Months)',
+    kind: 'Packages',
+    method: 'MasterCard ending in 2791',
+    amount: 4.63,
+    sku: 'packages_storage',
+    productLine: 'GitHub Packages storage',
+    unit: 'GB',
+    quantity: '18.52 GB',
+    rawQty: 18.52,
+    unitRate: 0.25,
+    rate: '0.25',
+    rateStr: '$0.25/GB',
+    period: 'Aug 01, 2026 - Aug 31, 2026',
+    files: [{ ...demoBundles[2].files[0] }],
+    invoiceData: {
+      sku: 'packages_storage',
+      productLine: 'GitHub Packages storage',
+      description: 'GitHub Packages — Shared Storage & Container Registry (GB-Months)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '18.52 GB',
+      rate: '0.25',
+      rateStr: '$0.25/GB',
+      unit: 'GB',
+      amount: '$4.63',
+      invoiceDate: 'Sep 25, 2026',
+      dueDate: 'Sep 25, 2026'
+    },
+    receiptData: {
+      sku: 'packages_storage',
+      description: 'GitHub Packages — Shared Storage & Container Registry (GB-Months)',
+      period: 'Aug 01, 2026 - Aug 31, 2026',
+      quantity: '18.52 GB',
+      rateStr: '$0.25/GB',
+      amount: '$4.63 USD'
+    }
+  },
+  {
+    id: '362GCLD1',
+    date: '2026-10-01',
+    name: 'GitHub Packages — Data Transfer Out (Bandwidth Egress)',
+    kind: 'Packages',
+    method: 'American Express ending in 1989',
+    amount: 3.62,
+    sku: 'packages_bandwidth',
+    productLine: 'GitHub Packages bandwidth',
+    unit: 'GB',
+    quantity: '7.24 GB',
+    rawQty: 7.24,
+    unitRate: 0.50,
+    rate: '0.50',
+    rateStr: '$0.50/GB',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'packages_bandwidth',
+      productLine: 'GitHub Packages bandwidth',
+      description: 'GitHub Packages — Data Transfer Out (Bandwidth Egress)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '7.24 GB',
+      rate: '0.50',
+      rateStr: '$0.50/GB',
+      unit: 'GB',
+      amount: '$3.62',
+      invoiceDate: 'Oct 01, 2026',
+      dueDate: 'Oct 01, 2026'
+    },
+    receiptData: {
+      sku: 'packages_bandwidth',
+      description: 'GitHub Packages — Data Transfer Out (Bandwidth Egress)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '7.24 GB',
+      rateStr: '$0.50/GB',
+      amount: '$3.62 USD'
+    }
+  },
+  {
+    id: '4C81A53D',
+    date: '2026-10-03',
+    name: 'GitHub Actions — macOS Runners (iOS Release Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 265.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '3,312.5 min',
+    rawQty: 3312.5,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (iOS Release Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '3,312.5 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$265.00',
+      invoiceDate: 'Oct 03, 2026',
+      dueDate: 'Oct 03, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (iOS Release Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '3,312.5 min',
+      rateStr: '$0.080/min',
+      amount: '$265.00 USD'
+    }
+  },
+  {
+    id: '19T5IGEN',
+    date: '2026-10-25',
+    name: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 5.66,
+    sku: 'actions_linux',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '707.5 min',
+    rawQty: 707.5,
+    unitRate: 0.008,
+    rate: '0.008',
+    rateStr: '$0.008/min',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '707.5 min',
+      rate: '0.008',
+      rateStr: '$0.008/min',
+      unit: 'min',
+      amount: '$5.66',
+      invoiceDate: 'Oct 25, 2026',
+      dueDate: 'Oct 25, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux',
+      description: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '707.5 min',
+      rateStr: '$0.008/min',
+      amount: '$5.66 USD'
+    }
+  },
+  {
+    id: '1040APPL',
+    date: '2026-10-28',
+    name: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+    kind: 'Actions',
+    method: 'American Express ending in 1989',
+    amount: 1040.00,
+    sku: 'actions_linux_4_core',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '65,000 min',
+    rawQty: 65000.0,
+    unitRate: 0.016,
+    rate: '0.016',
+    rateStr: '$0.016/min',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux_4_core',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '65,000 min',
+      rate: '0.016',
+      rateStr: '$0.016/min',
+      unit: 'min',
+      amount: '$1,040.00',
+      invoiceDate: 'Oct 28, 2026',
+      dueDate: 'Oct 28, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux_4_core',
+      description: 'GitHub Actions — Linux 4-core Runners (Deployment Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '65,000 min',
+      rateStr: '$0.016/min',
+      amount: '$1,040.00 USD'
+    }
+  },
+  {
+    id: '1074APPL',
+    date: '2026-10-28',
+    name: 'GitHub Codespaces — 4-Core Cloud Compute (Workstation Hours)',
+    kind: 'Codespaces',
+    method: 'American Express ending in 1989',
+    amount: 1074.00,
+    sku: 'codespaces_compute_d4',
+    productLine: 'GitHub Codespaces core hours',
+    unit: 'hrs',
+    quantity: '2,983.33 hrs',
+    rawQty: 2983.3333333333335,
+    unitRate: 0.36,
+    rate: '0.36',
+    rateStr: '$0.36/hr',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'codespaces_compute_d4',
+      productLine: 'GitHub Codespaces core hours',
+      description: 'GitHub Codespaces — 4-Core Cloud Compute (Workstation Hours)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '2,983.33 hrs',
+      rate: '0.36',
+      rateStr: '$0.36/hr',
+      unit: 'hrs',
+      amount: '$1,074.00',
+      invoiceDate: 'Oct 28, 2026',
+      dueDate: 'Oct 28, 2026'
+    },
+    receiptData: {
+      sku: 'codespaces_compute_d4',
+      description: 'GitHub Codespaces — 4-Core Cloud Compute (Workstation Hours)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '2,983.33 hrs',
+      rateStr: '$0.36/hr',
+      amount: '$1,074.00 USD'
+    }
+  },
+  {
+    id: '1173APPL',
+    date: '2026-10-28',
+    name: 'GitHub Actions — macOS Runners (iOS Compilation & Archive Minutes)',
+    kind: 'Actions',
+    method: 'American Express ending in 1989',
+    amount: 1173.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '14,662.5 min',
+    rawQty: 14662.5,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (iOS Compilation & Archive Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '14,662.5 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$1,173.00',
+      invoiceDate: 'Oct 28, 2026',
+      dueDate: 'Oct 28, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (iOS Compilation & Archive Minutes)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '14,662.5 min',
+      rateStr: '$0.080/min',
+      amount: '$1,173.00 USD'
+    }
+  },
+  {
+    id: '0C63C367',
+    date: '2026-10-29',
+    name: 'GitHub Packages & Git LFS — Shared Asset Storage (GB-Months)',
+    kind: 'Storage',
+    method: 'American Express ending in 0388',
+    amount: 130.00,
+    sku: 'packages_storage',
+    productLine: 'Git Large File Storage storage',
+    unit: 'GB',
+    quantity: '520 GB',
+    rawQty: 520.0,
+    unitRate: 0.25,
+    rate: '0.25',
+    rateStr: '$0.25/GB',
+    period: 'Sep 01, 2026 - Sep 30, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'packages_storage',
+      productLine: 'Git Large File Storage storage',
+      description: 'GitHub Packages & Git LFS — Shared Asset Storage (GB-Months)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '520 GB',
+      rate: '0.25',
+      rateStr: '$0.25/GB',
+      unit: 'GB',
+      amount: '$130.00',
+      invoiceDate: 'Oct 29, 2026',
+      dueDate: 'Oct 29, 2026'
+    },
+    receiptData: {
+      sku: 'packages_storage',
+      description: 'GitHub Packages & Git LFS — Shared Asset Storage (GB-Months)',
+      period: 'Sep 01, 2026 - Sep 30, 2026',
+      quantity: '520 GB',
+      rateStr: '$0.25/GB',
+      amount: '$130.00 USD'
+    }
+  },
+  {
+    id: '5D17F82B',
+    date: '2026-11-01',
+    name: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+    kind: 'Actions',
+    method: 'American Express ending in 1989',
+    amount: 3.80,
+    sku: 'actions_linux',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '475 min',
+    rawQty: 475.0,
+    unitRate: 0.008,
+    rate: '0.008',
+    rateStr: '$0.008/min',
+    period: 'Oct 01, 2026 - Oct 31, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_linux',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '475 min',
+      rate: '0.008',
+      rateStr: '$0.008/min',
+      unit: 'min',
+      amount: '$3.80',
+      invoiceDate: 'Nov 01, 2026',
+      dueDate: 'Nov 01, 2026'
+    },
+    receiptData: {
+      sku: 'actions_linux',
+      description: 'GitHub Actions — Linux 2-core Standard Runners (Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '475 min',
+      rateStr: '$0.008/min',
+      amount: '$3.80 USD'
+    }
+  },
+  {
+    id: '6E39C94F',
+    date: '2026-11-06',
+    name: 'GitHub Actions — macOS Runners (Automated Build & Deployment Minutes)',
+    kind: 'Actions',
+    method: 'American Express ending in 1989',
+    amount: 971.75,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '12,146.88 min',
+    rawQty: 12146.875,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Oct 01, 2026 - Oct 31, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (Automated Build & Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '12,146.88 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$971.75',
+      invoiceDate: 'Nov 06, 2026',
+      dueDate: 'Nov 06, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (Automated Build & Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '12,146.88 min',
+      rateStr: '$0.080/min',
+      amount: '$971.75 USD'
+    }
+  },
+  {
+    id: '7A52B81C',
+    date: '2026-11-09',
+    name: 'GitHub Actions — macOS Runners (CROSSBOX Release Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 0791',
+    amount: 270.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '3,375 min',
+    rawQty: 3375.0,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Oct 01, 2026 - Oct 31, 2026',
+    files: [{ ...demoBundles[2].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS Runners (CROSSBOX Release Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '3,375 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$270.00',
+      invoiceDate: 'Nov 09, 2026',
+      dueDate: 'Nov 09, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS Runners (CROSSBOX Release Deployment Minutes)',
+      period: 'Oct 01, 2026 - Oct 31, 2026',
+      quantity: '3,375 min',
+      rateStr: '$0.080/min',
+      amount: '$270.00 USD'
+    }
+  }
 ];
 
 export const DEPLOYMENT_COMMITS = {
@@ -169,14 +815,29 @@ export const DEPLOYMENT_COMMITS = {
   }
 };
 
-const PAYMENTS_DATA_VERSION = 5;
+const PAYMENTS_DATA_VERSION = 7;
 let currentVersion = Number(read('payments-version', 0));
 let payments = read('payments', initialPayments);
 if (currentVersion < PAYMENTS_DATA_VERSION || !Array.isArray(payments) || payments.length < initialPayments.length) {
   const existingMap = new Map((Array.isArray(payments) ? payments : []).map(p => [p.id, p]));
   payments = initialPayments.map(p => {
     const existing = existingMap.get(p.id);
-    return existing ? { ...p, ...existing, receiptData: existing.receiptData || p.receiptData, invoiceData: existing.invoiceData || p.invoiceData } : p;
+    return existing ? {
+      ...existing,
+      ...p,
+      name: p.name,
+      sku: p.sku,
+      productLine: p.productLine,
+      unit: p.unit,
+      quantity: p.quantity,
+      rawQty: p.rawQty,
+      unitRate: p.unitRate,
+      rate: p.rate,
+      rateStr: p.rateStr,
+      period: p.period,
+      invoiceData: { ...(existing.invoiceData || {}), ...(p.invoiceData || {}) },
+      receiptData: { ...(existing.receiptData || {}), ...(p.receiptData || {}) }
+    } : p;
   });
   write('payments', payments);
   write('payments-version', PAYMENTS_DATA_VERSION);
@@ -287,12 +948,12 @@ function deploymentStartButton(row) {
   return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="white-space:nowrap;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar recibo oficial en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial en página aparte" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td style="white-space:nowrap;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar factura oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="white-space:nowrap;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar recibo oficial en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial en página aparte" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td style="white-space:nowrap;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar factura oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver factura oficial en página aparte" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
   const deploysListHtml = records.map(p => {
-    const dep = DEPLOYMENT_COMMITS[p.id] || { sha: p.id, title: 'GitHub Actions Usage & Runner Deployment', url: 'https://github.com/lfarmas4/crossbox-app' };
+    const dep = DEPLOYMENT_COMMITS[p.id] || { sha: p.id, title: p.name || 'GitHub Actions Usage & Runner Deployment', url: 'https://github.com/lfarmas4/crossbox-app' };
     return `<li style="padding:10px 14px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;">
       <div style="display:flex;flex-direction:column;gap:3px;">
         <div style="font-weight:600;font-size:12px;color:#c9d1d9;">
@@ -302,6 +963,7 @@ function renderHistory() {
         </div>
         <div style="font-size:11px;color:#8b949e;">
           Fecha de despliegue: <strong>${e(p.date)}</strong> · Factura: <strong class="mono" style="color:#e6edf3;">${e(generateNumericInvoiceNum(p.id))}</strong> · Commit: <code style="background:#161b22;padding:2px 5px;border-radius:3px;color:#58a6ff;">${e(dep.sha)}</code>
+          ${p.quantity ? ` · <span style="color:#7ee787;font-weight:600;">${e(p.quantity)}</span> (${e(p.sku || '')}${p.rateStr ? ` @ ${e(p.rateStr)}` : ''})` : ''}
         </div>
       </div>
       <div>
@@ -728,8 +1390,11 @@ function bindReceiptModalActions(record) {
         accountBilled: record.receiptData?.accountBilled || `${profile.username || 'lfarmas4'} (${profile.email || 'luisfernando1942.a@gmail.com'})`,
         transactionId: record.receiptData?.transactionId || `ch_3UUVcRJFr6CCHwli${record.id}`,
         chargedTo: record.receiptData?.chargedTo || (record.method ? record.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)'),
-        description: 'GitHub Actions Usage',
-        period: record.receiptData?.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`,
+        sku: record.sku || record.receiptData?.sku || '',
+        quantity: record.quantity || record.receiptData?.quantity || '',
+        rateStr: record.rateStr || record.receiptData?.rateStr || '',
+        description: record.receiptData?.description || record.name || 'GitHub Actions Usage',
+        period: record.receiptData?.period || record.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`,
         amount: record.receiptData?.amount || `$${Number(record.amount || 0).toFixed(2)} USD`,
         watermark: 'Thank you.',
         supportUrl: 'https://support.github.com/contact'
@@ -771,11 +1436,13 @@ function bindInvoiceModalActions(record) {
         billAddress2: 'Sangolquí, Pichincha, Ecuador, Pichincha',
         billPostal: '171103',
         billCountry: 'Ecuador',
-        description: 'GitHub Actions Usage',
-        period: record.invoiceData?.period || (record.date ? `${record.date.slice(0, 7)}-01 - ${record.date.slice(0, 7)}-30` : 'Sep 01, 2026 - Sep 30, 2026'),
-        quantity: amtNum,
-        rate: '1.00',
-        amount: `$${amtNum}`,
+        sku: record.invoiceData?.sku || record.sku || '',
+        productLine: record.invoiceData?.productLine || record.productLine || '',
+        description: record.invoiceData?.description || record.name || 'GitHub Actions Usage',
+        period: record.invoiceData?.period || record.period || (record.date ? `${record.date.slice(0, 7)}-01 - ${record.date.slice(0, 7)}-30` : 'Sep 01, 2026 - Sep 30, 2026'),
+        quantity: record.invoiceData?.quantity || record.quantity || amtNum,
+        rate: record.invoiceData?.rateStr || record.invoiceData?.rate || record.rateStr || record.rate || '1.00',
+        amount: record.invoiceData?.amount || `$${amtNum}`,
         transactionRef: generateNumericTransactionRef(record.id)
       };
       const printWindow = window.open('', '_blank');
@@ -811,7 +1478,7 @@ async function downloadAttachment(record,index) {
 }
 function viewPayment(record) {
   if (!record) return;
-  modal('Payment details',`<div class="modal-body"><h3>${e(record.name)}</h3><div class="checkout-line"><span class="muted">ID</span><span>${e(record.id)}</span></div><div class="checkout-line"><span class="muted">Deployment & payment date</span><span>${e(record.date)}</span></div><div class="checkout-line"><span class="muted">Payment method</span><span>${e(record.method)}</span></div><div class="checkout-line"><span class="muted">Amount</span><strong>${money(record.amount)}</strong></div>${record.reference?`<div class="checkout-line"><span class="muted">Reference</span><span>${e(record.reference)}</span></div>`:''}<h3 style="margin-top:23px">Archivos del despliegue</h3>${record.files.map((f,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(f.name)}</span><small>${formatBytes(f.size)} · ${f.size.toLocaleString('en-US')} bytes</small></div><button class="table-action" data-action="download-file" data-id="${e(record.id)}" data-index="${i}" aria-label="Descargar ${e(f.name)}">${icon('download')}</button></div>`).join('')}<div class="form-actions">${btn('Descargar recibo','download-receipt','',`data-id="${e(record.id)}"`)}</div></div>`);
+  modal('Payment details',`<div class="modal-body"><h3>${e(record.name)}</h3><div class="checkout-line"><span class="muted">ID</span><span>${e(record.id)}</span></div><div class="checkout-line"><span class="muted">SKU de GitHub</span><span class="mono" style="font-weight:600;color:#58a6ff;">${e(record.sku || 'actions_linux')}</span></div>${record.quantity ? `<div class="checkout-line"><span class="muted">Métrica / Consumo</span><strong style="color:#7ee787;">${e(record.quantity)}</strong> (@ ${e(record.rateStr || `$${record.rate}`)})</div>` : ''}<div class="checkout-line"><span class="muted">Deployment & payment date</span><span>${e(record.date)}</span></div><div class="checkout-line"><span class="muted">Payment method</span><span>${e(record.method)}</span></div><div class="checkout-line"><span class="muted">Amount</span><strong>${money(record.amount)}</strong></div>${record.reference?`<div class="checkout-line"><span class="muted">Reference</span><span>${e(record.reference)}</span></div>`:''}<h3 style="margin-top:23px">Archivos del despliegue</h3>${record.files.map((f,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(f.name)}</span><small>${formatBytes(f.size)} · ${f.size.toLocaleString('en-US')} bytes</small></div><button class="table-action" data-action="download-file" data-id="${e(record.id)}" data-index="${i}" aria-label="Descargar ${e(f.name)}">${icon('download')}</button></div>`).join('')}<div class="form-actions" style="display:flex;gap:8px;flex-wrap:wrap;">${btn('Descargar recibo','download-receipt','',`data-id="${e(record.id)}"`)} ${btn('Ver recibo','open-receipt-generator','',`data-id="${e(record.id)}"`)} ${btn('Descargar factura','download-invoice','primary',`data-id="${e(record.id)}"`)} ${btn('Ver factura (modal)','view-invoice-modal','',`data-id="${e(record.id)}"`)}</div></div>`);
   const actions=`<div class="payment-detail-actions">${record.purpose!=='budget'&&(record.status??'success')==='success'&&record.deploymentStatus&&record.deploymentStatus!=='deployed'?btn('Desplegar ahora','deploy-now','primary',`data-id="${e(record.id)}"`):''}${!record.deletedAt?btn('Eliminar registro','delete-payment','danger',`data-id="${e(record.id)}"`):''}</div>`;
   $('#modal-content .modal-body').insertAdjacentHTML('beforeend',actions);
 }
@@ -883,6 +1550,9 @@ document.addEventListener('click',async event=>{
       if (p) {
         window.open(`assets/pdf/invoice-${p.id}.pdf`, '_blank');
       }
+    }
+    else if (action==='view-invoice-modal') {
+      openInvoiceGenerator(findRecord(target.dataset.id));
     }
     else if (action==='open-receipt-generator') {
       const p = findRecord(target.dataset.id);
