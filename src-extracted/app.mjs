@@ -2195,255 +2195,98 @@ function renderCodespaces() {
 }
 
 
-const BOX_SPACES = [
-  {
-    id: 'box-sr',
-    name: 'CrossBox San Rafael (Sede Principal)',
-    slug: 'crossbox-san-rafael',
-    location: 'Quito - Valle de los Chillos',
-    users: 184,
-    compute: '348 core-hrs · 1,520 runs',
-    storage: '48.5 GB (Videos VAR & Media)',
-    cost: 412.50,
-    plan: 'Enterprise Pro',
-    category: 'CrossFit & Halterofilia'
-  },
-  {
-    id: 'box-arm',
-    name: 'CrossBox Armenia (Sede Norte)',
-    slug: 'crossbox-armenia',
-    location: 'Quito - Sector Armenia',
-    users: 142,
-    compute: '264 core-hrs · 1,180 runs',
-    storage: '36.2 GB (VAR & Rutinas)',
-    cost: 298.00,
-    plan: 'Pro Multi-Sede',
-    category: 'CrossFit & Funcional'
-  },
-  {
-    id: 'box-heroes',
-    name: 'Heroes Gym & Arena Training',
-    slug: 'heroes-gym-arena',
-    location: 'Cumbayá',
-    users: 118,
-    compute: '198 core-hrs · 890 runs',
-    storage: '24.8 GB (Plataforma)',
-    cost: 215.00,
-    plan: 'Estándar',
-    category: 'Powerlifting & Arena'
-  },
-  {
-    id: 'box-thelab',
-    name: 'The Lab Testing & Video Analysis',
-    slug: 'the-lab-testing',
-    location: 'Quito - Centro Norte',
-    users: 96,
-    compute: '162 core-hrs · 740 runs',
-    storage: '18.4 GB (High-speed VAR)',
-    cost: 168.50,
-    plan: 'Estándar',
-    category: 'VAR & Biomecánica'
-  },
-  {
-    id: 'box-tandem',
-    name: 'Tandem Fitness & Vital Protein',
-    slug: 'tandem-vital-protein',
-    location: 'Guayaquil - Samborondón',
-    users: 68,
-    compute: '110 core-hrs · 430 runs',
-    storage: '12.1 GB (Inventario & POS)',
-    cost: 112.50,
-    plan: 'Comercial',
-    category: 'Nutrición & Funcional'
-  },
-  {
-    id: 'box-pwr-arena',
-    name: 'Power Games Arena Ficticio',
-    slug: 'pwr-games-arena-ficticio',
-    location: 'Simulacro Arena Jueces',
-    users: 8,
-    compute: '14 core-hrs · 45 runs',
-    storage: '1.8 GB (Caché temporal)',
-    cost: 14.20,
-    plan: 'Sandbox / Prueba',
-    category: 'Simulacro Eventos'
-  },
-  {
-    id: 'box-beta',
-    name: 'Box Beta Studio Training',
-    slug: 'box-beta-studio',
-    location: 'Ambato',
-    users: 5,
-    compute: '8 core-hrs · 22 runs',
-    storage: '0.9 GB (Caché inicial)',
-    cost: 7.80,
-    plan: 'Piloto Starter',
-    category: 'Piloto Inicial'
-  },
-  {
-    id: 'box-demo',
-    name: 'Demo Staging Box (Pruebas Internas)',
-    slug: 'demo-staging-box',
-    location: 'Entorno de Desarrollo',
-    users: 2,
-    compute: '4 core-hrs · 12 runs',
-    storage: '0.4 GB (Logs CI/CD)',
-    cost: 3.10,
-    plan: 'Desarrollo',
-    category: 'Dev QA Staging'
-  }
-];
+const COST_DATA = {"summary": {"project": "crossbox-668a3", "window": "últimos 30 días (al 2026-11-13)", "rate": 2.525e-05, "totalSeconds": 2109659, "totalUsd": 53.27, "cat": {"gyms": {"seconds": 26146, "usd": 0.66}, "stores": {"seconds": 144, "usd": 0.0}, "platform": {"seconds": 2012873, "usd": 50.83}, "events": {"seconds": 18020, "usd": 0.46}, "ironmeet": {"seconds": 52476, "usd": 1.33}}, "topPlatform": [["setauthclaims", 1853615], ["invalidateusercache", 130452], ["api", 7078], ["seorender", 4908], ["processpendingemails", 4545]], "setAuthClaims": {"seconds": 1853615, "calls": 1668, "usd": 46.8}, "firestore": {"reads": 2331575, "writes": 115100, "deletes": 1916}}, "events": [{"id": "pwr-games-hyrox-2026-5ceba", "name": "PWR GAMES 2026 — HYROX", "type": "Real", "date": "2026-11-21", "organizer": "tandem-armenia", "confirmed": 96, "actions": 308, "seconds": 10385, "usd": 0.26}, {"id": "pwr-games-ensayo-hyrox-2026-10-31", "name": "PWR Games · HYROX Halloween Edition — 31 octubre 2026", "type": "Ensayo / capacitación", "date": "2026-10-31", "organizer": "—", "confirmed": 28, "actions": 59, "seconds": 2236, "usd": 0.06}, {"id": "hyrox-solidario-2026", "name": "HYROX Solidario por Danny y Ale Siguenza", "type": "Real", "date": "2026-10-24", "organizer": "tandem-armenia", "confirmed": 31, "actions": 55, "seconds": 2211, "usd": 0.06}, {"id": "pwr-games-capacitacion-jueces-2026-11-08", "name": "PWR Games · Capacitación de jueces — Domingo 8 de noviembre", "type": "Ensayo / capacitación", "date": "2026-11-08", "organizer": "tandem-armenia", "confirmed": 42, "actions": 35, "seconds": 1979, "usd": 0.05}, {"id": "pwr-games-capacitacion-jueces-2026-11-07", "name": "PWR Games · Capacitación de jueces — PRUEBA", "type": "Prueba", "date": "2026-11-07", "organizer": "tandem-armenia", "confirmed": 28, "actions": 10, "seconds": 977, "usd": 0.02}, {"id": "simulacro-pwr-prueba-aiumf", "name": "Simulacro PWR (prueba)", "type": "Prueba", "date": "2026-10-30", "organizer": "—", "confirmed": 9, "actions": 0, "seconds": 231, "usd": 0.01}, {"id": "4yTvYRQ517dsAyXHdnpZ", "name": "Rwzzrwrwzr", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "DiZCb8P56Gupf7i85Hj5", "name": "fgffdfgdfsfadfsdf", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "uUmTb0TRT3rsTXpWG6wb", "name": "Fhzfhshzffhx", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "L8IRasn0iWLq4nFz799P", "name": "PRE MURPH", "type": "Real", "date": "2026-05-16", "organizer": "tandem-sanrafael", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "S6CzHOcvRhTjqzFXscPn", "name": "THE MURPH", "type": "Real", "date": "2026-05-22", "organizer": "tandem-sanrafael", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "eJmysTulee1qZFQOkX1X", "name": "MURPH", "type": "Real", "date": "2026-05-22", "organizer": "tandem-armenia", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "8YVgVa8CKkpB9NxHYTeM", "name": "2026armenia", "type": "Prueba", "date": "2026-06-13", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "iron-legacy-the-first-pulse-lu0cj", "name": "Iron Legacy: The First Pulse", "type": "Demo (sin inscritos)", "date": "2026-06-15", "organizer": "—", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "gdG07jO6L2Z2XFo1Ffry", "name": "Benchmark AMANDA", "type": "Real", "date": "2026-08-05", "organizer": "tandem-armenia", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "NnswPXu6t07ipuRsVVwZ", "name": "Benchmark DT", "type": "Real", "date": "2026-08-29", "organizer": "tandem-sanrafael", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "NjccMcBAHBNOGpC16Hpj", "name": "HYROX PARTY SOLIDARIA", "type": "Real", "date": "2026-09-12", "organizer": "tandem-armenia", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "liga-de-titanes-y5m2o", "name": "LIGA DE TITANES", "type": "Demo (sin inscritos)", "date": "2026-09-12", "organizer": "—", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "beast-mode-invitational-2026-4yby7", "name": "Beast Mode Invitational 2026", "type": "Demo (sin inscritos)", "date": "2026-12-10", "organizer": "—", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}, {"id": "SPfwn1IaNbDhkJ6j7EYR", "name": "Last Round 2026", "type": "Real", "date": "2026-12-12", "organizer": "hangar-cross", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 0.0}], "spaces": [{"id": "tandem-armenia", "name": "Tandem Armenia", "kind": "Box", "users": 291, "staff": 6, "activity": 2398, "seconds": 11566, "usd": 0.29}, {"id": "tandem-sanrafael", "name": "Tandem San Rafael", "kind": "Box", "users": 196, "staff": 8, "activity": 1890, "seconds": 9115, "usd": 0.23}, {"id": "heroes-gym", "name": "Heroes Gym", "kind": "Gimnasio", "users": 90, "staff": 3, "activity": 603, "seconds": 2908, "usd": 0.07}, {"id": "pragma-gym", "name": "Pragma Gym", "kind": "Gimnasio", "users": 53, "staff": 1, "activity": 181, "seconds": 873, "usd": 0.02}, {"id": "hangar-cross", "name": "Hangar Cross", "kind": "Box", "users": 32, "staff": 3, "activity": 160, "seconds": 772, "usd": 0.02}, {"id": "tandem-box", "name": "Tandem Box", "kind": "Box", "users": 8, "staff": 3, "activity": 11, "seconds": 53, "usd": 0.0}, {"id": "crossfit-los-andes", "name": "CrossFit Los Andes", "kind": "Box", "users": 5, "staff": 1, "activity": 45, "seconds": 217, "usd": 0.01}, {"id": "crossbox-demo", "name": "CrossBox Demo", "kind": "Box", "users": 5, "staff": 0, "activity": 15, "seconds": 72, "usd": 0.0}, {"id": "wolfs-gym", "name": "Wolfs Gym", "kind": "Gimnasio", "users": 4, "staff": 1, "activity": 12, "seconds": 58, "usd": 0.0}, {"id": "crossbox", "name": "CrossBox", "kind": "Box", "users": 2, "staff": 1, "activity": 37, "seconds": 178, "usd": 0.0}, {"id": "scanor-gym", "name": "Scanor Gym", "kind": "Gimnasio", "users": 2, "staff": 1, "activity": 22, "seconds": 106, "usd": 0.0}, {"id": "jeff-coach", "name": "Jeff Coach", "kind": "Coach", "users": 2, "staff": 1, "activity": 3, "seconds": 14, "usd": 0.0}, {"id": "alex-predator", "name": "Alex Predator", "kind": "Coach", "users": 2, "staff": 1, "activity": 13, "seconds": 63, "usd": 0.0}, {"id": "armas-familia", "name": "Armas Familia", "kind": "Coach", "users": 2, "staff": 0, "activity": 6, "seconds": 29, "usd": 0.0}, {"id": "sonesta-wellness", "name": "Sonesta Wellness", "kind": "Gimnasio", "users": 1, "staff": 1, "activity": 5, "seconds": 24, "usd": 0.0}, {"id": "raw-grip", "name": "Raw Grip", "kind": "Sin clasificar", "users": 1, "staff": 1, "activity": 9, "seconds": 43, "usd": 0.0}, {"id": "monkey-cab", "name": "Monkey Cab", "kind": "Sin clasificar", "users": 1, "staff": 1, "activity": 1, "seconds": 5, "usd": 0.0}, {"id": "99yl7k7V1e22V2TqESxy", "name": "Sin slug (99yl7k7V…)", "kind": "Sin clasificar", "users": 1, "staff": 1, "activity": 10, "seconds": 48, "usd": 0.0}], "stores": [{"id": "good-vibes-ezy6", "name": "Good Vibes", "type": "nutrition", "gyms": 0, "staff": 0, "demo": false, "seconds": 36, "usd": 0.0}, {"id": "kalos-4w0j", "name": "KALOS", "type": "apparel", "gyms": 0, "staff": 0, "demo": false, "seconds": 36, "usd": 0.0}, {"id": "teststore-demo", "name": "TestStore Demo", "type": "demo", "gyms": 1, "staff": 0, "demo": true, "seconds": 36, "usd": 0.0}, {"id": "vital-protein-ipxq", "name": "Vital Protein", "type": "food", "gyms": 2, "staff": 1, "demo": false, "seconds": 36, "usd": 0.0}]};
 
-let applicationFilter = 'all'; // 'all', 'active', 'inactive'
+let applicationFilter = 'all';
 let applicationSearch = '';
+let applicationTab = 'spaces';
+
+function fmtDur(s) {
+  if (!s) return '0 s';
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = Math.round(s % 60);
+  return h ? `${h} h ${m} min` : m ? `${m} min ${sec} s` : `${sec} s`;
+}
+function fmtUsd(v) { return v === 0 ? '$0.00' : v < 0.01 ? '&lt; $0.01' : money(v); }
 
 function renderApplications() {
   $('#main').className = 'applications-page';
-  
-  const filtered = BOX_SPACES.filter(b => {
-    const isActive = b.users >= 10;
-    if (applicationFilter === 'active' && !isActive) return false;
-    if (applicationFilter === 'inactive' && isActive) return false;
-    if (applicationSearch.trim()) {
-      const q = applicationSearch.toLowerCase();
-      return b.name.toLowerCase().includes(q) || b.location.toLowerCase().includes(q) || b.slug.toLowerCase().includes(q);
-    }
-    return true;
-  });
+  const D = COST_DATA, S = D.summary;
+  const pill = (txt, on) => on
+    ? `<span style="background:#238636;color:#fff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;">${txt}</span>`
+    : `<span style="background:#21262d;color:#8b949e;border:1px solid #30363d;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;">${txt}</span>`;
+  const card = (label, value, sub) => `<div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;"><span style="font-size:11px;color:#8b949e;">${label}</span><div style="font-size:20px;font-weight:600;color:#c9d1d9;margin:4px 0;">${value}</div><small style="color:#8b949e;font-size:11px;">${sub}</small></div>`;
+  const tab = (id, label) => `<button class="btn small ${applicationTab===id?'primary':''}" data-app-tab="${id}">${label}</button>`;
+  const q = applicationSearch.trim().toLowerCase();
+  const match = (...xs) => !q || xs.some(x => String(x || '').toLowerCase().includes(q));
+  let body = '';
 
-  const totalUsers = BOX_SPACES.reduce((sum, b) => sum + b.users, 0);
-  const totalCost = BOX_SPACES.reduce((sum, b) => sum + b.cost, 0);
-  const activeCount = BOX_SPACES.filter(b => b.users >= 10).length;
-  const inactiveCount = BOX_SPACES.filter(b => b.users < 10).length;
+  if (applicationTab === 'spaces') {
+    const active = b => b.users >= 10;
+    const rows = D.spaces.filter(b => (applicationFilter === 'all' || (applicationFilter === 'active') === active(b)) && match(b.name, b.id, b.kind));
+    const nA = D.spaces.filter(active).length;
+    body = `
+      <div style="display:flex;gap:6px;margin-bottom:12px;">
+        <button class="btn small ${applicationFilter==='all'?'primary':''}" data-app-filter="all">Todos (${D.spaces.length})</button>
+        <button class="btn small ${applicationFilter==='active'?'primary':''}" data-app-filter="active">Activos (${nA})</button>
+        <button class="btn small ${applicationFilter==='inactive'?'primary':''}" data-app-filter="inactive">Inactivos (${D.spaces.length - nA})</button>
+      </div>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Espacio</th><th>Tipo</th><th>Usuarios</th><th>Staff</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th><th>Estado</th></tr></thead><tbody>
+      ${rows.map(b => `<tr style="${active(b)?'':'opacity:0.7;'}"><td><strong style="color:#c9d1d9;">${e(b.name)}</strong><small class="muted" style="display:block;"><code>${e(b.id)}</code></small></td>
+        <td>${e(b.kind)}</td><td style="color:#c9d1d9;font-weight:600;">${b.users}</td><td>${b.staff}</td>
+        <td style="color:#c9d1d9;">${fmtDur(b.seconds)}<small class="muted" style="display:block;">${b.activity} acciones registradas</small></td>
+        <td style="color:#c9d1d9;font-weight:600;">${fmtUsd(b.usd)}</td><td>${pill(active(b) ? 'Activo' : 'Inactivo', active(b))}</td></tr>`).join('') || '<tr><td colspan="7" class="muted">Sin resultados.</td></tr>'}
+      </tbody></table></div>
+      <p class="muted" style="font-size:11px;margin-top:10px;">Tipo (Box / Gimnasio / Coach) asignado según el nombre del espacio; Firebase no guarda ese dato. Inactivo = menos de 10 usuarios.</p>`;
+  } else if (applicationTab === 'events') {
+    const rows = D.events.filter(x => match(x.name, x.id, x.type, x.organizer));
+    const tests = D.events.filter(x => x.type !== 'Real').length;
+    body = `
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Evento</th><th>Tipo</th><th>Fecha</th><th>Organiza</th><th>Inscritos</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th></tr></thead><tbody>
+      ${rows.map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name || '(sin nombre)')}</strong><small class="muted" style="display:block;"><code>${e(x.id)}</code></small></td>
+        <td>${pill(x.type, x.type === 'Real')}</td><td>${e(x.date)}</td><td><code>${e(x.organizer)}</code></td><td>${x.confirmed}</td>
+        <td style="color:#c9d1d9;">${fmtDur(x.seconds)}<small class="muted" style="display:block;">${x.actions} acciones registradas</small></td>
+        <td style="color:#c9d1d9;font-weight:600;">${fmtUsd(x.usd)}</td></tr>`).join('')}
+      </tbody></table></div>
+      <p class="muted" style="font-size:11px;margin-top:10px;">${D.events.length} eventos en Firestore, ${tests} de prueba, ensayo o demo. Los eventos con 0 s no tuvieron actividad en los últimos 30 días; solo ocupan almacenamiento. Aparte, <strong>IronMeet</strong> (powerlifting) usó ${fmtDur(S.cat.ironmeet.seconds)} ≈ ${fmtUsd(S.cat.ironmeet.usd)} y no está ligado a un evento de esta lista.</p>`;
+  } else if (applicationTab === 'stores') {
+    body = `
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Tienda</th><th>Tipo de negocio</th><th>Boxes conectados</th><th>Staff</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th></tr></thead><tbody>
+      ${D.stores.filter(x => match(x.name, x.id, x.type)).map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name)}</strong> ${x.demo ? pill('Demo', false) : ''}<small class="muted" style="display:block;"><code>${e(x.id)}</code></small></td>
+        <td>${e(x.type)}</td><td>${x.gyms}</td><td>${x.staff}</td><td style="color:#c9d1d9;">${fmtDur(x.seconds)}</td><td style="color:#c9d1d9;font-weight:600;">${fmtUsd(x.usd)}</td></tr>`).join('')}
+      </tbody></table></div>
+      <p class="muted" style="font-size:11px;margin-top:10px;">Las funciones de tiendas usaron ${fmtDur(S.cat.stores.seconds)} en total. No hay registros por tienda, así que se reparte en partes iguales.</p>`;
+  } else {
+    body = `
+      <div style="border:1px solid #da3633;background:#da363314;border-radius:6px;padding:14px;margin-bottom:16px;">
+        <strong style="color:#f85149;">Alerta: setAuthClaims</strong>
+        <p style="margin:6px 0 0;color:#c9d1d9;font-size:12px;">${fmtDur(S.setAuthClaims.seconds)} de cómputo facturable con solo ${S.setAuthClaims.calls.toLocaleString('en-US')} llamadas: ${Math.round(S.setAuthClaims.seconds / S.totalSeconds * 100)}% de todo el cómputo (≈ ${fmtUsd(S.setAuthClaims.usd)}). Parece una instancia mínima siempre encendida o llamadas que no terminan. Revisar <code>minInstances</code> y los timeouts de esa función.</p>
+      </div>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Categoría</th><th>Tiempo de cómputo (30 d)</th><th>% del total</th><th>Costo estimado</th></tr></thead><tbody>
+      ${[['Plataforma compartida (auth, caché, API, emails)','platform'],['Boxes, gimnasios y coaches','gyms'],['Eventos','events'],['IronMeet (powerlifting)','ironmeet'],['Tiendas','stores']].map(([l,k]) =>
+        `<tr><td>${l}</td><td style="color:#c9d1d9;">${fmtDur(S.cat[k].seconds)}</td><td>${(S.cat[k].seconds / S.totalSeconds * 100).toFixed(1)}%</td><td style="color:#c9d1d9;font-weight:600;">${fmtUsd(S.cat[k].usd)}</td></tr>`).join('')}
+      <tr style="font-weight:600;background:#161b22;"><td>Total</td><td>${fmtDur(S.totalSeconds)}</td><td>100%</td><td>${fmtUsd(S.totalUsd)}</td></tr>
+      </tbody></table></div>
+      <p class="muted" style="font-size:11px;margin-top:10px;">Firestore (30 d): ${S.firestore.reads.toLocaleString('en-US')} lecturas, ${S.firestore.writes.toLocaleString('en-US')} escrituras y ${S.firestore.deletes.toLocaleString('en-US')} borrados.</p>`;
+  }
 
   $('#main').innerHTML = `
-    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;border-bottom:1px solid #30363d;padding-bottom:16px;margin-bottom:20px;">
-      <div>
-        <h1 style="font-size:20px;font-weight:600;color:#c9d1d9;margin:0 0 6px 0;">Applications & Box Workspaces</h1>
-        <p style="font-size:12px;color:#8b949e;margin:0;">
-          Supervisión y auditoría de consumo de recursos por box/espacio en la plataforma CrossBox. Los boxes con menos de 10 usuarios se marcan automáticamente como <strong>Inactivos</strong>.
-        </p>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn small" onclick="alert('Exportando auditoría de consumo...');">${icon('download')} Exportar consumo</button>
-        <button class="btn small primary" onclick="alert('Formulario de registro de nuevo box.');">+ Nuevo espacio</button>
-      </div>
+    <div class="page-heading" style="display:block;border-bottom:1px solid #30363d;padding-bottom:16px;margin-bottom:20px;">
+      <h1 style="font-size:20px;font-weight:600;color:#c9d1d9;margin:0 0 6px 0;">Applications · Consumo por espacio</h1>
+      <p style="font-size:12px;color:#8b949e;margin:0;">Datos reales de Firebase y Cloud Monitoring (<code>${S.project}</code>, ${S.window}).</p>
     </div>
-
-    <!-- Summary KPI Cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px;">
-      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
-        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Espacios Totales</span>
-        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${BOX_SPACES.length} boxes</div>
-        <small style="color:#8b949e;font-size:11px;">En la plataforma</small>
-      </div>
-
-      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
-        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Boxes Activos</span>
-        <div style="font-size:22px;font-weight:600;color:#3fb950;margin:4px 0;">${activeCount}</div>
-        <small style="color:#8b949e;font-size:11px;">≥ 10 usuarios activos</small>
-      </div>
-
-      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
-        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Boxes Inactivos</span>
-        <div style="font-size:22px;font-weight:600;color:#f85149;margin:4px 0;">${inactiveCount}</div>
-        <small style="color:#8b949e;font-size:11px;">&lt; 10 usuarios (en pausa)</small>
-      </div>
-
-      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
-        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Atletas / Usuarios</span>
-        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${totalUsers}</div>
-        <small style="color:#8b949e;font-size:11px;">Cuentas registradas</small>
-      </div>
-
-      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
-        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Consumo Imputado</span>
-        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${money(totalCost)}</div>
-        <small style="color:#8b949e;font-size:11px;">Distribución mensual</small>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;">
+      ${card('Cómputo total', fmtDur(S.totalSeconds), '30 días, Cloud Run / Functions')}
+      ${card('Costo estimado', fmtUsd(S.totalUsd), 'precio de lista')}
+      ${card('Espacios', D.spaces.length, `${D.spaces.filter(b => b.users >= 10).length} activos`)}
+      ${card('Eventos', D.events.length, `${D.events.filter(x => x.type !== 'Real').length} de prueba/ensayo/demo`)}
+      ${card('Tiendas', D.stores.length, `${D.stores.filter(x => x.demo).length} demo`)}
     </div>
-
-    <!-- Filter and Search Bar -->
-    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
-      <div style="flex:1;min-width:240px;position:relative;">
-        <input id="application-search-input" value="${e(applicationSearch)}" placeholder="Buscar por nombre de box, sede o slug..." style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px 6px 32px;color:#c9d1d9;font-size:12px;">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="#7d8590" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);"><path d="m21 21-5.1-5.1M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"></path></svg>
-      </div>
-      <div style="display:flex;gap:6px;">
-        <button class="btn small ${applicationFilter==='all'?'primary':''}" data-app-filter="all">Todos (${BOX_SPACES.length})</button>
-        <button class="btn small ${applicationFilter==='active'?'primary':''}" data-app-filter="active">Activos (${activeCount})</button>
-        <button class="btn small ${applicationFilter==='inactive'?'primary':''}" data-app-filter="inactive">Inactivos (${inactiveCount})</button>
-      </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
+      ${tab('spaces','Boxes y gimnasios')}${tab('events','Eventos')}${tab('stores','Tiendas')}${tab('platform','Plataforma')}
+      <input id="application-search-input" value="${e(applicationSearch)}" placeholder="Buscar..." style="flex:1;min-width:180px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px;color:#c9d1d9;font-size:12px;">
     </div>
-
-    <!-- Main Table of Boxes and Consumption -->
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Box / Espacio</th>
-            <th>Usuarios</th>
-            <th>Cómputo App</th>
-            <th>Almacenamiento (VAR/DB)</th>
-            <th>Consumo asignado</th>
-            <th>Estado</th>
-            <th style="text-align:right;">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filtered.map(b => {
-            const isActive = b.users >= 10;
-            return `
-            <tr style="${!isActive ? 'opacity:0.75;' : ''}">
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div style="width:32px;height:32px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:${isActive ? '#3fb950' : '#8b949e'};flex:none;">
-                    ${icon('org')}
-                  </div>
-                  <div>
-                    <strong style="color:#c9d1d9;font-size:13px;display:block;">${e(b.name)}</strong>
-                    <small class="muted" style="font-size:11px;">${e(b.location)} · <code style="color:#8b949e;background:#161b22;padding:1px 4px;border-radius:3px;">${e(b.slug)}</code></small>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span style="color:#c9d1d9;font-weight:600;font-size:13px;">${b.users}</span>
-                <small class="muted" style="display:block;font-size:11px;">${b.users === 1 ? 'usuario' : 'atletas'}</small>
-              </td>
-              <td>
-                <span style="color:#c9d1d9;font-size:12px;">${e(b.compute)}</span>
-                <small class="muted" style="display:block;font-size:11px;">${e(b.plan)}</small>
-              </td>
-              <td>
-                <span style="color:#c9d1d9;font-size:12px;">${e(b.storage)}</span>
-                <small class="muted" style="display:block;font-size:11px;">Cloud Firestore & Bucket</small>
-              </td>
-              <td>
-                <div style="color:#c9d1d9;font-weight:600;font-size:13px;">${money(b.cost)}</div>
-                <small class="muted" style="display:block;font-size:11px;">Imputación mensual</small>
-              </td>
-              <td>
-                ${isActive ? 
-                  `<span class="status status-success" style="background:#238636;color:#ffffff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
-                    <span style="width:6px;height:6px;background:#ffffff;border-radius:50%;display:inline-block;"></span> Activo
-                  </span>` : 
-                  `<span class="status status-failed" style="background:#21262d;color:#8b949e;border:1px solid #30363d;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
-                    <span style="width:6px;height:6px;background:#8b949e;border-radius:50%;display:inline-block;"></span> Inactivo (&lt;10 usuarios)
-                  </span>`
-                }
-              </td>
-              <td style="text-align:right;">
-                <button class="bare-icon" style="color:var(--muted);cursor:pointer;" title="Gestionar espacio">···</button>
-              </td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-
-    <div style="margin-top:20px;padding:14px;background:#161b22;border:1px solid #30363d;border-radius:6px;font-size:11px;color:#8b949e;line-height:1.5;">
-      <strong>Regla de consumo y ciclo de vida de boxes:</strong> Los espacios con menos de 10 usuarios quedan catalogados en estado <em>Inactivo</em> para optimizar el cómputo de la aplicación, pausando las ejecuciones de runners dedicados y la retención de video buffers hasta que se registre nueva actividad.
-    </div>
+    ${body}
+    <p style="margin-top:16px;font-size:11px;color:#8b949e;line-height:1.5;"><strong>Cómo se calcula:</strong> el tiempo de cómputo por función es real (Cloud Monitoring, <code>billable_instance_time</code>). El reparto por evento, espacio o tienda es una <strong>estimación</strong> según la actividad registrada (<code>audit_logs</code>, notificaciones, inscritos). El costo usa el precio de lista de Cloud Run suponiendo 1 vCPU y 512 MiB por instancia (US$0.00002525 por segundo), sin descontar el nivel gratuito. La factura real está en Google Cloud Billing.</p>
   `;
 }
 
@@ -2760,3 +2603,19 @@ document.addEventListener('click',event=>{if(event.target.closest('[data-search-
 document.addEventListener('keydown',event=>{if(event.key==='Escape') closePopover(); if(event.key==='/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !$('#modal').open) {event.preventDefault();$('.top-search').click();}});
 window.addEventListener('hashchange',()=>{activePage=location.hash.slice(1)||'organizations';render();window.scrollTo(0,0);});
 render();
+
+// Applications page: tabs, filters and search
+document.addEventListener('click', event => {
+  const tabBtn = event.target.closest('[data-app-tab]');
+  if (tabBtn) { applicationTab = tabBtn.dataset.appTab; applicationSearch = ''; renderApplications(); return; }
+  const filterBtn = event.target.closest('[data-app-filter]');
+  if (filterBtn) { applicationFilter = filterBtn.dataset.appFilter; renderApplications(); }
+});
+document.addEventListener('input', event => {
+  if (event.target.id !== 'application-search-input') return;
+  applicationSearch = event.target.value;
+  const pos = event.target.selectionStart;
+  renderApplications();
+  const inp = document.getElementById('application-search-input');
+  if (inp) { inp.focus(); inp.setSelectionRange(pos, pos); }
+});
