@@ -45,23 +45,23 @@ document.documentElement.style.setProperty('--ui-scale',uiZoom/100);
 let organizations = read('organizations', []);
 if (!Array.isArray(organizations)) organizations = [];
 const initialPayments = [
-  { id:'08JUNE3A', date:'2026-06-03', name:'GitHub Actions Usage', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'1B78C49E', date:'2026-07-03', name:'GitHub Actions Usage', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'2F49D10A', date:'2026-08-03', name:'GitHub Actions Usage', kind:'App', method:'MasterCard ending in 2791', amount:250.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'839GHTB3', date:'2026-09-03', name:'GitHub Actions Usage', kind:'Feature', method:'American Express ending in 1989', amount:839.50, files:[{...demoBundles[0].files[0]}] },
-  { id:'3E92B67C', date:'2026-09-03', name:'GitHub Actions Usage', kind:'App', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[2].files[0]}] },
-  { id:'2300APPL', date:'2026-09-09', name:'GitHub Actions Usage', kind:'App', method:'Banco Pichincha Debit', amount:2300.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'09FAPWZ5', date:'2026-09-25', name:'GitHub Actions Usage', kind:'App', method:'MasterCard ending in 2791', amount:4.63, files:[{...demoBundles[2].files[0]}] },
-  { id:'362GCLD1', date:'2026-10-01', name:'GitHub Actions Usage', kind:'Feature', method:'American Express ending in 1989', amount:3.62, files:[{...demoBundles[0].files[0]}] },
-  { id:'4C81A53D', date:'2026-10-03', name:'GitHub Actions Usage', kind:'Feature', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'19T5IGEN', date:'2026-10-25', name:'GitHub Actions Usage', kind:'Feature', method:'MasterCard ending in 2791', amount:5.66, files:[{...demoBundles[0].files[0]}] },
-  { id:'1040APPL', date:'2026-10-28', name:'GitHub Actions Usage', kind:'App', method:'American Express ending in 1989', amount:1040.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'1074APPL', date:'2026-10-28', name:'GitHub Actions Usage', kind:'App', method:'American Express ending in 1989', amount:1074.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'1173APPL', date:'2026-10-28', name:'GitHub Actions Usage', kind:'App', method:'American Express ending in 1989', amount:1173.00, files:[{...demoBundles[1].files[0]}] },
-  { id:'0C63C367', date:'2026-10-29', name:'GitHub Actions Usage', kind:'Feature', method:'American Express ending in 0388', amount:130.00, files:[{...demoBundles[0].files[0]}] },
-  { id:'5D17F82B', date:'2026-11-01', name:'GitHub Actions Usage', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
-  { id:'6E39C94F', date:'2026-11-06', name:'GitHub Actions Usage', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
-  { id:'7A52B81C', date:'2026-11-09', name:'GitHub Actions Usage', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
+  { id:'08JUNE3A', date:'2026-06-03', name:'Cloud metered infrastructure', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'1B78C49E', date:'2026-07-03', name:'Cloud metered services', kind:'Feature', method:'MasterCard ending in 2791', amount:180.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'2F49D10A', date:'2026-08-03', name:'App platform scale-up', kind:'App', method:'MasterCard ending in 2791', amount:250.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'839GHTB3', date:'2026-09-03', name:'GITHUB, INC. — Team & Services', kind:'Feature', method:'American Express ending in 1989', amount:839.50, files:[{...demoBundles[0].files[0]}] },
+  { id:'3E92B67C', date:'2026-09-03', name:'Application core services', kind:'App', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[2].files[0]}] },
+  { id:'2300APPL', date:'2026-09-09', name:'APPLE.COM BILL — Débito cuenta Luis Fernando Armas', kind:'App', method:'Banco Pichincha Debit', amount:2300.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'09FAPWZ5', date:'2026-09-25', name:'Storefront application', kind:'App', method:'MasterCard ending in 2791', amount:4.63, files:[{...demoBundles[2].files[0]}] },
+  { id:'362GCLD1', date:'2026-10-01', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:3.62, files:[{...demoBundles[0].files[0]}] },
+  { id:'4C81A53D', date:'2026-10-03', name:'High-capacity runner allocation', kind:'Feature', method:'MasterCard ending in 2791', amount:265.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'19T5IGEN', date:'2026-10-25', name:'Authentication feature', kind:'Feature', method:'MasterCard ending in 2791', amount:5.66, files:[{...demoBundles[0].files[0]}] },
+  { id:'1040APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX Developer preview (MNY6QK6M6H)', kind:'App', method:'American Express ending in 1989', amount:1040.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'1074APPL', date:'2026-10-28', name:'Apple Receipt — App Developer Paid (MNY6S74KGB)', kind:'App', method:'American Express ending in 1989', amount:1074.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'1173APPL', date:'2026-10-28', name:'Apple Receipt — CROSSBOX In-App iPhone 13 Pro Max', kind:'App', method:'American Express ending in 1989', amount:1173.00, files:[{...demoBundles[1].files[0]}] },
+  { id:'0C63C367', date:'2026-10-29', name:'Actualización de tarifas y presupuesto', kind:'Feature', method:'American Express ending in 0388', amount:130.00, files:[{...demoBundles[0].files[0]}] },
+  { id:'5D17F82B', date:'2026-11-01', name:'Google Cloud Platform & APIs (P7SZWC)', kind:'Feature', method:'American Express ending in 1989', amount:3.80, files:[{...demoBundles[0].files[0]}] },
+  { id:'6E39C94F', date:'2026-11-06', name:'Google Cloud Platform & APIs (CLOUD XJQz2J)', kind:'Feature', method:'American Express ending in 1989', amount:971.75, files:[{...demoBundles[1].files[0]}] },
+  { id:'7A52B81C', date:'2026-11-09', name:'Actualización de aplicación — CROSSBOX FITNESS & STRENGTH', kind:'App', method:'MasterCard ending in 0791', amount:270.00, files:[{...demoBundles[2].files[0]}] }
 ];
 
 export const DEPLOYMENT_COMMITS = {
@@ -169,7 +169,7 @@ export const DEPLOYMENT_COMMITS = {
   }
 };
 
-const PAYMENTS_DATA_VERSION = 4;
+const PAYMENTS_DATA_VERSION = 5;
 let currentVersion = Number(read('payments-version', 0));
 let payments = read('payments', initialPayments);
 if (currentVersion < PAYMENTS_DATA_VERSION || !Array.isArray(payments) || payments.length < initialPayments.length) {
@@ -287,7 +287,7 @@ function deploymentStartButton(row) {
   return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="text-align:center;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar Recibo en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>` : `<td>${icon('card')} ${e(p.method)}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="text-align:center;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar Factura Oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver factura oficial de GitHub" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="white-space:nowrap;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar recibo oficial en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial en página aparte" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td style="white-space:nowrap;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar factura oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver factura oficial en página aparte" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button><button type="button" class="table-action" data-action="delete-payment" data-id="${e(p.id)}" aria-label="Eliminar pago ${e(p.id)}">${icon('close')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
@@ -313,7 +313,7 @@ function renderHistory() {
   }).join('');
 
   $('#main').className = 'history-page';
-  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th style="text-align:center;">Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p>
+  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th>Receipt</th><th>Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p>
   <div style="margin-top:35px;background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
     <div style="background:#161b22;padding:12px 16px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;">
       <h3 style="margin:0;font-size:13px;font-weight:600;color:#c9d1d9;display:flex;align-items:center;gap:8px;">
@@ -878,8 +878,18 @@ document.addEventListener('click',async event=>{
     else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); renderValuation(); }
     else if (action==='valuation-export') { const data=valuationCsv(target.dataset.project); downloadBlob(new Blob([data.csv],{type:'text/csv;charset=utf-8'}),data.name); }
     else if (action==='download-file') await downloadAttachment(findRecord(target.dataset.id),Number(target.dataset.index));
-    else if (action==='open-invoice-generator') { const p = findRecord(target.dataset.id); if (p) openInvoiceGenerator(p); }
-    else if (action==='open-receipt-generator') { const p = findRecord(target.dataset.id); if (p) openReceiptGenerator(p); }
+    else if (action==='open-invoice-generator') {
+      const p = findRecord(target.dataset.id);
+      if (p) {
+        window.open(`assets/pdf/invoice-${p.id}.pdf`, '_blank');
+      }
+    }
+    else if (action==='open-receipt-generator') {
+      const p = findRecord(target.dataset.id);
+      if (p) {
+        window.open(`assets/pdf/receipt-${p.id}.pdf`, '_blank');
+      }
+    }
     else if (action==='download-receipt') {
       const p = findRecord(target.dataset.id);
       if (p) {

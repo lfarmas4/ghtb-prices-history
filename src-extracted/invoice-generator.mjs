@@ -57,23 +57,7 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
 
   return `
     <div class="invoice-dialog-body clean-sheet-only">
-      <div class="receipt-action-toolbar" style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;">
-        <div style="font-size:13px;color:#8b949e;display:flex;align-items:center;gap:8px;">
-          <strong style="color:#f0f6fc;">Factura Oficial:</strong> 
-          <span style="font-family:monospace;background:#21262d;padding:2px 8px;border-radius:4px;color:#58a6ff;">${escapeHtml(invoiceNum)}</span>
-          <span>· Total: <strong style="color:#3fb950;">${escapeHtml(amountStr)}</strong></span>
-        </div>
-        <div style="display:flex;gap:10px;">
-          <a href="assets/pdf/invoice-${record.id || 'github'}.pdf" download="invoice-${invoiceNum}.pdf" class="btn primary" style="background:#238636;border-color:#2ea043;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:5px 14px;border-radius:6px;font-size:13px;color:#fff;">
-            Descargar PDF Oficial
-          </a>
-          <button type="button" class="btn" id="btn-print-invoice" style="display:inline-flex;align-items:center;gap:6px;">
-            Imprimir / Guardar PDF
-          </button>
-        </div>
-      </div>
-
-      <div class="receipt-preview-panel" style="background:#eef1f5;padding:24px 0;border-radius:8px;display:flex;justify-content:center;">
+      <div class="receipt-preview-panel" style="background:#ffffff;padding:0;border-radius:0;display:flex;justify-content:center;">
         <div class="invoice-card-sheet" id="invoice-printable-content" style="box-shadow:0 8px 24px rgba(0,0,0,0.12);background:#fff;border-radius:4px;">
           <div class="inv-topbar-black"></div>
           
