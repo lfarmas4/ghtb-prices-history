@@ -868,6 +868,29 @@ let checkout = null;
 let deploymentBusy=false;
 let recordMutationBusy=false;
 let activePage = location.hash.slice(1) || 'organizations';
+
+const DEFAULT_BUDGETS = [
+  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 3.00, spent: 0.00 },
+  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 60.00, spent: 0.00 },
+  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 3.00, spent: 0.00 },
+  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 3.00, spent: 0.00 },
+  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 3.00, spent: 0.00 }
+];
+
+let budgets = (() => {
+  try {
+    const raw = localStorage.getItem('codeweight-budgets-v1');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return [...DEFAULT_BUDGETS];
+})();
+
+function saveBudgets() {
+  try {
+    localStorage.setItem('codeweight-budgets-v1', JSON.stringify(budgets));
+  } catch {}
+}
+
 let toastTimer;
 let dbPromise;
 
@@ -1380,6 +1403,75 @@ function openReceiptGenerator(record) {
   bindReceiptModalActions(record);
 }
 
+
+function bindAccessibilityController() {
+  const sel = $('#acc-budget-select');
+  const inLimit = $('#acc-budget-limit');
+  const inSpent = $('#acc-budget-spent');
+  const form = $('#accessibility-budget-form');
+  if (!sel || !inLimit || !inSpent || !form) return;
+
+  function updatePreview() {
+    const bId = sel.value;
+    const b = budgets.find(x => x.id === bId) || budgets[0];
+    const limit = Number(inLimit.value || 0);
+    const spent = Number(inSpent.value || 0);
+    const pct = limit > 0 ? Math.min(100, Math.round((spent / limit) * 100)) : 0;
+    const rem = Math.max(0, limit - spent);
+    const isWarning = pct >= 80;
+    const isDanger = pct >= 100;
+    const color = isDanger ? '#f85149' : (isWarning ? '#d29922' : '#2ea043');
+
+    const titleEl = $('#acc-preview-title');
+    const numsEl = $('#acc-preview-numbers');
+    const barEl = $('#acc-preview-bar');
+    const pctEl = $('#acc-preview-pct');
+    const remEl = $('#acc-preview-rem');
+
+    if (titleEl) titleEl.textContent = `lfarmas4 · ${b ? b.product : 'Product'}`;
+    if (numsEl) numsEl.textContent = `$${spent.toFixed(2)} / $${limit.toFixed(2)} spent`;
+    if (barEl) {
+      barEl.style.width = `${pct}%`;
+      barEl.style.background = color;
+    }
+    if (pctEl) pctEl.textContent = `${pct}% consumido`;
+    if (remEl) remEl.textContent = `Restante: $${rem.toFixed(2)} USD`;
+  }
+
+  sel.addEventListener('change', () => {
+    const b = budgets.find(x => x.id === sel.value);
+    if (b) {
+      inLimit.value = b.limit.toFixed(2);
+      inSpent.value = b.spent.toFixed(2);
+      updatePreview();
+    }
+  });
+
+  inLimit.addEventListener('input', updatePreview);
+  inSpent.addEventListener('input', updatePreview);
+
+  // default initial values for demonstration
+  const actionsBudget = budgets.find(b => b.product === 'Actions');
+  if (actionsBudget) {
+    sel.value = actionsBudget.id;
+    inLimit.value = actionsBudget.limit > 0 ? actionsBudget.limit.toFixed(2) : '60.00';
+    inSpent.value = actionsBudget.spent > 0 ? actionsBudget.spent.toFixed(2) : '35.00';
+  }
+  updatePreview();
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bId = sel.value;
+    const idx = budgets.findIndex(x => x.id === bId);
+    if (idx !== -1) {
+      budgets[idx].limit = parseFloat(inLimit.value) || 0;
+      budgets[idx].spent = parseFloat(inSpent.value) || 0;
+      saveBudgets();
+      toast(`Presupuesto ${budgets[idx].product} actualizado: $${budgets[idx].spent.toFixed(2)} consumidos de $${budgets[idx].limit.toFixed(2)} USD.`);
+    }
+  });
+}
+
 function bindReceiptModalActions(record) {
   const btnPrint = $('#btn-print-receipt');
   if (btnPrint) {
@@ -1506,7 +1598,69 @@ function renderOther() {
     $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Deployment activity</h2>${deploymentRows().slice(0,10).map(p=>`<div class="file-row">${icon('rocket')}<div><button class="deployment-name" data-action="view-deployment" data-id="${e(p.id)}">${e(p.name)}</button><div class="muted">${e(p.date)} · ${p.source==='github'?'GitHub':'Mi espacio'}</div></div>${statusBadge(p.status)}</div>`).join('')}</div>`;
   } else if (activePage==='appearance') {
     $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Theme preferences</h2><div class="payment-method">${icon('check')} Dark default <span class="badge" style="margin-left:auto">Active</span></div><p class="muted">A dark appearance across your workspace.</p><div class="form-actions" style="justify-content:flex-start;margin-top:16px;">${btn('Cambiar imagen del espacio','mascot')}${btn('Papelera','trash')}${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}${btn(`${icon('receipt')} Formato base`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
+  } else if (activePage === 'accessibility') {
+    $('#main').innerHTML = `
+      ${heading('Accessibility')}
+      <section class="panel accessibility-budget-controller">
+        <h2 style="font-size:16px;margin-top:0;display:flex;align-items:center;gap:8px;">
+          ${icon('access')} Control de Presupuesto y Consumo Accesible
+        </h2>
+        <p class="muted" style="margin-bottom:18px;">
+          Configura y prueba en tiempo real los presupuestos mensuales de GitHub y su consumo actual (por ejemplo, definir un presupuesto de <strong>$60.00 USD</strong> y registrar <strong>$35.00 USD consumidos</strong>). Los cambios se reflejan inmediatamente en <a href="#budgets" style="color:#58a6ff;text-decoration:none;">Budgets and alerts</a>.
+        </p>
+
+        <form id="accessibility-budget-form" style="background:#161b22;padding:18px;border-radius:8px;border:1px solid #30363d;margin-bottom:20px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;margin-bottom:15px;">
+            <label class="field" style="margin:0;">
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Producto / Servicio</span>
+              <select name="budgetId" id="acc-budget-select" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;">
+                ${budgets.map(b => `<option value="${e(b.id)}">${e(b.product)} (${e(b.scope)})</option>`).join('')}
+              </select>
+            </label>
+
+            <label class="field" style="margin:0;">
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Límite de Presupuesto (USD)</span>
+              <input type="number" id="acc-budget-limit" step="0.01" min="1" max="100000" value="60.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;" required>
+            </label>
+
+            <label class="field" style="margin:0;">
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Consumo Actual Realizado (USD)</span>
+              <input type="number" id="acc-budget-spent" step="0.01" min="0" max="100000" value="35.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;" required>
+            </label>
+          </div>
+
+          <div id="acc-budget-preview-box" style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:13px;font-weight:600;color:#c9d1d9;" id="acc-preview-title">lfarmas4 · Actions</span>
+              <span style="font-size:13px;font-weight:700;color:#58a6ff;" id="acc-preview-numbers">$35.00 / $60.00 spent</span>
+            </div>
+            <div style="background:#21262d;height:10px;border-radius:5px;overflow:hidden;margin-bottom:8px;">
+              <div id="acc-preview-bar" style="background:#2ea043;height:100%;width:58.3%;transition:width 0.3s ease;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;">
+              <span id="acc-preview-pct">58% consumido</span>
+              <span id="acc-preview-rem">Restante: $25.00 USD</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;align-items:center;">
+            <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;font-weight:600;">Aplicar y guardar presupuesto</button>
+            <a href="#budgets" class="btn" style="background:#21262d;color:#c9d1d9;text-decoration:none;">Ver en Budgets and alerts →</a>
+          </div>
+        </form>
+
+        <h3 style="font-size:13px;color:#8b949e;margin-top:24px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">Acciones rápidas de espacio</h3>
+        <div class="form-actions" style="justify-content:flex-start">
+          ${btn('Ir a Despliegues','deployments')}
+          ${btn('Ver historial de pagos','payment-history')}
+          ${btn(`${icon('receipt')} Generar recibo oficial (Formato base)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}
+        </div>
+      </section>
+    `;
+
+    bindAccessibilityController();
   } else {
+    
     $('#main').innerHTML=`${heading(title)}<section class="panel"><h2 style="font-size:14px">${e(title)}</h2><p class="muted">Configuración y herramientas del espacio de trabajo.</p><p class="hint">Gestiona tus organizaciones, consulta el consumo y genera o edita recibos con el formato base oficial.</p><div class="form-actions" style="justify-content:flex-start">${btn('Ir a Despliegues','deployments')}${btn('Ver pagos','history')}${btn(`${icon('receipt')} Generar recibo oficial (Formato base)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></section>`;
   }
 }
@@ -1598,6 +1752,79 @@ document.addEventListener('click',async event=>{
     else if (action==='usage-more') popover(target,`<button data-action="new-record">${icon('plus')} Registrar despliegue</button><button data-action="usage-report">${icon('download')} Download report</button><button data-action="timeframe">${icon('calendar')} Choose month</button>`);
     else if (action==='usage-report') exportUsageReport();
     else if (action==='budget') navigate('budgets');
+    else if (action==='new-budget-modal') {
+      modal('New budget', `
+        <form id="new-budget-form" class="modal-body">
+          <label class="field">
+            <span>Product or SKU</span>
+            <select name="product" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
+              <option value="Actions">GitHub Actions</option>
+              <option value="Codespaces">GitHub Codespaces</option>
+              <option value="Packages">GitHub Packages</option>
+              <option value="Git LFS">Git Large File Storage (LFS)</option>
+              <option value="Copilot">GitHub Copilot</option>
+              <option value="All AI Credit SKUs">All AI Credit SKUs</option>
+            </select>
+          </label>
+          <label class="field" style="margin-top:14px;">
+            <span>Monthly limit (USD)</span>
+            <input type="number" name="limit" step="0.01" min="1" max="100000" placeholder="e.g. 60.00" value="60.00" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
+          </label>
+          <div class="form-actions" style="margin-top:18px;">
+            <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;">Create budget</button>
+          </div>
+        </form>
+      `);
+      $('#new-budget-form')?.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const fd = new FormData(ev.target);
+        const prod = fd.get('product') || 'Custom';
+        const lim = parseFloat(fd.get('limit')) || 10.0;
+        const newB = {
+          id: 'b-' + Date.now(),
+          scope: 'Account',
+          product: prod,
+          limit: lim,
+          spent: 0.00
+        };
+        budgets.push(newB);
+        saveBudgets();
+        closeModal();
+        renderBudgets();
+        toast(`Presupuesto para ${prod} creado exitosamente con límite de $${lim.toFixed(2)} USD.`);
+      });
+    }
+    else if (action==='edit-budget-modal') {
+      const b = budgets.find(x => x.id === target.dataset.id);
+      if (b) {
+        modal(`Edit budget · ${b.product}`, `
+          <form id="edit-budget-form" class="modal-body">
+            <p class="muted" style="margin-bottom:12px;font-size:12px;">Modifica el límite mensual y el consumo acumulado de este presupuesto.</p>
+            <label class="field">
+              <span>Límite mensual (USD)</span>
+              <input type="number" name="limit" step="0.01" min="1" max="100000" value="${b.limit.toFixed(2)}" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
+            </label>
+            <label class="field" style="margin-top:14px;">
+              <span>Consumido actualmente (USD)</span>
+              <input type="number" name="spent" step="0.01" min="0" max="100000" value="${b.spent.toFixed(2)}" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
+            </label>
+            <div class="form-actions" style="margin-top:18px;">
+              <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;">Guardar cambios</button>
+            </div>
+          </form>
+        `);
+        $('#edit-budget-form')?.addEventListener('submit', (ev) => {
+          ev.preventDefault();
+          const fd = new FormData(ev.target);
+          b.limit = parseFloat(fd.get('limit')) || 0;
+          b.spent = parseFloat(fd.get('spent')) || 0;
+          saveBudgets();
+          closeModal();
+          renderBudgets();
+          toast(`Presupuesto ${b.product} actualizado: $${b.spent.toFixed(2)} / $${b.limit.toFixed(2)} USD.`);
+        });
+      }
+    }
     else if (action==='activity') navigate('notifications');
     else if (action==='search') modal('Search settings',`<div class="modal-body"><label class="search-field" style="height:35px">${icon('search')}<input id="global-search" placeholder="Search settings…" autofocus></label><div id="search-results" style="margin-top:15px">${searchResults('')}</div></div>`);
   } catch(error) { toast(error.message || 'No se pudo completar la acción.'); }
