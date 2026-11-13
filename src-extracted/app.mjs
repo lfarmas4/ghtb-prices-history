@@ -1695,7 +1695,10 @@ document.addEventListener('click',async event=>{
     else if (action==='deploy-now') await beginDeployment(target.dataset.id);
     else if (action==='paid-history') { closeModal(); navigate('payment-history'); }
     else if (action==='view-payment') viewPayment(findRecord(target.dataset.id));
-    else if (action==='view-history-update') { const detail=valuationDetail(target.dataset.project,target.dataset.id); modal(detail.title,detail.body); }
+    else if (action==='view-history-update') {
+      const commitUrl = `https://github.com/lfarmas4/crossbox-app/commit/${target.dataset.id}`;
+      window.open(commitUrl, '_blank');
+    }
     else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); renderValuation(); }
     else if (action==='valuation-export') { const data=valuationCsv(target.dataset.project); downloadBlob(new Blob([data.csv],{type:'text/csv;charset=utf-8'}),data.name); }
     else if (action==='download-file') await downloadAttachment(findRecord(target.dataset.id),Number(target.dataset.index));
