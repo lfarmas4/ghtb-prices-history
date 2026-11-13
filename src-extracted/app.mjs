@@ -881,11 +881,11 @@ let recordMutationBusy=false;
 let activePage = location.hash.slice(1) || 'organizations';
 
 const DEFAULT_BUDGETS = [
-  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 3.00, spent: 0.00 },
-  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 60.00, spent: 0.00 },
-  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 3.00, spent: 0.00 },
-  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 3.00, spent: 0.00 },
-  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 3.00, spent: 0.00 }
+  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 6444.00, spent: 6444.00 },
+  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 1680.00, spent: 1680.00 },
+  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 620.00, spent: 620.00 },
+  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 250.00, spent: 0.00 },
+  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 211.96, spent: 211.96 }
 ];
 
 let budgets = (() => {
@@ -1174,6 +1174,162 @@ function renderUsage() {
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <!-- Pronóstico y aproximado al 30 de noviembre -->
+    <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="#58a6ff"><path d="M1.5 3A1.5 1.5 0 0 1 3 1.5h10A1.5 1.5 0 0 1 14.5 3v10a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 13V3ZM3 2.5a.5.5 0 0 0-.5.5v1h11V3a.5.5 0 0 0-.5-.5H3Zm11 2.5H2v8a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V5Z"></path><path d="M4.5 7.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm-4 3a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"></path></svg>
+            Aproximado al 30 de este mes y proyección de cierre (Nov 30, 2026)
+          </h3>
+          <p style="font-size:12px;color:#8b949e;margin:0;">
+            Cálculo proyectado desde el corte del <strong>13 de noviembre (día 13 de 30 · 43.3% transcurrido)</strong> hacia los 17 días restantes y prefacturación estimada para el próximo ciclo.
+          </p>
+        </div>
+        <div style="text-align:right;">
+          <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
+          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$1,216.71</strong>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Consumo al 13 nov</th>
+              <th>Ritmo diario</th>
+              <th>Proyección al 30 nov</th>
+              <th>Neto facturado proyectado</th>
+              <th>Próximo mes estimado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GitHub Actions</strong> (macOS & Linux)</td>
+              <td>595 min ($9.52 bruto / $0.26 neto)</td>
+              <td>45.8 min/día ($0.73/día)</td>
+              <td>1,373 min ($21.97 bruto)</td>
+              <td><strong style="color:#c9d1d9;">$12.71</strong> <small style="color:#8b949e;">(-$9.26 dcto.)</small></td>
+              <td>$15.00 – $25.00</td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Codespaces</strong> core hours</td>
+              <td>2,983.33 hrs ($1,074.00)</td>
+              <td>Workstations dedicadas</td>
+              <td>2,983.33 hrs</td>
+              <td><strong style="color:#c9d1d9;">$1,074.00</strong></td>
+              <td>$1,074.00 – $1,150.00</td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Packages</strong> storage</td>
+              <td>130 GB ($130.00)</td>
+              <td>Cuota mensual retenida</td>
+              <td>130 GB</td>
+              <td><strong style="color:#c9d1d9;">$130.00</strong></td>
+              <td>$130.00</td>
+            </tr>
+            <tr>
+              <td><strong>Git Large File Storage (LFS)</strong></td>
+              <td>10 GB Bandwidth ($0.00)</td>
+              <td>Dentro de cuota base</td>
+              <td>10 GB</td>
+              <td><strong style="color:#c9d1d9;">$0.00</strong> <small style="color:#8b949e;">(Incluido)</small></td>
+              <td>$0.00</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:600;border-top:2px solid #30363d;background:#161b22;">
+              <td>Total estimado mensual</td>
+              <td>$1,204.26 neto al corte</td>
+              <td>—</td>
+              <td>30 días completos</td>
+              <td><span style="color:#c9d1d9;font-size:14px;">$1,216.71 USD</span></td>
+              <td>$1,219.00 – $1,492.66</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- Distribución de presupuestos correspondientes al Payment Overview -->
+    <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <h3 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="#3fb950"><path d="M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 15H2.75A1.75 1.75 0 0 1 1 13.25V2.75Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H2.75ZM8 4a.75.75 0 0 1 .75.75v.27c1.173.23 2 1.155 2 2.23 0 1.25-.97 2.25-2.25 2.25H7.5c-.414 0-.75.336-.75.75s.336.75.75.75h2a.75.75 0 0 1 0 1.5v.25a.75.75 0 0 1-1.5 0v-.27c-1.173-.23-2-1.155-2-2.23 0-1.25.97-2.25 2.25-2.25H9c.414 0 .75-.336.75-.75s-.336-.75-.75-.75H7a.75.75 0 0 1 0-1.5V4.75A.75.75 0 0 1 8 4Z"></path></svg>
+            Distribución de presupuestos asignados (Payment Overview Conciliation)
+          </h3>
+          <p style="font-size:12px;color:#8b949e;margin:0;">
+            Presupuestos asignados distribuidos por producto, conciliados directamente con el total histórico de <strong>$8,955.96 USD</strong> en Payment Overview (promedio mensual: <strong>$1,492.66 USD</strong>).
+          </p>
+        </div>
+        <div style="text-align:right;">
+          <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Presupuesto Total Acumulado</span>
+          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$8,955.96</strong>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:16px;">
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Codespaces Workstations</span>
+            <span style="font-size:11px;color:#8b949e;">71.9%</span>
+          </div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$6,444.00</div>
+          <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
+            <div style="width:100%;height:100%;background:#388bfd;"></div>
+          </div>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Presupuesto asignado para workstations de desarrollo e instancias de 8 y 16 núcleos.</p>
+        </div>
+
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Actions Runners</span>
+            <span style="font-size:11px;color:#8b949e;">18.8%</span>
+          </div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$1,680.00</div>
+          <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
+            <div style="width:98%;height:100%;background:#2ea043;"></div>
+          </div>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Compilaciones nativas iOS (macOS), Android APK, runners cluster y flujos CI/CD.</p>
+        </div>
+
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Packages & Storage</span>
+            <span style="font-size:11px;color:#8b949e;">6.9%</span>
+          </div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$620.00</div>
+          <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
+            <div style="width:94%;height:100%;background:#d29922;"></div>
+          </div>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Almacenamiento de paquetes npm, contenedores Docker y artefactos de despliegue.</p>
+        </div>
+
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Git LFS & Egress</span>
+            <span style="font-size:11px;color:#8b949e;">2.4%</span>
+          </div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$211.96</div>
+          <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
+            <div style="width:90%;height:100%;background:#a371f7;"></div>
+          </div>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Ancho de banda para assets pesados de Power Games, trailers y egress de datos.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;justify-content:flex-end;">
+        <a href="#payment-history" class="btn small" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+          Ver 17 recibos en Payment history
+        </a>
+        <a href="#budgets" class="btn small primary" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
+          Ajustar límites en Budgets and alerts
+        </a>
       </div>
     </div>
   `;
