@@ -14,7 +14,18 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const e = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const money = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 const localMoney = n => new Intl.NumberFormat('es-EC', {minimumFractionDigits:2,maximumFractionDigits:2}).format(n) + ' US$';
-let valuationState={project:'crossbox',query:'',page:1};
+let valuationState = (() => {
+  try {
+    const raw = sessionStorage.getItem('cw_valuation_state');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return { project: 'crossbox', query: '', page: 1 };
+})();
+const persistValuationState = () => {
+  try {
+    sessionStorage.setItem('cw_valuation_state', JSON.stringify(valuationState));
+  } catch {}
+};
 const paths = {
   menu:'M4 6h16M4 12h16M4 18h16', search:'m21 21-5.1-5.1M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
   person:'M20 21v-2a7 7 0 0 0-14 0v2M17 7a5 5 0 1 1-10 0 5 5 0 0 1 10 0',
@@ -1699,7 +1710,7 @@ document.addEventListener('click',async event=>{
       const commitUrl = `https://github.com/lfarmas4/crossbox-app/commit/${target.dataset.id}`;
       window.open(commitUrl, '_blank');
     }
-    else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); renderValuation(); }
+    else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); persistValuationState(); renderValuation(); }
     else if (action==='valuation-export') { const data=valuationCsv(target.dataset.project); downloadBlob(new Blob([data.csv],{type:'text/csv;charset=utf-8'}),data.name); }
     else if (action==='download-file') await downloadAttachment(findRecord(target.dataset.id),Number(target.dataset.index));
     else if (action==='open-invoice-generator') {
@@ -1835,7 +1846,7 @@ document.addEventListener('click',async event=>{
 function searchResults(query) { const links=[...mainLinks,...billingLinks,...accessLinks,...codeLinks,['deployments','Despliegues','rocket']].filter(x=>x[1].toLowerCase().includes(query.toLowerCase())); return links.map(x=>`<a class="nav-link" href="#${x[0]}" data-search-result>${icon(x[2]||'page')}${x[1]}</a>`).join('') || '<p class="muted">No results found.</p>'; }
 document.addEventListener('input',event=>{
   if (event.target.id==='global-search') $('#search-results').innerHTML=searchResults(event.target.value);
-  if (event.target.id==='valuation-search') { valuationState.query=event.target.value; valuationState.page=1; const pos=event.target.selectionStart; renderValuation(); $('#valuation-search').focus(); $('#valuation-search').setSelectionRange(pos,pos); }
+  if (event.target.id==='valuation-search') { valuationState.query=event.target.value; valuationState.page=1; persistValuationState(); const pos=event.target.selectionStart; renderValuation(); $('#valuation-search').focus(); $('#valuation-search').setSelectionRange(pos,pos); }
   if (event.target.id==='usage-search') { usageSearch=event.target.value; const start=event.target.selectionStart; renderUsage(); $('#usage-search').focus(); $('#usage-search').setSelectionRange(start,start); }
   if (event.target.id==='deployment-search') { deploymentQuery=event.target.value; deploymentPage=1; const pos=event.target.selectionStart; renderDeployments(); $('#deployment-search').focus(); $('#deployment-search').setSelectionRange(pos,pos); }
 });
@@ -1846,7 +1857,7 @@ document.addEventListener('change',async event=>{
     else if (input.id==='record-files') { const combined=[...recordFiles,...await wrapFiles(Array.from(input.files))]; validateFiles(combined); recordFiles=combined; updateRecordFiles(); input.value=''; }
     else if (input.id==='record-example' && input.value) { const combined=[...recordFiles,...demoBundles.find(b=>b.id===input.value).files.map(f=>({...f}))]; validateFiles(combined); recordFiles=combined; updateRecordFiles(); input.value=''; }
     else if (input.id==='group-by') { groupBy=input.value; renderUsage(); }
-    else if (input.id==='valuation-project') { valuationState={project:input.value,query:'',page:1}; renderValuation(); }
+    else if (input.id==='valuation-project') { valuationState={project:input.value,query:'',page:1}; persistValuationState(); renderValuation(); }
     else if (input.id==='deployment-source') { deploymentSource=input.value; deploymentPage=1; renderDeployments(); }
     else if (['avatar-input','mascot-input','logo-input'].includes(input.id)) {
       const file=input.files[0]; if (!file) return;
