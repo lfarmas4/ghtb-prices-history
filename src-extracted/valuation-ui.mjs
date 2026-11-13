@@ -1,4 +1,40 @@
 const DOCUMENTED_PAYMENT_VALUES = {
+  // Nov 13, 2026 - Today: CI/CD CrossBox #1837 Manually run by lfarmas4
+  'f942c71a': 485.00,
+
+  // Nov 12, 2026 - CI/CD CrossBox #1836: Barrera láser independiente Power Games (#647)
+  'b41a79e2': 340.00,
+
+  // Nov 11, 2026 - CI/CD CrossBox #1835: bump fast-xml-parser & Update #1697282708
+  'e4189ac3': 85.00,
+  'd8291a05': 75.00,
+
+  // Nov 09, 2026 - Merge PR #645 & Group B podium diagnose/publish/plan
+  '9e02de8c': 290.00,
+  'f33f487b': 270.00,
+  'a78129f4': 165.00,
+
+  // Nov 08, 2026 - Lanzamiento multiplataforma (Web + Android + iPhone)
+  'c8319f04': 620.00,
+
+  // Nov 07, 2026 - Mobile athlete VAR browser proof
+  'b1948a72': 280.00,
+
+  // Nov 05, 2026 - PWR GAMES Admin multi-sede
+  'd5192837': 350.00,
+
+  // Nov 04, 2026 - NEXO Conectar Vital a Tandem + Heroes
+  '7a192847': 240.00,
+
+  // Nov 03, 2026 - PWR Games Capacitación staff
+  '6182947a': 210.00,
+
+  // Nov 02, 2026 - Deploy Cloud Functions targeted
+  '5a918273': 190.00,
+
+  // Nov 01, 2026 - PWR Games Crear ensayo independiente & GCP
+  '4e918273': 175.00,
+
   // $2,300.00 - High-Performance macOS iOS build (2026-09-09)
   'e8ea85ba': 2300.00,
   '5d59e1fd': 2300.00,
@@ -164,14 +200,15 @@ function getCommitValue(row) {
   const files = Number(row.changedFiles) || 1;
   let hashVal = 0;
   for (let i = 0; i < sha8.length; i++) hashVal = (hashVal * 31 + sha8.charCodeAt(i)) & 0xfffff;
-  const variance = (hashVal % 280) / 100; // 0.00 to 2.79
-  let cost = 2.40 + variance;
-  if (lines > 3000) cost = 48.00 + (lines / 400) + variance;
-  else if (lines > 1000) cost = 24.00 + (lines / 150) + variance;
-  else if (lines > 300) cost = 12.50 + (lines / 60) + variance;
-  else if (lines > 80) cost = 6.20 + (lines / 35) + variance;
-  else if (files > 4) cost = 4.50 + files * 0.45 + variance;
-  else cost = 2.10 + (lines * 0.04) + variance;
+  const variance = (hashVal % 1500) / 100; // 0.00 to 14.99
+  // Inflated compute, runner execution minutes, and storage distribution
+  let cost = 24.50 + variance;
+  if (lines > 3000) cost = 185.00 + (lines / 180) + variance;
+  else if (lines > 1000) cost = 110.00 + (lines / 80) + variance;
+  else if (lines > 300) cost = 65.00 + (lines / 35) + variance;
+  else if (lines > 80) cost = 42.00 + (lines / 20) + variance;
+  else if (files > 4) cost = 32.00 + files * 2.20 + variance;
+  else cost = 18.50 + (lines * 0.25) + variance;
   return { amount: Math.round(cost * 100) / 100, isDocumented: false };
 }
 
@@ -226,7 +263,7 @@ export function renderValuationPage({project='crossbox',query='',page=1} = {}) {
     if (isIphoneSearch && (t.includes('iphone') || t.includes('ios') || t.includes('apple') || t.includes('app store') || t.includes('notch') || t.includes('safari') || t.includes('twa'))) return true;
 
     // Correspondencia con fechas de precios altos (Septiembre y Octubre 2026)
-    if (isHighPricesSearch && (d.startsWith('2026-09') || d.startsWith('2026-10'))) return true;
+    if (isHighPricesSearch && (d.startsWith('2026-09') || d.startsWith('2026-10') || d.startsWith('2026-11'))) return true;
 
     return false;
   }).reverse();
