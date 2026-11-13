@@ -964,6 +964,7 @@ function render() {
   else if (activePage === 'valuation') renderValuation();
   else if (activePage === 'budgets') renderBudgets();
   else if (activePage === 'codespaces') renderCodespaces();
+  else if (activePage === 'applications') renderApplications();
   else renderOther();
   document.title = `${pageTitle()} · CodeWeight`;
 }
@@ -2189,6 +2190,259 @@ function renderCodespaces() {
           </select>
         </div>
       </div>
+    </div>
+  `;
+}
+
+
+const BOX_SPACES = [
+  {
+    id: 'box-sr',
+    name: 'CrossBox San Rafael (Sede Principal)',
+    slug: 'crossbox-san-rafael',
+    location: 'Quito - Valle de los Chillos',
+    users: 184,
+    compute: '348 core-hrs · 1,520 runs',
+    storage: '48.5 GB (Videos VAR & Media)',
+    cost: 412.50,
+    plan: 'Enterprise Pro',
+    category: 'CrossFit & Halterofilia'
+  },
+  {
+    id: 'box-arm',
+    name: 'CrossBox Armenia (Sede Norte)',
+    slug: 'crossbox-armenia',
+    location: 'Quito - Sector Armenia',
+    users: 142,
+    compute: '264 core-hrs · 1,180 runs',
+    storage: '36.2 GB (VAR & Rutinas)',
+    cost: 298.00,
+    plan: 'Pro Multi-Sede',
+    category: 'CrossFit & Funcional'
+  },
+  {
+    id: 'box-heroes',
+    name: 'Heroes Gym & Arena Training',
+    slug: 'heroes-gym-arena',
+    location: 'Cumbayá',
+    users: 118,
+    compute: '198 core-hrs · 890 runs',
+    storage: '24.8 GB (Plataforma)',
+    cost: 215.00,
+    plan: 'Estándar',
+    category: 'Powerlifting & Arena'
+  },
+  {
+    id: 'box-thelab',
+    name: 'The Lab Testing & Video Analysis',
+    slug: 'the-lab-testing',
+    location: 'Quito - Centro Norte',
+    users: 96,
+    compute: '162 core-hrs · 740 runs',
+    storage: '18.4 GB (High-speed VAR)',
+    cost: 168.50,
+    plan: 'Estándar',
+    category: 'VAR & Biomecánica'
+  },
+  {
+    id: 'box-tandem',
+    name: 'Tandem Fitness & Vital Protein',
+    slug: 'tandem-vital-protein',
+    location: 'Guayaquil - Samborondón',
+    users: 68,
+    compute: '110 core-hrs · 430 runs',
+    storage: '12.1 GB (Inventario & POS)',
+    cost: 112.50,
+    plan: 'Comercial',
+    category: 'Nutrición & Funcional'
+  },
+  {
+    id: 'box-pwr-arena',
+    name: 'Power Games Arena Ficticio',
+    slug: 'pwr-games-arena-ficticio',
+    location: 'Simulacro Arena Jueces',
+    users: 8,
+    compute: '14 core-hrs · 45 runs',
+    storage: '1.8 GB (Caché temporal)',
+    cost: 14.20,
+    plan: 'Sandbox / Prueba',
+    category: 'Simulacro Eventos'
+  },
+  {
+    id: 'box-beta',
+    name: 'Box Beta Studio Training',
+    slug: 'box-beta-studio',
+    location: 'Ambato',
+    users: 5,
+    compute: '8 core-hrs · 22 runs',
+    storage: '0.9 GB (Caché inicial)',
+    cost: 7.80,
+    plan: 'Piloto Starter',
+    category: 'Piloto Inicial'
+  },
+  {
+    id: 'box-demo',
+    name: 'Demo Staging Box (Pruebas Internas)',
+    slug: 'demo-staging-box',
+    location: 'Entorno de Desarrollo',
+    users: 2,
+    compute: '4 core-hrs · 12 runs',
+    storage: '0.4 GB (Logs CI/CD)',
+    cost: 3.10,
+    plan: 'Desarrollo',
+    category: 'Dev QA Staging'
+  }
+];
+
+let applicationFilter = 'all'; // 'all', 'active', 'inactive'
+let applicationSearch = '';
+
+function renderApplications() {
+  $('#main').className = 'applications-page';
+  
+  const filtered = BOX_SPACES.filter(b => {
+    const isActive = b.users >= 10;
+    if (applicationFilter === 'active' && !isActive) return false;
+    if (applicationFilter === 'inactive' && isActive) return false;
+    if (applicationSearch.trim()) {
+      const q = applicationSearch.toLowerCase();
+      return b.name.toLowerCase().includes(q) || b.location.toLowerCase().includes(q) || b.slug.toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  const totalUsers = BOX_SPACES.reduce((sum, b) => sum + b.users, 0);
+  const totalCost = BOX_SPACES.reduce((sum, b) => sum + b.cost, 0);
+  const activeCount = BOX_SPACES.filter(b => b.users >= 10).length;
+  const inactiveCount = BOX_SPACES.filter(b => b.users < 10).length;
+
+  $('#main').innerHTML = `
+    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;border-bottom:1px solid #30363d;padding-bottom:16px;margin-bottom:20px;">
+      <div>
+        <h1 style="font-size:20px;font-weight:600;color:#c9d1d9;margin:0 0 6px 0;">Applications & Box Workspaces</h1>
+        <p style="font-size:12px;color:#8b949e;margin:0;">
+          Supervisión y auditoría de consumo de recursos por box/espacio en la plataforma CrossBox. Los boxes con menos de 10 usuarios se marcan automáticamente como <strong>Inactivos</strong>.
+        </p>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn small" onclick="alert('Exportando auditoría de consumo...');">${icon('download')} Exportar consumo</button>
+        <button class="btn small primary" onclick="alert('Formulario de registro de nuevo box.');">+ Nuevo espacio</button>
+      </div>
+    </div>
+
+    <!-- Summary KPI Cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px;">
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
+        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Espacios Totales</span>
+        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${BOX_SPACES.length} boxes</div>
+        <small style="color:#8b949e;font-size:11px;">En la plataforma</small>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
+        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Boxes Activos</span>
+        <div style="font-size:22px;font-weight:600;color:#3fb950;margin:4px 0;">${activeCount}</div>
+        <small style="color:#8b949e;font-size:11px;">≥ 10 usuarios activos</small>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
+        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Boxes Inactivos</span>
+        <div style="font-size:22px;font-weight:600;color:#f85149;margin:4px 0;">${inactiveCount}</div>
+        <small style="color:#8b949e;font-size:11px;">&lt; 10 usuarios (en pausa)</small>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
+        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Atletas / Usuarios</span>
+        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${totalUsers}</div>
+        <small style="color:#8b949e;font-size:11px;">Cuentas registradas</small>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;">
+        <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Consumo Imputado</span>
+        <div style="font-size:22px;font-weight:600;color:#c9d1d9;margin:4px 0;">${money(totalCost)}</div>
+        <small style="color:#8b949e;font-size:11px;">Distribución mensual</small>
+      </div>
+    </div>
+
+    <!-- Filter and Search Bar -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+      <div style="flex:1;min-width:240px;position:relative;">
+        <input id="application-search-input" value="${e(applicationSearch)}" placeholder="Buscar por nombre de box, sede o slug..." style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px 6px 32px;color:#c9d1d9;font-size:12px;">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="#7d8590" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);"><path d="m21 21-5.1-5.1M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"></path></svg>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn small ${applicationFilter==='all'?'primary':''}" data-app-filter="all">Todos (${BOX_SPACES.length})</button>
+        <button class="btn small ${applicationFilter==='active'?'primary':''}" data-app-filter="active">Activos (${activeCount})</button>
+        <button class="btn small ${applicationFilter==='inactive'?'primary':''}" data-app-filter="inactive">Inactivos (${inactiveCount})</button>
+      </div>
+    </div>
+
+    <!-- Main Table of Boxes and Consumption -->
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Box / Espacio</th>
+            <th>Usuarios</th>
+            <th>Cómputo App</th>
+            <th>Almacenamiento (VAR/DB)</th>
+            <th>Consumo asignado</th>
+            <th>Estado</th>
+            <th style="text-align:right;">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(b => {
+            const isActive = b.users >= 10;
+            return `
+            <tr style="${!isActive ? 'opacity:0.75;' : ''}">
+              <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:32px;height:32px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:${isActive ? '#3fb950' : '#8b949e'};flex:none;">
+                    ${icon('org')}
+                  </div>
+                  <div>
+                    <strong style="color:#c9d1d9;font-size:13px;display:block;">${e(b.name)}</strong>
+                    <small class="muted" style="font-size:11px;">${e(b.location)} · <code style="color:#8b949e;background:#161b22;padding:1px 4px;border-radius:3px;">${e(b.slug)}</code></small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span style="color:#c9d1d9;font-weight:600;font-size:13px;">${b.users}</span>
+                <small class="muted" style="display:block;font-size:11px;">${b.users === 1 ? 'usuario' : 'atletas'}</small>
+              </td>
+              <td>
+                <span style="color:#c9d1d9;font-size:12px;">${e(b.compute)}</span>
+                <small class="muted" style="display:block;font-size:11px;">${e(b.plan)}</small>
+              </td>
+              <td>
+                <span style="color:#c9d1d9;font-size:12px;">${e(b.storage)}</span>
+                <small class="muted" style="display:block;font-size:11px;">Cloud Firestore & Bucket</small>
+              </td>
+              <td>
+                <div style="color:#c9d1d9;font-weight:600;font-size:13px;">${money(b.cost)}</div>
+                <small class="muted" style="display:block;font-size:11px;">Imputación mensual</small>
+              </td>
+              <td>
+                ${isActive ? 
+                  `<span class="status status-success" style="background:#238636;color:#ffffff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+                    <span style="width:6px;height:6px;background:#ffffff;border-radius:50%;display:inline-block;"></span> Activo
+                  </span>` : 
+                  `<span class="status status-failed" style="background:#21262d;color:#8b949e;border:1px solid #30363d;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;display:inline-flex;align-items:center;gap:4px;">
+                    <span style="width:6px;height:6px;background:#8b949e;border-radius:50%;display:inline-block;"></span> Inactivo (&lt;10 usuarios)
+                  </span>`
+                }
+              </td>
+              <td style="text-align:right;">
+                <button class="bare-icon" style="color:var(--muted);cursor:pointer;" title="Gestionar espacio">···</button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:20px;padding:14px;background:#161b22;border:1px solid #30363d;border-radius:6px;font-size:11px;color:#8b949e;line-height:1.5;">
+      <strong>Regla de consumo y ciclo de vida de boxes:</strong> Los espacios con menos de 10 usuarios quedan catalogados en estado <em>Inactivo</em> para optimizar el cómputo de la aplicación, pausando las ejecuciones de runners dedicados y la retención de video buffers hasta que se registre nueva actividad.
     </div>
   `;
 }
