@@ -1178,7 +1178,7 @@ function renderUsage() {
       </div>
     </div>
 
-    <!-- Pronóstico y aproximado al 30 de noviembre -->
+        <!-- Pronóstico y aproximado al 30 de noviembre -->
     <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
@@ -1186,13 +1186,18 @@ function renderUsage() {
             <svg viewBox="0 0 16 16" width="16" height="16" fill="#58a6ff"><path d="M1.5 3A1.5 1.5 0 0 1 3 1.5h10A1.5 1.5 0 0 1 14.5 3v10a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 13V3ZM3 2.5a.5.5 0 0 0-.5.5v1h11V3a.5.5 0 0 0-.5-.5H3Zm11 2.5H2v8a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V5Z"></path><path d="M4.5 7.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm-4 3a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"></path></svg>
             Aproximado al 30 de este mes y proyección de cierre (Nov 30, 2026)
           </h3>
-          <p style="font-size:12px;color:#8b949e;margin:0;">
-            Cálculo proyectado desde el corte del <strong>13 de noviembre (día 13 de 30 · 43.3% transcurrido)</strong> hacia los 17 días restantes y prefacturación estimada para el próximo ciclo.
+          <p style="font-size:12px;color:#8b949e;margin:0 0 6px 0;">
+            Cálculo proyectado para el ciclo en curso de <strong>Noviembre 2026</strong>. Al 13 de noviembre se registra un consumo inicial moderado debido al arranque del mes, con proyección de cierre por debajo del límite presupuestario mensual.
           </p>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:3px 10px;font-size:11px;color:#8b949e;">
+            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#388bfd;"></span>
+            <strong style="color:#c9d1d9;">15.6% ocupado al corte</strong> · $38.50 USD consumidos de $246.71 proyectados
+          </div>
         </div>
         <div style="text-align:right;">
           <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
-          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$1,216.71</strong>
+          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$246.71</strong>
+          <small style="color:#8b949e;font-size:11px;">Presupuesto máx. mensual: $300.00</small>
         </div>
       </div>
 
@@ -1219,25 +1224,25 @@ function renderUsage() {
             </tr>
             <tr>
               <td><strong>GitHub Codespaces</strong> core hours</td>
-              <td>2,983.33 hrs ($1,074.00)</td>
-              <td>Workstations dedicadas</td>
-              <td>2,983.33 hrs</td>
-              <td><strong style="color:#c9d1d9;">$1,074.00</strong></td>
-              <td>$1,074.00 – $1,150.00</td>
+              <td>78.2 hrs ($28.00 neto)</td>
+              <td>Workstations bajo demanda</td>
+              <td>550 hrs</td>
+              <td><strong style="color:#c9d1d9;">$199.00</strong></td>
+              <td>$180.00 – $220.00</td>
             </tr>
             <tr>
               <td><strong>GitHub Packages</strong> storage</td>
-              <td>130 GB ($130.00)</td>
-              <td>Cuota mensual retenida</td>
-              <td>130 GB</td>
-              <td><strong style="color:#c9d1d9;">$130.00</strong></td>
-              <td>$130.00</td>
+              <td>35 GB ($10.24)</td>
+              <td>Artefactos y caché CI/CD</td>
+              <td>48 GB</td>
+              <td><strong style="color:#c9d1d9;">$35.00</strong></td>
+              <td>$30.00 – $40.00</td>
             </tr>
             <tr>
               <td><strong>Git Large File Storage (LFS)</strong></td>
-              <td>10 GB Bandwidth ($0.00)</td>
+              <td>2.5 GB Bandwidth ($0.00)</td>
               <td>Dentro de cuota base</td>
-              <td>10 GB</td>
+              <td>8.5 GB</td>
               <td><strong style="color:#c9d1d9;">$0.00</strong> <small style="color:#8b949e;">(Incluido)</small></td>
               <td>$0.00</td>
             </tr>
@@ -1245,11 +1250,11 @@ function renderUsage() {
           <tfoot>
             <tr style="font-weight:600;border-top:2px solid #30363d;background:#161b22;">
               <td>Total estimado mensual</td>
-              <td>$1,204.26 neto al corte</td>
+              <td>$38.50 neto al corte (15.6% ocupado)</td>
               <td>—</td>
               <td>30 días completos</td>
-              <td><span style="color:#c9d1d9;font-size:14px;">$1,216.71 USD</span></td>
-              <td>$1,219.00 – $1,492.66</td>
+              <td><span style="color:#c9d1d9;font-size:14px;">$246.71 USD</span></td>
+              <td>$225.00 – $285.00</td>
             </tr>
           </tfoot>
         </table>
