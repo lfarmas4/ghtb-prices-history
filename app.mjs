@@ -881,16 +881,16 @@ let recordMutationBusy=false;
 let activePage = location.hash.slice(1) || 'organizations';
 
 const DEFAULT_BUDGETS = [
-  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 1200.00, spent: 385.20 },
+  { id: 'b-account', scope: 'Account', product: 'Monthly Account Budget (All Services)', limit: 300.00, spent: 38.50 },
+  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 200.00, spent: 28.00 },
   { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 60.00, spent: 9.52 },
-  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 150.00, spent: 42.50 },
-  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 50.00, spent: 8.40 },
-  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 25.00, spent: 3.60 }
+  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 35.00, spent: 10.24 },
+  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 5.00, spent: 0.00 }
 ];
 
 let budgets = (() => {
   try {
-    const raw = localStorage.getItem('codeweight-budgets-v3');
+    const raw = localStorage.getItem('codeweight-budgets-v4');
     if (raw) return JSON.parse(raw);
   } catch {}
   return [...DEFAULT_BUDGETS];
@@ -898,7 +898,7 @@ let budgets = (() => {
 
 function saveBudgets() {
   try {
-    localStorage.setItem('codeweight-budgets-v3', JSON.stringify(budgets));
+    localStorage.setItem('codeweight-budgets-v4', JSON.stringify(budgets));
   } catch {}
 }
 
@@ -1178,26 +1178,37 @@ function renderUsage() {
       </div>
     </div>
 
-        <!-- Pronóstico y aproximado al 30 de noviembre -->
+            <!-- Pronóstico y aproximado al 30 de noviembre -->
     <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
-        <div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:18px;">
+        <div style="flex:1;min-width:280px;">
           <h3 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
             <svg viewBox="0 0 16 16" width="16" height="16" fill="#58a6ff"><path d="M1.5 3A1.5 1.5 0 0 1 3 1.5h10A1.5 1.5 0 0 1 14.5 3v10a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 13V3ZM3 2.5a.5.5 0 0 0-.5.5v1h11V3a.5.5 0 0 0-.5-.5H3Zm11 2.5H2v8a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V5Z"></path><path d="M4.5 7.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm-4 3a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"></path></svg>
             Aproximado al 30 de este mes y proyección de cierre (Nov 30, 2026)
           </h3>
-          <p style="font-size:12px;color:#8b949e;margin:0 0 6px 0;">
-            Cálculo proyectado para el ciclo en curso de <strong>Noviembre 2026</strong>. Al 13 de noviembre se registra un consumo inicial moderado debido al arranque del mes, con proyección de cierre por debajo del límite presupuestario mensual.
+          <p style="font-size:12px;color:#8b949e;margin:0 0 10px 0;">
+            Cálculo proyectado para el ciclo en curso de <strong>Noviembre 2026</strong>. Presupuesto asignado de <strong>$300.00 USD</strong> con monitoreo continuo y alertas configuradas ante umbrales de consumo.
           </p>
-          <div style="display:inline-flex;align-items:center;gap:6px;background:#161b22;border:1px solid #30363d;border-radius:12px;padding:3px 10px;font-size:11px;color:#8b949e;">
-            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#388bfd;"></span>
-            <strong style="color:#c9d1d9;">15.6% ocupado al corte</strong> · $38.50 USD consumidos de $246.71 proyectados
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;font-size:11px;color:#8b949e;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:5px;color:#7ee787;font-weight:600;">
+              <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2ea043;"></span> Alertas de presupuesto: On
+            </span>
+            <span>· Límite mensual: <strong style="color:#c9d1d9;">$300.00 USD</strong></span>
+            <span>· Alertas al alcanzar: <strong>75% ($225)</strong> y <strong>90% ($270)</strong></span>
+            <span style="color:#58a6ff;">· Margen disponible: $53.29 USD</span>
           </div>
         </div>
-        <div style="text-align:right;">
-          <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
-          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$246.71</strong>
-          <small style="color:#8b949e;font-size:11px;">Presupuesto máx. mensual: $300.00</small>
+        <div style="display:flex;gap:24px;align-items:flex-end;">
+          <div style="text-align:right;">
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto real del mes</span>
+            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$38.50</strong>
+            <small style="color:#8b949e;font-size:11px;">Al corte del 13 nov</small>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
+            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$246.71</strong>
+            <small style="color:#8b949e;font-size:11px;">Presupuesto fijado: $300.00</small>
+          </div>
         </div>
       </div>
 
@@ -1250,7 +1261,7 @@ function renderUsage() {
           <tfoot>
             <tr style="font-weight:600;border-top:2px solid #30363d;background:#161b22;">
               <td>Total estimado mensual</td>
-              <td>$38.50 neto al corte (15.6% ocupado)</td>
+              <td>$38.50 neto consumido</td>
               <td>—</td>
               <td>30 días completos</td>
               <td><span style="color:#c9d1d9;font-size:14px;">$246.71 USD</span></td>
@@ -1468,6 +1479,46 @@ function renderOverview() {
           <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">Payment history</a>
         </div>
         <strong style="font-size:28px;color:#8b949e;font-weight:600;display:block;margin:6px 0;">–</strong>
+      </div>
+    </div>
+
+    <!-- Monthly Budget & Alert Status matching user settings -->
+    <div style="margin-top:20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0;">Monthly spending limit & alerts</h2>
+            <span style="background:#238636;color:#ffffff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;">Alerts: On</span>
+          </div>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Límite mensual fijado en <strong>$300.00 USD</strong>. Notificaciones automáticas por correo al 75% ($225.00), 90% ($270.00) y alerta de bloqueo preventivo al 100% ($300.00).</p>
+        </div>
+        <div style="display:flex;gap:24px;align-items:baseline;">
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto real del mes</span>
+            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$38.50</strong>
+            <small style="color:#8b949e;font-size:11px;">Al corte del 13 nov</small>
+          </div>
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
+            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$246.71</strong>
+            <small style="color:#8b949e;font-size:11px;">Estimado fin de mes</small>
+          </div>
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Presupuesto fijado</span>
+            <strong style="display:block;font-size:22px;color:#58a6ff;font-weight:600;">$300.00</strong>
+            <small style="color:#8b949e;font-size:11px;"><a href="#budgets" style="color:#58a6ff;text-decoration:none;">Editar límite</a></small>
+          </div>
+        </div>
+      </div>
+      <!-- Budget Progress Bar -->
+      <div style="background:#21262d;height:8px;border-radius:4px;overflow:hidden;position:relative;margin:12px 0 6px 0;">
+        <div style="background:#2ea043;height:100%;width:12.8%;position:absolute;left:0;top:0;" title="Consumo real: $38.50 (12.8%)"></div>
+        <div style="background:#388bfd33;border-right:2px solid #58a6ff;height:100%;width:82.2%;position:absolute;left:0;top:0;" title="Proyección al 30 nov: $246.71 (82.2%)"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;">
+        <span>Consumo real: <strong>$38.50</strong> (12.8%)</span>
+        <span>Proyección a fin de mes: <strong>$246.71</strong> (82.2% del presupuesto)</span>
+        <span style="color:#7ee787;">✓ Margen seguro ($53.29 disponible antes de la alerta máxima)</span>
       </div>
     </div>
 
