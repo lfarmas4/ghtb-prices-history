@@ -163,6 +163,9 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
                       <span><span id="inv-p-txref">${escapeHtml(transactionRef)}</span> &nbsp; <span id="inv-p-txdate">${escapeHtml(invoiceDate)}</span></span>
                       <span id="inv-p-txamt">-${escapeHtml(amountStr)}</span>
                     </div>
+                    <div style="font-size:11px;color:#57606a;margin-top:4px;">
+                      Remittance Ref: <strong style="color:#24292f;">REMIT-GHUB-${escapeHtml(record.id || 'TX')}</strong> · Wire/ACH: <span class="mono">Bank of America (ABA: 026009593)</span>
+                    </div>
                   </td>
                 </tr>
                 <tr class="inv-balancedue-row">
@@ -175,7 +178,7 @@ export function invoiceModalHtml(record, profile = {}, allPayments = []) {
 
           <div class="inv-footer-notes">
             <span style="font-weight:700;">Notes</span>
-            <span>*VAT is included in the sales price when and where applicable.</span>
+            <span>*VAT is included in the sales price when and where applicable. Remittance instructions: For inquiries on wire transfers or electronic fund settlements, contact billing-remittance@github.com citing your invoice and remittance reference numbers.</span>
           </div>
 
           <div class="inv-page-num">Page 1 of 1</div>
@@ -478,6 +481,9 @@ export function buildStandaloneInvoiceHtml(data) {
                 <span>${escapeHtml(data.transactionRef)} &nbsp; ${escapeHtml(data.invoiceDate)}</span>
                 <span>-${escapeHtml(data.amount)}</span>
               </div>
+              <div style="font-size:11px;color:#57606a;margin-top:4px;">
+                Remittance Ref: <strong style="color:#24292f;">REMIT-GHUB-${escapeHtml(data.id || 'TX')}</strong> · Wire/ACH: <span class="mono">Bank of America (ABA: 026009593)</span>
+              </div>
             </td>
           </tr>
           <tr class="inv-balancedue-row">
@@ -490,7 +496,7 @@ export function buildStandaloneInvoiceHtml(data) {
 
     <div class="inv-footer-notes">
       <span style="font-weight:700;">Notes</span>
-      <span>*VAT is included in the sales price when and where applicable.</span>
+      <span>*VAT is included in the sales price when and where applicable. Remittance instructions: For inquiries on wire transfers or electronic fund settlements, contact billing-remittance@github.com citing your invoice and remittance reference numbers.</span>
     </div>
 
     <div class="inv-page-num">Page 1 of 1</div>

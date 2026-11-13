@@ -50,6 +50,10 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
                 <td class="rcpt-label">Charged to</td>
                 <td class="rcpt-value" id="rcpt-preview-charged">${escapeHtml(chargedTo)}</td>
               </tr>
+              <tr>
+                <td class="rcpt-label">Payment processor</td>
+                <td class="rcpt-value" style="font-size:12px;color:#57606a;">Stripe Payments Enterprise · <span class="mono" style="color:#24292f;font-weight:600;">pi_3UUVcRJFr6CCHwli${escapeHtml(record.id || 'TX')}</span></td>
+              </tr>
             </tbody>
           </table>
 
@@ -335,6 +339,10 @@ export function buildStandaloneReceiptHtml(data) {
         <tr>
           <td class="rcpt-label">Charged to</td>
           <td class="rcpt-value">${escapeHtml(data.chargedTo)}</td>
+        </tr>
+        <tr>
+          <td class="rcpt-label">Payment processor</td>
+          <td class="rcpt-value" style="font-size:12px;color:#57606a;">Stripe Payments Enterprise · <span class="mono" style="color:#24292f;font-weight:600;">pi_3UUVcRJFr6CCHwli${escapeHtml(data.id || 'TX')}</span></td>
         </tr>
       </tbody>
     </table>
