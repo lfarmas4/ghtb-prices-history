@@ -589,3 +589,25 @@ td:has(.table-action) {
   color: var(--muted);
   margin-top: 14px;
 }
+
+/* Clean modal overrides: show only sheet and action toolbar */
+.clean-sheet-only {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 6px;
+}
+.clean-sheet-only .receipt-preview-panel {
+  background: #f6f8fa;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+.clean-sheet-only .receipt-card-sheet,
+.clean-sheet-only .invoice-card-sheet {
+  margin: 0 auto;
+}

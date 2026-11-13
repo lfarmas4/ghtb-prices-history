@@ -287,7 +287,7 @@ function deploymentStartButton(row) {
   return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver y editar recibo oficial" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>` : `<td>${icon('card')} ${e(p.method)}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver y editar factura oficial de GitHub" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="text-align:center;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar Recibo en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>` : `<td>${icon('card')} ${e(p.method)}</td><td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="text-align:center;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar Factura Oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-invoice-generator" data-id="${e(p.id)}" title="Ver factura oficial de GitHub" aria-label="Ver factura ${e(p.id)}">${icon('eye')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
@@ -313,7 +313,7 @@ function renderHistory() {
   }).join('');
 
   $('#main').className = 'history-page';
-  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table">${new_thead}<tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p>
+  $('#main').innerHTML = `${heading('Payment history')}<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>Payment Method</th><th>Amount</th><th>Status</th><th style="text-align:center;">Invoice</th></tr></thead><tbody>${recordRows(records)}</tbody></table></div><p class="currency-note">Amounts shown in USD</p>
   <div style="margin-top:35px;background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
     <div style="background:#161b22;padding:12px 16px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;">
       <h3 style="margin:0;font-size:13px;font-weight:600;color:#c9d1d9;display:flex;align-items:center;gap:8px;">
@@ -714,176 +714,25 @@ async function beginDeployment(id) {
 
 function openReceiptGenerator(record) {
   if (!record) return;
-  modal('Generador de Recibo Oficial (GitHub)', receiptModalHtml(record, profile, activePayments(payments)), 1080);
-  bindReceiptEditorEvents(record);
+  modal('Recibo Oficial (GitHub)', receiptModalHtml(record, profile, activePayments(payments)), 820);
+  bindReceiptModalActions(record);
 }
 
-function bindReceiptEditorEvents(record) {
-  const form = $('#receipt-editor-form');
-  if (!form) return;
-
-  const getFormVal = name => form.elements[name]?.value || '';
-
-  const linkedSelect = $('#rcpt-field-linked');
-  if (linkedSelect) {
-    linkedSelect.addEventListener('change', () => {
-      const selectedId = linkedSelect.value;
-      const targetRecord = payments.find(p => p.id === selectedId);
-      if (targetRecord) {
-        const custom = targetRecord.receiptData || {};
-        const dateStr = custom.date || `${targetRecord.date || '2026-10-25'} 10:54AM PDT`;
-        const accountStr = custom.accountBilled || `${profile.username || 'lfarmas4'} (${profile.email || 'luisfernando1942.a@gmail.com'})`;
-        const txStr = custom.transactionId || `ch_3UUVcRJFr6CCHwli${targetRecord.id}`;
-        const chargedStr = custom.chargedTo || (targetRecord.method ? targetRecord.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)');
-        const descStr = custom.description || targetRecord.name || 'GitHub Actions Usage';
-        const periodStr = custom.period || `${(targetRecord.date || '2026-10-25').slice(0,7)}-01 - ${(targetRecord.date || '2026-10-25').slice(0,7)}-30`;
-        const amtStr = custom.amount || `$${Number(targetRecord.amount || 0).toFixed(2)} USD`;
-        const watermarkStr = custom.watermark || 'Thank you.';
-
-        if (form.elements['date']) form.elements['date'].value = dateStr;
-        if (form.elements['accountBilled']) form.elements['accountBilled'].value = accountStr;
-        if (form.elements['transactionId']) form.elements['transactionId'].value = txStr;
-        if (form.elements['chargedTo']) form.elements['chargedTo'].value = chargedStr;
-        if (form.elements['description']) form.elements['description'].value = descStr;
-        if (form.elements['period']) form.elements['period'].value = periodStr;
-        if (form.elements['amount']) form.elements['amount'].value = amtStr;
-        if (form.elements['watermark']) form.elements['watermark'].value = watermarkStr;
-        syncPreview();
-        toast(`Datos cargados del pago ${targetRecord.id}.`);
-      }
-    });
-  }
-
-  const syncPreview = () => {
-    const dateVal = getFormVal('date');
-    const accountVal = getFormVal('accountBilled');
-    const txVal = getFormVal('transactionId');
-    const chargedVal = getFormVal('chargedTo');
-    const descVal = getFormVal('description');
-    const periodVal = getFormVal('period');
-    const amountVal = getFormVal('amount');
-    const supportVal = getFormVal('supportUrl');
-    const watermarkVal = getFormVal('watermark');
-
-    if ($('#rcpt-preview-date')) $('#rcpt-preview-date').textContent = dateVal;
-    if ($('#rcpt-preview-account')) $('#rcpt-preview-account').textContent = accountVal;
-    if ($('#rcpt-preview-txid')) $('#rcpt-preview-txid').textContent = txVal;
-    if ($('#rcpt-preview-charged')) $('#rcpt-preview-charged').textContent = chargedVal;
-    if ($('#rcpt-preview-desc')) $('#rcpt-preview-desc').textContent = descVal;
-    if ($('#rcpt-preview-period')) $('#rcpt-preview-period').textContent = periodVal;
-    if ($('#rcpt-preview-amount')) $('#rcpt-preview-amount').textContent = amountVal;
-    if ($('#rcpt-preview-total')) $('#rcpt-preview-total').textContent = amountVal.endsWith('*') ? amountVal : (amountVal + '*');
-    if ($('#rcpt-preview-watermark')) $('#rcpt-preview-watermark').textContent = watermarkVal;
-    if ($('#rcpt-preview-support-link')) {
-      $('#rcpt-preview-support-link').textContent = supportVal;
-      $('#rcpt-preview-support-link').href = supportVal;
-    }
-  };
-
-  form.addEventListener('input', syncPreview);
-
-  const syncFromPreview = (elementId, fieldName) => {
-    const el = $('#' + elementId);
-    if (!el) return;
-    el.addEventListener('input', () => {
-      let val = el.textContent || '';
-      if (elementId === 'rcpt-preview-total') {
-        val = val.replace(/\*$/, '');
-        if (form.elements['amount']) form.elements['amount'].value = val;
-        if ($('#rcpt-preview-amount')) $('#rcpt-preview-amount').textContent = val;
-      } else {
-        if (form.elements[fieldName]) form.elements[fieldName].value = val;
-      }
-    });
-  };
-
-  syncFromPreview('rcpt-preview-date', 'date');
-  syncFromPreview('rcpt-preview-account', 'accountBilled');
-  syncFromPreview('rcpt-preview-txid', 'transactionId');
-  syncFromPreview('rcpt-preview-charged', 'chargedTo');
-  syncFromPreview('rcpt-preview-desc', 'description');
-  syncFromPreview('rcpt-preview-period', 'period');
-  syncFromPreview('rcpt-preview-amount', 'amount');
-  syncFromPreview('rcpt-preview-total', 'amount');
-  syncFromPreview('rcpt-preview-watermark', 'watermark');
-
-  const btnSaveTemplate = $('#btn-save-receipt-template');
-  if (btnSaveTemplate) {
-    btnSaveTemplate.addEventListener('click', () => {
-      const linkedId = getFormVal('linkedPaymentId') || record.id;
-      const receiptData = {
-        title: $('#rcpt-preview-title')?.textContent || 'Receipt',
-        date: getFormVal('date') || $('#rcpt-preview-date')?.textContent,
-        accountBilled: getFormVal('accountBilled') || $('#rcpt-preview-account')?.textContent,
-        transactionId: getFormVal('transactionId') || $('#rcpt-preview-txid')?.textContent,
-        chargedTo: getFormVal('chargedTo') || $('#rcpt-preview-charged')?.textContent,
-        description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
-        period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
-        amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
-        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
-        supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
-      };
-
-      // Also parse amount number if user entered e.g. $130.00 USD
-      const amtMatch = receiptData.amount.match(/([0-9]+(?:\.[0-9]+)?)/);
-      const parsedAmount = amtMatch ? parseFloat(amtMatch[1]) : null;
-
-      let nextPayments = payments.map(p => {
-        if (p.id === linkedId) {
-          return {
-            ...p,
-            receiptData,
-            name: receiptData.description || p.name,
-            amount: parsedAmount !== null ? parsedAmount : p.amount,
-            method: receiptData.chargedTo.includes('(') ? receiptData.chargedTo.replace(/\s*\(.*\)/, ' ending in ' + receiptData.chargedTo.slice(-5,-1)) : p.method
-          };
-        }
-        return p;
-      });
-
-      write('payments', nextPayments);
-      payments = nextPayments;
-      toast(`Formato guardado y vinculado exitosamente al pago ${linkedId}.`);
-      closeModal();
-      render();
-    });
-  }
-
-  const btnDownload = $('#btn-download-html-receipt');
-  if (btnDownload) {
-    btnDownload.addEventListener('click', () => {
-      const data = {
-        title: $('#rcpt-preview-title')?.textContent || 'Receipt',
-        date: getFormVal('date') || $('#rcpt-preview-date')?.textContent,
-        accountBilled: getFormVal('accountBilled') || $('#rcpt-preview-account')?.textContent,
-        transactionId: getFormVal('transactionId') || $('#rcpt-preview-txid')?.textContent,
-        chargedTo: getFormVal('chargedTo') || $('#rcpt-preview-charged')?.textContent,
-        description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
-        period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
-        amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
-        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
-        supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
-      };
-      const htmlContent = buildStandaloneReceiptHtml(data);
-      downloadBlob(new Blob([htmlContent], { type: 'text/html;charset=utf-8' }), `receipt-${record.id || 'github'}.html`);
-      toast('Recibo HTML descargado con éxito.');
-    });
-  }
-
+function bindReceiptModalActions(record) {
   const btnPrint = $('#btn-print-receipt');
   if (btnPrint) {
     btnPrint.addEventListener('click', () => {
       const data = {
-        title: $('#rcpt-preview-title')?.textContent || 'Receipt',
-        date: getFormVal('date') || $('#rcpt-preview-date')?.textContent,
-        accountBilled: getFormVal('accountBilled') || $('#rcpt-preview-account')?.textContent,
-        transactionId: getFormVal('transactionId') || $('#rcpt-preview-txid')?.textContent,
-        chargedTo: getFormVal('chargedTo') || $('#rcpt-preview-charged')?.textContent,
-        description: getFormVal('description') || $('#rcpt-preview-desc')?.textContent,
-        period: getFormVal('period') || $('#rcpt-preview-period')?.textContent,
-        amount: getFormVal('amount') || $('#rcpt-preview-amount')?.textContent,
-        watermark: getFormVal('watermark') || $('#rcpt-preview-watermark')?.textContent || 'Thank you.',
-        supportUrl: getFormVal('supportUrl') || 'https://support.github.com/contact'
+        title: 'Receipt',
+        date: record.receiptData?.date || `${record.date || '2026-10-25'} 10:54AM PDT`,
+        accountBilled: record.receiptData?.accountBilled || `${profile.username || 'lfarmas4'} (${profile.email || 'luisfernando1942.a@gmail.com'})`,
+        transactionId: record.receiptData?.transactionId || `ch_3UUVcRJFr6CCHwli${record.id}`,
+        chargedTo: record.receiptData?.chargedTo || (record.method ? record.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)'),
+        description: 'GitHub Actions Usage',
+        period: record.receiptData?.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`,
+        amount: record.receiptData?.amount || `$${Number(record.amount || 0).toFixed(2)} USD`,
+        watermark: 'Thank you.',
+        supportUrl: 'https://support.github.com/contact'
       };
       const printWindow = window.open('', '_blank');
       if (printWindow) {
@@ -898,143 +747,40 @@ function bindReceiptEditorEvents(record) {
   }
 }
 
-
 function openInvoiceGenerator(record) {
   if (!record) return;
-  modal('Factura Oficial (GitHub Invoice)', invoiceModalHtml(record, profile, activePayments(payments)), 1100);
-  bindInvoiceEditorEvents(record);
+  modal('Factura Oficial (GitHub Invoice)', invoiceModalHtml(record, profile, activePayments(payments)), 840);
+  bindInvoiceModalActions(record);
 }
 
-function bindInvoiceEditorEvents(record) {
-  const form = $('#invoice-editor-form');
-  if (!form) return;
-
-  const getVal = name => form.elements[name]?.value || '';
-
-  const syncInvoicePreview = () => {
-    if ($('#inv-p-num')) $('#inv-p-num').textContent = getVal('invoiceNum');
-    if ($('#inv-p-date')) $('#inv-p-date').textContent = getVal('invoiceDate');
-    if ($('#inv-p-terms')) $('#inv-p-terms').textContent = getVal('terms');
-    if ($('#inv-p-duedate')) $('#inv-p-duedate').textContent = getVal('dueDate');
-    if ($('#inv-p-currency')) $('#inv-p-currency').textContent = 'USD';
-    
-    if ($('#inv-p-billname')) $('#inv-p-billname').textContent = getVal('billName');
-    if ($('#inv-p-billcompany')) $('#inv-p-billcompany').textContent = getVal('billCompany');
-    if ($('#inv-p-billaddr1')) $('#inv-p-billaddr1').textContent = getVal('billAddress1');
-    if ($('#inv-p-billaddr2')) $('#inv-p-billaddr2').textContent = getVal('billAddress2');
-    if ($('#inv-p-billpostal')) $('#inv-p-billpostal').textContent = getVal('billPostal');
-    if ($('#inv-p-billcountry')) $('#inv-p-billcountry').textContent = getVal('billCountry');
-
-    if ($('#inv-p-qty')) $('#inv-p-qty').textContent = getVal('quantity');
-    if ($('#inv-p-desc')) $('#inv-p-desc').textContent = getVal('description');
-    if ($('#inv-p-period')) $('#inv-p-period').textContent = getVal('period');
-    if ($('#inv-p-rate')) $('#inv-p-rate').textContent = '$' + getVal('rate');
-    const amtStr = getVal('amount');
-    if ($('#inv-p-amt')) $('#inv-p-amt').textContent = amtStr;
-    if ($('#inv-p-subtotal')) $('#inv-p-subtotal').textContent = amtStr;
-    if ($('#inv-p-invtotal')) $('#inv-p-invtotal').textContent = amtStr;
-    if ($('#inv-p-txref')) $('#inv-p-txref').textContent = getVal('transactionRef');
-    if ($('#inv-p-txdate')) $('#inv-p-txdate').textContent = getVal('invoiceDate');
-    if ($('#inv-p-txamt')) $('#inv-p-txamt').textContent = '-' + amtStr;
-  };
-
-  form.addEventListener('input', syncInvoicePreview);
-
-  const btnSaveInv = $('#btn-save-invoice-template');
-  if (btnSaveInv) {
-    btnSaveInv.addEventListener('click', () => {
-      const linkedId = getVal('linkedPaymentId') || record.id;
-      const invoiceData = {
-        invoiceNum: getVal('invoiceNum'),
-        invoiceDate: getVal('invoiceDate'),
-        terms: getVal('terms'),
-        dueDate: getVal('dueDate'),
-        currency: 'USD',
-        billName: getVal('billName'),
-        billCompany: getVal('billCompany'),
-        billAddress1: getVal('billAddress1'),
-        billAddress2: getVal('billAddress2'),
-        billPostal: getVal('billPostal'),
-        billCountry: getVal('billCountry'),
-        description: getVal('description'),
-        period: getVal('period'),
-        quantity: getVal('quantity'),
-        rate: getVal('rate'),
-        amount: getVal('amount'),
-        transactionRef: getVal('transactionRef')
-      };
-
-      let nextPayments = payments.map(p => {
-        if (p.id === linkedId) {
-          return {
-            ...p,
-            invoiceData
-          };
-        }
-        return p;
-      });
-
-      write('payments', nextPayments);
-      payments = nextPayments;
-      toast(`Factura oficial guardada y vinculada al registro ${linkedId}.`);
-      closeModal();
-      render();
-    });
-  }
-
-  const btnDlHtml = $('#btn-download-html-invoice');
-  if (btnDlHtml) {
-    btnDlHtml.addEventListener('click', () => {
-      const data = {
-        invoiceNum: getVal('invoiceNum'),
-        invoiceDate: getVal('invoiceDate'),
-        terms: getVal('terms'),
-        dueDate: getVal('dueDate'),
-        currency: 'USD',
-        billName: getVal('billName'),
-        billCompany: getVal('billCompany'),
-        billAddress1: getVal('billAddress1'),
-        billAddress2: getVal('billAddress2'),
-        billPostal: getVal('billPostal'),
-        billCountry: getVal('billCountry'),
-        description: getVal('description'),
-        period: getVal('period'),
-        quantity: getVal('quantity'),
-        rate: getVal('rate'),
-        amount: getVal('amount'),
-        transactionRef: getVal('transactionRef')
-      };
-      const html = buildStandaloneInvoiceHtml(data);
-      downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `invoice-${data.invoiceNum}.html`);
-      toast('Factura oficial descargada en HTML.');
-    });
-  }
-
+function bindInvoiceModalActions(record) {
   const btnPrintInv = $('#btn-print-invoice');
   if (btnPrintInv) {
     btnPrintInv.addEventListener('click', () => {
-      const data = {
-        invoiceNum: getVal('invoiceNum'),
-        invoiceDate: getVal('invoiceDate'),
-        terms: getVal('terms'),
-        dueDate: getVal('dueDate'),
+      const amtNum = Number(record.amount || 5.66).toFixed(2);
+      const invDate = record.invoiceData?.invoiceDate || (record.date ? formatInvoiceDate(record.date) : 'Oct 25, 2026');
+      const invoiceData = {
+        invoiceNum: record.invoiceData?.invoiceNum || generateNumericInvoiceNum(record.id),
+        invoiceDate: invDate,
+        terms: 'Due Upon Receipt',
+        dueDate: invDate,
         currency: 'USD',
-        billName: getVal('billName'),
-        billCompany: getVal('billCompany'),
-        billAddress1: getVal('billAddress1'),
-        billAddress2: getVal('billAddress2'),
-        billPostal: getVal('billPostal'),
-        billCountry: getVal('billCountry'),
-        description: getVal('description'),
-        period: getVal('period'),
-        quantity: getVal('quantity'),
-        rate: getVal('rate'),
-        amount: getVal('amount'),
-        transactionRef: getVal('transactionRef')
+        billName: 'Fernando Armas',
+        billCompany: 'ESPE',
+        billAddress1: 'Casa 345',
+        billAddress2: 'Sangolquí, Pichincha, Ecuador, Pichincha',
+        billPostal: '171103',
+        billCountry: 'Ecuador',
+        description: 'GitHub Actions Usage',
+        period: record.invoiceData?.period || (record.date ? `${record.date.slice(0, 7)}-01 - ${record.date.slice(0, 7)}-30` : 'Sep 01, 2026 - Sep 30, 2026'),
+        quantity: amtNum,
+        rate: '1.00',
+        amount: `$${amtNum}`,
+        transactionRef: generateNumericTransactionRef(record.id)
       };
       const printWindow = window.open('', '_blank');
       if (printWindow) {
-        printWindow.document.write(buildStandaloneInvoiceHtml(data));
+        printWindow.document.write(buildStandaloneInvoiceHtml(invoiceData));
         printWindow.document.close();
         printWindow.focus();
         setTimeout(() => { printWindow.print(); }, 400);
@@ -1044,7 +790,6 @@ function bindInvoiceEditorEvents(record) {
     });
   }
 }
-
 
 function formatInvoiceDate(isoDate) {
   try {
@@ -1137,36 +882,27 @@ document.addEventListener('click',async event=>{
     else if (action==='open-receipt-generator') { const p = findRecord(target.dataset.id); if (p) openReceiptGenerator(p); }
     else if (action==='download-receipt') {
       const p = findRecord(target.dataset.id);
-      if (p) downloadBlob(new Blob([receiptText(p, false)], { type: 'text/plain;charset=utf-8' }), `receipt-${p.id}.txt`);
+      if (p) {
+        const a = document.createElement('a');
+        a.href = `assets/pdf/receipt-${p.id}.pdf`;
+        a.download = `receipt-${p.id}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        toast(`Recibo oficial ${p.id} descargado en PDF.`);
+      }
     }
     else if (action==='download-invoice') {
       const p = findRecord(target.dataset.id);
       if (p) {
-        const custom = p.invoiceData || {};
-        const amtNum = Number(p.amount || 5.66).toFixed(2);
-        const invDate = custom.invoiceDate || (p.date ? formatInvoiceDate(p.date) : 'Oct 25, 2026');
-        const invoiceData = {
-          invoiceNum: custom.invoiceNum || generateNumericInvoiceNum(p.id),
-          invoiceDate: invDate,
-          terms: custom.terms || 'Due Upon Receipt',
-          dueDate: custom.dueDate || invDate,
-          currency: 'USD',
-          billName: custom.billName || 'Fernando Armas',
-          billCompany: custom.billCompany || 'ESPE',
-          billAddress1: custom.billAddress1 || 'Casa 345',
-          billAddress2: custom.billAddress2 || 'Sangolquí, Pichincha, Ecuador, Pichincha',
-          billPostal: custom.billPostal || '171103',
-          billCountry: custom.billCountry || 'Ecuador',
-          description: custom.description || (p.purpose === 'budget' ? 'GitHub Actions & Compute Usage' : (p.name || 'GitHub Actions Usage')),
-          period: custom.period || (p.date ? `${p.date.slice(0, 7)}-01 - ${p.date.slice(0, 7)}-30` : 'Sep 01, 2026 - Sep 30, 2026'),
-          quantity: custom.quantity || amtNum,
-          rate: custom.rate || '1.00',
-          amount: custom.amount || `$${amtNum}`,
-          transactionRef: custom.transactionRef || `P-9983${p.id || '6064'}`
-        };
-        const html = buildStandaloneInvoiceHtml(invoiceData);
-        downloadBlob(new Blob([html], { type: 'text/html;charset=utf-8' }), `invoice-${invoiceData.invoiceNum}.html`);
-        toast(`Factura oficial ${invoiceData.invoiceNum} descargada.`);
+        const invNum = generateNumericInvoiceNum(p.id);
+        const a = document.createElement('a');
+        a.href = `assets/pdf/invoice-${p.id}.pdf`;
+        a.download = `invoice-${invNum}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        toast(`Factura oficial ${invNum} descargada en PDF.`);
       }
     }
     else if (action==='dismiss-budget') { showBudgetNotice=false; renderUsage(); }

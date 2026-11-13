@@ -4,9 +4,8 @@ export const GITHUB_OCTOCAT_INVOICE_SVG = `<svg viewBox="0 0 16 16" width="68" h
   <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9 1.01 1.28.32.43.91 1.28 2.53.94 0 .64.01 1.18.01 1.34 0 .21-.15.46-.55.38A8.013 8.013 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
 </svg>`;
 
-export function invoiceModalHtml(record, profile = {}, allPayments = []) {
-  const custom = record.invoiceData || {};
-  export function generateNumericInvoiceNum(id) {
+
+export function generateNumericInvoiceNum(id) {
   if (!id) return 'INV163022783';
   if (id === '19T5IGEN') return 'INV163022783';
   let hash = 0;
@@ -32,6 +31,9 @@ export function generateNumericTransactionRef(id) {
   return `P-9983${suffix}`;
 }
 
+
+export function invoiceModalHtml(record, profile = {}, allPayments = []) {
+  const custom = record.invoiceData || {};
   const invoiceNum = custom.invoiceNum || generateNumericInvoiceNum(record.id);
   const invoiceDate = custom.invoiceDate || (record.date ? formatInvoiceDate(record.date) : 'Oct 25, 2026');
   const dueDate = custom.dueDate || invoiceDate;
@@ -45,7 +47,7 @@ export function generateNumericTransactionRef(id) {
   const billPostal = custom.billPostal || '171103';
   const billCountry = custom.billCountry || 'Ecuador';
 
-  const desc = custom.description || (record.purpose === 'budget' ? 'GitHub Actions & Compute Usage' : (record.name || 'GitHub Actions Usage'));
+  const desc = custom.description || 'GitHub Actions Usage';
   const period = custom.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`;
   const amtNum = Number(record.amount || 5.66).toFixed(2);
   const qty = custom.quantity || amtNum;
@@ -53,116 +55,26 @@ export function generateNumericTransactionRef(id) {
   const amountStr = custom.amount || `$${amtNum}`;
   const transactionRef = custom.transactionRef || generateNumericTransactionRef(record.id);
 
-  const currentRecordId = record.id || '';
-  const options = allPayments.map(p => `
-    <option value="${escapeHtml(p.id)}" ${p.id === currentRecordId ? 'selected' : ''}>
-      ${escapeHtml(p.id)} · ${escapeHtml(p.date)} · $${Number(p.amount||0).toFixed(2)} USD (${escapeHtml(p.name || p.method)})
-    </option>
-  `).join('');
-
   return `
-    <div class="invoice-dialog-body">
-      <div class="invoice-form-panel">
-        <h3 class="receipt-form-title">Editar campos de la Factura Oficial</h3>
-        <p class="receipt-form-hint">Modifica los datos de la factura oficial de GitHub. Puedes guardarla y vincularla a este pago.</p>
-        
-        <form id="invoice-editor-form" class="receipt-fields-grid">
-          <label class="field full">
-            <span>Vincular con registro de pago</span>
-            <select name="linkedPaymentId" id="inv-field-linked" class="select" style="width:100%;height:32px;background:#0d1117;color:var(--text);border:1px solid #30363d;border-radius:6px;padding:4px 8px;">
-              <option value="">-- Seleccionar pago --</option>
-              ${options}
-            </select>
-          </label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <label class="field">
-              <span>Invoice #</span>
-              <input name="invoiceNum" id="inv-field-num" value="${escapeHtml(invoiceNum)}" required>
-            </label>
-            <label class="field">
-              <span>Invoice Date</span>
-              <input name="invoiceDate" id="inv-field-date" value="${escapeHtml(invoiceDate)}" required>
-            </label>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <label class="field">
-              <span>Terms</span>
-              <input name="terms" id="inv-field-terms" value="${escapeHtml(terms)}" required>
-            </label>
-            <label class="field">
-              <span>Due Date</span>
-              <input name="dueDate" id="inv-field-duedate" value="${escapeHtml(dueDate)}" required>
-            </label>
-          </div>
-          
-          <h4 style="margin:10px 0 4px;font-size:12px;color:#58a6ff;">Datos del Cliente (BILL TO)</h4>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <label class="field">
-              <span>Nombre cliente</span>
-              <input name="billName" id="inv-field-billname" value="${escapeHtml(billName)}" required>
-            </label>
-            <label class="field">
-              <span>Institución / Empresa</span>
-              <input name="billCompany" id="inv-field-billcompany" value="${escapeHtml(billCompany)}">
-            </label>
-          </div>
-          <label class="field full">
-            <span>Dirección (Línea 1)</span>
-            <input name="billAddress1" id="inv-field-billaddr1" value="${escapeHtml(billAddress1)}">
-          </label>
-          <label class="field full">
-            <span>Ciudad / Provincia (Línea 2)</span>
-            <input name="billAddress2" id="inv-field-billaddr2" value="${escapeHtml(billAddress2)}">
-          </label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <label class="field">
-              <span>Código Postal</span>
-              <input name="billPostal" id="inv-field-billpostal" value="${escapeHtml(billPostal)}">
-            </label>
-            <label class="field">
-              <span>País</span>
-              <input name="billCountry" id="inv-field-billcountry" value="${escapeHtml(billCountry)}">
-            </label>
-          </div>
-
-          <h4 style="margin:10px 0 4px;font-size:12px;color:#58a6ff;">Concepto y Valores</h4>
-          <label class="field full">
-            <span>Descripción</span>
-            <input name="description" id="inv-field-desc" value="${escapeHtml(desc)}" required>
-          </label>
-          <label class="field full">
-            <span>Período del servicio</span>
-            <input name="period" id="inv-field-period" value="${escapeHtml(period)}" required>
-          </label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-            <label class="field">
-              <span>Quantity</span>
-              <input name="quantity" id="inv-field-qty" value="${escapeHtml(qty)}">
-            </label>
-            <label class="field">
-              <span>Rate ($)</span>
-              <input name="rate" id="inv-field-rate" value="${escapeHtml(rate)}">
-            </label>
-            <label class="field">
-              <span>Amount ($)</span>
-              <input name="amount" id="inv-field-amt" value="${escapeHtml(amountStr)}">
-            </label>
-          </div>
-          <label class="field full">
-            <span>Ref. Pago Aplicado (Applied transaction)</span>
-            <input name="transactionRef" id="inv-field-txref" value="${escapeHtml(transactionRef)}">
-          </label>
-        </form>
-
-        <div class="receipt-form-actions">
-          <button type="button" class="btn primary" id="btn-save-invoice-template" style="background:#238636;border-color:#2ea043;font-weight:600;">Guardar formato y vincular a factura</button>
-          <button type="button" class="btn" id="btn-download-html-invoice">Descargar Factura HTML</button>
-          <button type="button" class="btn" id="btn-print-invoice">Imprimir / Guardar PDF Oficial</button>
+    <div class="invoice-dialog-body clean-sheet-only">
+      <div class="receipt-action-toolbar" style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;">
+        <div style="font-size:13px;color:#8b949e;display:flex;align-items:center;gap:8px;">
+          <strong style="color:#f0f6fc;">Factura Oficial:</strong> 
+          <span style="font-family:monospace;background:#21262d;padding:2px 8px;border-radius:4px;color:#58a6ff;">${escapeHtml(invoiceNum)}</span>
+          <span>· Total: <strong style="color:#3fb950;">${escapeHtml(amountStr)}</strong></span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <a href="assets/pdf/invoice-${record.id || 'github'}.pdf" download="invoice-${invoiceNum}.pdf" class="btn primary" style="background:#238636;border-color:#2ea043;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:5px 14px;border-radius:6px;font-size:13px;color:#fff;">
+            Descargar PDF Oficial
+          </a>
+          <button type="button" class="btn" id="btn-print-invoice" style="display:inline-flex;align-items:center;gap:6px;">
+            Imprimir / Guardar PDF
+          </button>
         </div>
       </div>
 
-      <div class="receipt-preview-panel" style="background:#eef1f5;">
-        <div class="invoice-card-sheet" id="invoice-printable-content">
+      <div class="receipt-preview-panel" style="background:#eef1f5;padding:24px 0;border-radius:8px;display:flex;justify-content:center;">
+        <div class="invoice-card-sheet" id="invoice-printable-content" style="box-shadow:0 8px 24px rgba(0,0,0,0.12);background:#fff;border-radius:4px;">
           <div class="inv-topbar-black"></div>
           
           <div class="inv-header">
@@ -185,35 +97,35 @@ export function generateNumericTransactionRef(id) {
 
             <div class="inv-billto-block">
               <div class="inv-billto-title">BILL TO</div>
-              <div class="inv-billto-name" contenteditable="true" id="inv-p-billname">${escapeHtml(billName)}</div>
-              <div contenteditable="true" id="inv-p-billcompany">${escapeHtml(billCompany)}</div>
-              <div contenteditable="true" id="inv-p-billaddr1">${escapeHtml(billAddress1)}</div>
-              <div contenteditable="true" id="inv-p-billaddr2">${escapeHtml(billAddress2)}</div>
-              <div contenteditable="true" id="inv-p-billpostal">${escapeHtml(billPostal)}</div>
-              <div contenteditable="true" id="inv-p-billcountry">${escapeHtml(billCountry)}</div>
+              <div class="inv-billto-name" id="inv-p-billname">${escapeHtml(billName)}</div>
+              <div id="inv-p-billcompany">${escapeHtml(billCompany)}</div>
+              <div id="inv-p-billaddr1">${escapeHtml(billAddress1)}</div>
+              <div id="inv-p-billaddr2">${escapeHtml(billAddress2)}</div>
+              <div id="inv-p-billpostal">${escapeHtml(billPostal)}</div>
+              <div id="inv-p-billcountry">${escapeHtml(billCountry)}</div>
             </div>
 
             <table class="inv-metadata-table">
               <tbody>
                 <tr>
                   <td>Invoice #</td>
-                  <td contenteditable="true" id="inv-p-num">${escapeHtml(invoiceNum)}</td>
+                  <td id="inv-p-num">${escapeHtml(invoiceNum)}</td>
                 </tr>
                 <tr>
                   <td>Invoice Date</td>
-                  <td contenteditable="true" id="inv-p-date">${escapeHtml(invoiceDate)}</td>
+                  <td id="inv-p-date">${escapeHtml(invoiceDate)}</td>
                 </tr>
                 <tr>
                   <td>Terms</td>
-                  <td contenteditable="true" id="inv-p-terms">${escapeHtml(terms)}</td>
+                  <td id="inv-p-terms">${escapeHtml(terms)}</td>
                 </tr>
                 <tr>
                   <td>Due Date</td>
-                  <td contenteditable="true" id="inv-p-duedate">${escapeHtml(dueDate)}</td>
+                  <td id="inv-p-duedate">${escapeHtml(dueDate)}</td>
                 </tr>
                 <tr>
                   <td>Currency</td>
-                  <td contenteditable="true" id="inv-p-currency">${escapeHtml(currency)}</td>
+                  <td id="inv-p-currency">${escapeHtml(currency)}</td>
                 </tr>
               </tbody>
             </table>
@@ -230,13 +142,13 @@ export function generateNumericTransactionRef(id) {
             </thead>
             <tbody>
               <tr>
-                <td contenteditable="true" id="inv-p-qty">${escapeHtml(qty)}</td>
+                <td id="inv-p-qty">${escapeHtml(qty)}</td>
                 <td>
-                  <div class="inv-item-title" contenteditable="true" id="inv-p-desc">${escapeHtml(desc)}</div>
-                  <div class="inv-item-sub" contenteditable="true" id="inv-p-period">${escapeHtml(period)}</div>
+                  <div class="inv-item-title" id="inv-p-desc">${escapeHtml(desc)}</div>
+                  <div class="inv-item-sub" id="inv-p-period">${escapeHtml(period)}</div>
                 </td>
-                <td contenteditable="true" id="inv-p-rate">$${escapeHtml(rate)}</td>
-                <td style="text-align:right;" contenteditable="true" id="inv-p-amt">${escapeHtml(amountStr)}</td>
+                <td id="inv-p-rate">$${escapeHtml(rate)}</td>
+                <td style="text-align:right;" id="inv-p-amt">${escapeHtml(amountStr)}</td>
               </tr>
             </tbody>
           </table>

@@ -10,82 +10,34 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
   const transactionId = custom.transactionId || record.transactionId || (record.id ? `ch_3UUVcRJFr6CCHwli${record.id}` : 'ch_3UUVcRJFr6CCHwli19T5iGEN');
   const chargedTo = custom.chargedTo || (record.method ? record.method.replace(' ending in ', ' (5*** **** **** ') + ')' : 'MasterCard (5*** **** **** 2791)');
   const dateStr = custom.date || `${record.date || '2026-10-25'} 10:54AM PDT`;
-  const desc = custom.description || (record.purpose === 'budget' ? 'GitHub Budgets & Usage' : (record.description || `${record.name || 'GitHub Actions Usage'}`));
+  const desc = custom.description || 'GitHub Actions Usage';
   const period = custom.period || record.period || `${(record.date || '2026-10-25').slice(0, 7)}-01 - ${(record.date || '2026-10-25').slice(0, 7)}-30`;
   const amountStr = custom.amount || `$${Number(record.amount || 0).toFixed(2)} USD`;
   const watermarkText = custom.watermark || 'Thank you.';
-  const currentRecordId = record.id || '';
-
-  const options = allPayments.map(p => `
-    <option value="${escapeHtml(p.id)}" ${p.id === currentRecordId ? 'selected' : ''}>
-      ${escapeHtml(p.id)} · ${escapeHtml(p.date)} · $${Number(p.amount||0).toFixed(2)} USD (${escapeHtml(p.name || p.method)})
-    </option>
-  `).join('');
 
   return `
-    <div class="receipt-dialog-body">
-      <div class="receipt-form-panel">
-        <h3 class="receipt-form-title">Editar campos del recibo</h3>
-        <p class="receipt-form-hint">Modifica los campos del recibo. Puedes guardar este formato y vincularlo directamente con cualquier pago del historial.</p>
-        
-        <form id="receipt-editor-form" class="receipt-fields-grid">
-          <label class="field full">
-            <span>Vincular con registro de pago</span>
-            <select name="linkedPaymentId" id="rcpt-field-linked" class="select" style="width:100%;height:32px;background:#0d1117;color:var(--text);border:1px solid #30363d;border-radius:6px;padding:4px 8px;">
-              <option value="">-- Sin vincular o nuevo recibo --</option>
-              ${options}
-            </select>
-          </label>
-          <label class="field full">
-            <span>Fecha y hora (Date)</span>
-            <input name="date" id="rcpt-field-date" value="${escapeHtml(dateStr)}" required>
-          </label>
-          <label class="field full">
-            <span>Cuenta facturada (Account billed)</span>
-            <input name="accountBilled" id="rcpt-field-account" value="${escapeHtml(accountBilled)}" required>
-          </label>
-          <label class="field full">
-            <span>ID de Transacción (Transaction ID)</span>
-            <input name="transactionId" id="rcpt-field-txid" value="${escapeHtml(transactionId)}" required>
-          </label>
-          <label class="field full">
-            <span>Cobrado a (Charged to)</span>
-            <input name="chargedTo" id="rcpt-field-charged" value="${escapeHtml(chargedTo)}" required>
-          </label>
-          <label class="field full">
-            <span>Descripción del concepto (Description)</span>
-            <input name="description" id="rcpt-field-desc" value="${escapeHtml(desc)}" required>
-          </label>
-          <label class="field">
-            <span>Período o detalle</span>
-            <input name="period" id="rcpt-field-period" value="${escapeHtml(period)}" required>
-          </label>
-          <label class="field">
-            <span>Importe (Amount / Total)</span>
-            <input name="amount" id="rcpt-field-amount" value="${escapeHtml(amountStr)}" required>
-          </label>
-          <label class="field full">
-            <span>Marca de agua (Watermark)</span>
-            <input name="watermark" id="rcpt-field-watermark" value="${escapeHtml(watermarkText)}" required>
-          </label>
-          <label class="field full">
-            <span>Enlace de soporte (Questions URL)</span>
-            <input name="supportUrl" id="rcpt-field-support" value="https://support.github.com/contact" required>
-          </label>
-        </form>
-
-        <div class="receipt-form-actions">
-          <button type="button" class="btn primary" id="btn-save-receipt-template" style="background:#238636;border-color:#2ea043;font-weight:600;">Guardar formato y vincular a pago</button>
-          <button type="button" class="btn" id="btn-download-html-receipt">Descargar Recibo HTML</button>
-          <button type="button" class="btn" id="btn-print-receipt">Imprimir / Guardar PDF (Exacto)</button>
+    <div class="receipt-dialog-body clean-sheet-only">
+      <div class="receipt-action-toolbar" style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#161b22;border:1px solid #30363d;border-radius:8px;margin-bottom:16px;">
+        <div style="font-size:13px;color:#8b949e;display:flex;align-items:center;gap:8px;">
+          <strong style="color:#f0f6fc;">Recibo Oficial:</strong>
+          <span style="font-family:monospace;background:#21262d;padding:2px 8px;border-radius:4px;color:#58a6ff;">${escapeHtml(record.id)}</span>
+          <span>· Total: <strong style="color:#3fb950;">${escapeHtml(amountStr)}</strong></span>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <a href="assets/pdf/receipt-${record.id || 'github'}.pdf" download="receipt-${record.id}.pdf" class="btn primary" style="background:#238636;border-color:#2ea043;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none;padding:5px 14px;border-radius:6px;font-size:13px;color:#fff;">
+            Descargar PDF Oficial
+          </a>
+          <button type="button" class="btn" id="btn-print-receipt" style="display:inline-flex;align-items:center;gap:6px;">
+            Imprimir / Guardar PDF
+          </button>
         </div>
       </div>
 
-      <div class="receipt-preview-panel">
-        <div class="receipt-card-sheet" id="receipt-printable-content">
+      <div class="receipt-preview-panel" style="background:#f6f8fa;padding:24px 0;border-radius:8px;display:flex;justify-content:center;">
+        <div class="receipt-card-sheet" id="receipt-printable-content" style="box-shadow:0 8px 24px rgba(0,0,0,0.12);background:#fff;border-radius:4px;">
           <div class="rcpt-header">
             ${GITHUB_OCTOCAT_SVG}
-            <h1 class="rcpt-title" contenteditable="true" id="rcpt-preview-title">Receipt</h1>
+            <h1 class="rcpt-title" id="rcpt-preview-title">Receipt</h1>
           </div>
 
           <div class="rcpt-intro">
@@ -97,19 +49,19 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
             <tbody>
               <tr>
                 <td class="rcpt-label">Date</td>
-                <td class="rcpt-value" contenteditable="true" id="rcpt-preview-date">${escapeHtml(dateStr)}</td>
+                <td class="rcpt-value" id="rcpt-preview-date">${escapeHtml(dateStr)}</td>
               </tr>
               <tr>
                 <td class="rcpt-label">Account billed</td>
-                <td class="rcpt-value" contenteditable="true" id="rcpt-preview-account">${escapeHtml(accountBilled)}</td>
+                <td class="rcpt-value" id="rcpt-preview-account">${escapeHtml(accountBilled)}</td>
               </tr>
               <tr>
                 <td class="rcpt-label">Transaction ID</td>
-                <td class="rcpt-value" contenteditable="true" id="rcpt-preview-txid">${escapeHtml(transactionId)}</td>
+                <td class="rcpt-value" id="rcpt-preview-txid">${escapeHtml(transactionId)}</td>
               </tr>
               <tr>
                 <td class="rcpt-label">Charged to</td>
-                <td class="rcpt-value" contenteditable="true" id="rcpt-preview-charged">${escapeHtml(chargedTo)}</td>
+                <td class="rcpt-value" id="rcpt-preview-charged">${escapeHtml(chargedTo)}</td>
               </tr>
             </tbody>
           </table>
@@ -124,22 +76,22 @@ export function receiptModalHtml(record, profile = {}, allPayments = []) {
             <tbody>
               <tr>
                 <td class="rcpt-item-desc">
-                  <div class="rcpt-item-name" contenteditable="true" id="rcpt-preview-desc">${escapeHtml(desc)}</div>
-                  <div class="rcpt-item-sub" contenteditable="true" id="rcpt-preview-period">${escapeHtml(period)}</div>
+                  <div class="rcpt-item-name" id="rcpt-preview-desc">${escapeHtml(desc)}</div>
+                  <div class="rcpt-item-sub" id="rcpt-preview-period">${escapeHtml(period)}</div>
                 </td>
-                <td class="rcpt-item-amt" contenteditable="true" id="rcpt-preview-amount">${escapeHtml(amountStr)}</td>
+                <td class="rcpt-item-amt" id="rcpt-preview-amount">${escapeHtml(amountStr)}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <td class="rcpt-total-label">Total</td>
-                <td class="rcpt-total-value" contenteditable="true" id="rcpt-preview-total">${escapeHtml(amountStr)}*</td>
+                <td class="rcpt-total-value" id="rcpt-preview-total">${escapeHtml(amountStr)}*</td>
               </tr>
             </tfoot>
           </table>
 
           <div class="rcpt-bottom-section">
-            <div class="rcpt-watermark" contenteditable="true" id="rcpt-preview-watermark">${escapeHtml(watermarkText)}</div>
+            <div class="rcpt-watermark" id="rcpt-preview-watermark">${escapeHtml(watermarkText)}</div>
             
             <div class="rcpt-footer-content">
               <div class="rcpt-footer-brand">GitHub</div>
