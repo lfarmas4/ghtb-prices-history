@@ -1,75 +1,75 @@
 export const DISTRIBUTED_COMPUTE = {
   'f942c71a': { amount: 485.00, time: "9m 26s runner", action: "CI/CD CrossBox #1837: Despliegue productivo y sincronizaci\u00f3n general" },
-  'b41a79e2': { amount: 680.00, time: "7m 51s runner", action: "CI/CD CrossBox #1836: feat(pwr): Barrera l\u00e1ser independiente con acceso desde Power Games (#647)" },
-  'e4189ac3': { amount: 85.00, time: "5m 23s runner", action: "CI/CD CrossBox #1835: chore(deps): bump fast-xml-parser from 5.8.0 to 5.12.0 in /functions (#646)" },
-  'd8291a05': { amount: 75.00, time: "1m 18s runner", action: "Dependabot Updates #212: npm_and_yarn in /functions for fast-xml-parser - Update #1697282708" },
-  'a78129f4': { amount: 165.00, time: "3m 45s runner", action: "PWR training - Group B podium #2: publicaci\u00f3n de agenda y grupos sincronizados" },
-  'f33f487b': { amount: 270.00, time: "4m 12s runner", action: "PWR training - Group B podium #3: diagn\u00f3stico de pantalla y calibraci\u00f3n de pods" },
-  '9e02de8c': { amount: 290.00, time: "7m 25s runner", action: "CI/CD CrossBox #1834: Merge PR #645 codex/pwr-group-b-diagnosis diagn\u00f3stico de pantalla" },
+  'b41a79e2': { amount: 340.00, time: "7m 51s runner", action: "CI/CD CrossBox #1836: feat(pwr): Barrera l\u00e1ser independiente con acceso desde Power Games (#647)" },
+  'e4189ac3': { amount: 0.40, time: "5m 23s runner", action: "CI/CD CrossBox #1835: chore(deps): bump fast-xml-parser from 5.8.0 to 5.12.0 in /functions (#646)" },
+  'd8291a05': { amount: 0.25, time: "1m 18s runner", action: "Dependabot Updates #212: npm_and_yarn in /functions for fast-xml-parser - Update #1697282708" },
+  'a78129f4': { amount: 0.30, time: "28s runner", action: "PWR training - Group B podium #2: publicaci\u00f3n de agenda y grupos sincronizados" },
+  'f33f487b': { amount: 0.35, time: "26s runner", action: "PWR training - Group B podium #3: diagn\u00f3stico de pantalla y calibraci\u00f3n de pods" },
+  '9e02de8c': { amount: 0.90, time: "7m 25s runner", action: "CI/CD CrossBox #1834: Merge PR #645 codex/pwr-group-b-diagnosis diagn\u00f3stico de pantalla" },
   'c8319f04': { amount: 1040.00, time: "24m 15s macOS", action: "CI/CD Workflow: Lanzamiento multiplataforma (Web + Android APK + iOS IPA)" },
-  'b1948a72': { amount: 380.00, time: "11m 15s runner", action: "Actions Run: Mobile athlete VAR browser proof & video frame validation" },
+  'b1948a72': { amount: 1.40, time: "11m 15s runner", action: "Actions Run: Mobile athlete VAR browser proof & video frame validation" },
   'f870a64e': { amount: 971.75, time: "18m 40s cluster", action: "Actions Run: Google Cloud & Runner Egress Cluster Multi-platform" },
-  'd5192837': { amount: 450.00, time: "12m 30s runner", action: "Actions Run: PWR GAMES - Admin multi-sede (San Rafael + Armenia) router deploy" },
-  '7a192847': { amount: 240.00, time: "8m 20s runner", action: "Actions Run: NEXO - Conectar Vital a Tandem + Heroes sincronizaci\u00f3n de stock" },
-  '6182947a': { amount: 210.00, time: "6m 40s runner", action: "Actions Run: PWR Games - Capacitaci\u00f3n del staff y simulacro de roles de jueces" },
-  '5a918273': { amount: 190.00, time: "5m 50s runner", action: "Actions Run: Deploy Cloud Functions (targeted) microservicios y triggers v2" },
-  '4e918273': { amount: 175.00, time: "4m 30s runner", action: "Actions Run: PWR Games - Crear ensayo independiente y aislamiento de arena" },
+  'd5192837': { amount: 2.10, time: "12m 30s runner", action: "Actions Run: PWR GAMES - Admin multi-sede (San Rafael + Armenia) router deploy" },
+  '7a192847': { amount: 1.15, time: "8m 20s runner", action: "Actions Run: NEXO - Conectar Vital a Tandem + Heroes sincronizaci\u00f3n de stock" },
+  '6182947a': { amount: 0.85, time: "6m 40s runner", action: "Actions Run: PWR Games - Capacitaci\u00f3n del staff y simulacro de roles de jueces" },
+  '5a918273': { amount: 0.75, time: "5m 50s runner", action: "Actions Run: Deploy Cloud Functions (targeted) microservicios y triggers v2" },
+  '4e918273': { amount: 0.60, time: "4m 30s runner", action: "Actions Run: PWR Games - Crear ensayo independiente y aislamiento de arena" },
   '3f3cb39a': { amount: 1173.00, time: "28m 40s macOS", action: "CI/CD Deploy: Merge PR #583: codex/pwr games release (In-App iOS & Android)" },
-  'e18e95ed': { amount: 95.00, time: "3m 15s runner", action: "CI/CD CrossBox: Merge PR #610: claude/re2js audit fix [skip ci]" },
-  'e245f953': { amount: 185.00, time: "6m 20s runner", action: "CI/CD Deploy: Merge PR #609: claude/pwr ensayo posters radio tv [skip ci]" },
-  '4a7ccbfd': { amount: 120.00, time: "4m 10s runner", action: "CI/CD Deploy: Merge PR #608: claude/pwr landing prueba estable" },
-  '3bd10137': { amount: 140.00, time: "5m 05s runner", action: "CI/CD Deploy: Merge PR #606: claude/pwr halloween landing" },
-  '8c066ebe': { amount: 115.00, time: "4m 18s runner", action: "CI/CD Deploy: Merge PR #605: claude/pwr ensayo guardar sanciones" },
-  'de829196': { amount: 130.00, time: "4m 45s runner", action: "CI/CD Deploy: Merge PR #604: claude/pwr ensayo publicar" },
-  '6d980d4b': { amount: 85.00, time: "3m 10s runner", action: "CI/CD Deploy: Merge PR #582: claude/avisos gentle ai 581 atr" },
+  'e18e95ed': { amount: 0.35, time: "3m 15s runner", action: "CI/CD CrossBox: Merge PR #610: claude/re2js audit fix [skip ci]" },
+  'e245f953': { amount: 0.61, time: "6m 20s runner", action: "CI/CD Deploy: Merge PR #609: claude/pwr ensayo posters radio tv [skip ci]" },
+  '4a7ccbfd': { amount: 0.00, time: "4m 10s runner", action: "CI/CD Deploy: Merge PR #608: claude/pwr landing prueba estable" },
+  '3bd10137': { amount: 0.15, time: "5m 05s runner", action: "CI/CD Deploy: Merge PR #606: claude/pwr halloween landing" },
+  '8c066ebe': { amount: 0.27, time: "4m 18s runner", action: "CI/CD Deploy: Merge PR #605: claude/pwr ensayo guardar sanciones" },
+  'de829196': { amount: 0.51, time: "4m 45s runner", action: "CI/CD Deploy: Merge PR #604: claude/pwr ensayo publicar" },
+  '6d980d4b': { amount: 0.45, time: "3m 10s runner", action: "CI/CD Deploy: Merge PR #582: claude/avisos gentle ai 581 atr" },
   '6a090b8d': { amount: 1040.00, time: "25m 10s cluster", action: "Actions Run: feat(atr): deploy dual planning and shared maestro defaults (#569)" },
-  'eef314f4': { amount: 380.00, time: "12m 45s macOS", action: "Actions Run: Merge PR #581: claude/twa iphone loading issues 946991" },
-  '056d6907': { amount: 260.00, time: "8m 50s runner", action: "Actions Run: Merge PR #567: claude/tabata open source github cd1bd3" },
-  '55897dd5': { amount: 140.00, time: "4m 30s runner", action: "Actions Run: Merge PR #566: codex/event live control" },
-  'eaf6be40': { amount: 420.00, time: "14m 20s runner", action: "Actions Run: Merge PR #559: codex/event live control tracker" },
+  'eef314f4': { amount: 0.50, time: "12m 45s macOS", action: "Actions Run: Merge PR #581: claude/twa iphone loading issues 946991" },
+  '056d6907': { amount: 3.63, time: "8m 50s runner", action: "Actions Run: Merge PR #567: claude/tabata open source github cd1bd3" },
+  '55897dd5': { amount: 5.66, time: "4m 30s runner", action: "Actions Run: Merge PR #566: codex/event live control" },
+  'eaf6be40': { amount: 13.22, time: "14m 20s runner", action: "Actions Run: Merge PR #559: codex/event live control tracker" },
   '4da15512': { amount: 1074.00, time: "26m 30s cluster", action: "Actions Run: Merge PR #527: codex/hyrox var (Solidario Variable Engine)" },
-  '074c9ece': { amount: 580.00, time: "16m 15s runner", action: "Actions Run: Merge PR #521: tablet camera wall and live judging control" },
-  'b17fa44e': { amount: 240.00, time: "7m 40s runner", action: "Actions Run: Merge PR #556: claude/hyrox podios solidario 03837a" },
-  'ee7918d4': { amount: 95.00, time: "3m 10s runner", action: "Actions Run: Merge PR #557: claude/hyrox podios solidario docs" },
-  '8c6dc362': { amount: 190.00, time: "6m 10s runner", action: "Actions Run: Merge PR #520: 5 GB de heap para vite build [skip ci]" },
-  'a4543c28': { amount: 180.00, time: "5m 30s runner", action: "Actions Run: Merge PR #522: sesi\u00f3n SuperAdmin sin permisos y cach\u00e9" },
+  '074c9ece': { amount: 2.10, time: "16m 15s runner", action: "Actions Run: Merge PR #521: tablet camera wall and live judging control" },
+  'b17fa44e': { amount: 6.90, time: "7m 40s runner", action: "Actions Run: Merge PR #556: claude/hyrox podios solidario 03837a" },
+  'ee7918d4': { amount: 14.24, time: "3m 10s runner", action: "Actions Run: Merge PR #557: claude/hyrox podios solidario docs" },
+  '8c6dc362': { amount: 13.60, time: "6m 10s runner", action: "Actions Run: Merge PR #520: 5 GB de heap para vite build [skip ci]" },
+  'a4543c28': { amount: 4.80, time: "5m 30s runner", action: "Actions Run: Merge PR #522: sesi\u00f3n SuperAdmin sin permisos y cach\u00e9" },
   '319afcac': { amount: 1040.00, time: "25m 00s cluster", action: "Actions Run: Runner Allocation & Large-scale Multi-core Jobs" },
-  '881d6ce1': { amount: 265.00, time: "8m 10s runner", action: "Actions Run: Runner Allocation & Storage Cache Synchronization" },
-  '4c81A53D': { amount: 265.00, time: "8m 00s runner", action: "Actions Run: iOS Release Deployment Pipeline" },
-  '9d303e3a': { amount: 180.00, time: "5m 45s egress", action: "Actions Run: GCP & API Data Transfer Egress" },
-  '631f5717': { amount: 180.00, time: "5m 45s egress", action: "Actions Run: GCP & API Data Transfer Egress" },
+  '881d6ce1': { amount: 3.40, time: "8m 10s runner", action: "Actions Run: Runner Allocation & Storage Cache Synchronization" },
+  '4c81A53D': { amount: 3.20, time: "8m 00s runner", action: "Actions Run: iOS Release Deployment Pipeline" },
+  '9d303e3a': { amount: 1.80, time: "5m 45s egress", action: "Actions Run: GCP & API Data Transfer Egress" },
+  '631f5717': { amount: 1.80, time: "5m 45s egress", action: "Actions Run: GCP & API Data Transfer Egress" },
   '103d5903': { amount: 1040.00, time: "24m 50s cluster", action: "Actions Run: Merge PR #379: claude/sharp lovelace n3wr9e (Full Build)" },
-  '825f6dc3': { amount: 520.00, time: "15m 10s runner", action: "Actions Run: Merge PR #381: claude/sharp planck z04kq6" },
-  '025c65f3': { amount: 680.00, time: "17m 30s runner", action: "Actions Run: Merge PR #374: claude/power games events screen a9b9e4" },
-  'cd3eabed': { amount: 210.00, time: "6m 40s runner", action: "Actions Run: Merge PR #378: claude/pwr games handoff" },
-  'acd7505a': { amount: 340.00, time: "10m 20s runner", action: "Actions Run: Merge PR #387: claude/athlete admin notifications" },
-  'b38d76af': { amount: 280.00, time: "8m 50s runner", action: "Actions Run: Merge PR #388: claude/vital cart sale" },
+  '825f6dc3': { amount: 2.10, time: "15m 10s runner", action: "Actions Run: Merge PR #381: claude/sharp planck z04kq6" },
+  '025c65f3': { amount: 2.80, time: "17m 30s runner", action: "Actions Run: Merge PR #374: claude/power games events screen a9b9e4" },
+  'cd3eabed': { amount: 0.85, time: "6m 40s runner", action: "Actions Run: Merge PR #378: claude/pwr games handoff" },
+  'acd7505a': { amount: 1.40, time: "10m 20s runner", action: "Actions Run: Merge PR #387: claude/athlete admin notifications" },
+  'b38d76af': { amount: 1.10, time: "8m 50s runner", action: "Actions Run: Merge PR #388: claude/vital cart sale" },
   '29fc05df': { amount: 850.00, time: "22m 10s cluster", action: "Actions Run: feat(hyrox): add standalone training platform and subscription" },
-  '739cce39': { amount: 740.00, time: "19m 40s runner", action: "Actions Run: Completa categor\u00edas, organizadores y boletos de fisicoculturismo" },
-  'cf17842b': { amount: 690.00, time: "18m 20s runner", action: "Actions Run: feat(bodybuilding): complete quick registration and landing editor" },
-  'dc078c00': { amount: 480.00, time: "13m 15s runner", action: "Actions Run: feat(bodybuilding): public landing, registration receipt" },
-  '5d874f99': { amount: 410.00, time: "12m 00s runner", action: "Actions Run: Fix THE LAB video workflows and activate Barra V2 guided setup" },
-  '18d1ea2e': { amount: 260.00, time: "8m 15s runner", action: "Actions Run: Merge PR #363: codex/lab storage cors audio" },
-  'f5a57210': { amount: 320.00, time: "9m 40s runner", action: "Actions Run: feat(thelab): protect concurrent assignments and renew athlete" },
+  '739cce39': { amount: 2.90, time: "19m 40s runner", action: "Actions Run: Completa categor\u00edas, organizadores y boletos de fisicoculturismo" },
+  'cf17842b': { amount: 2.75, time: "18m 20s runner", action: "Actions Run: feat(bodybuilding): complete quick registration and landing editor" },
+  'dc078c00': { amount: 1.80, time: "13m 15s runner", action: "Actions Run: feat(bodybuilding): public landing, registration receipt" },
+  '5d874f99': { amount: 1.60, time: "12m 00s runner", action: "Actions Run: Fix THE LAB video workflows and activate Barra V2 guided setup" },
+  '18d1ea2e': { amount: 0.95, time: "8m 15s runner", action: "Actions Run: Merge PR #363: codex/lab storage cors audio" },
+  'f5a57210': { amount: 1.25, time: "9m 40s runner", action: "Actions Run: feat(thelab): protect concurrent assignments and renew athlete" },
   'e8ea85ba': { amount: 2300.00, time: "48m 20s macOS", action: "Actions Run: Merge PR #325: feat/digital judging control & iOS Build Cluster" },
   '5d59e1fd': { amount: 2300.00, time: "48m 20s macOS", action: "Actions Run: High-Performance macOS iOS Build Cluster" },
-  'e87b19cb': { amount: 920.00, time: "23m 40s cluster", action: "Actions Run: feat: add bodybuilding competition suite and repair class pass" },
-  'd4287874': { amount: 450.00, time: "12m 50s runner", action: "Actions Run: Merge PR #329: claude/ultracode pre deploy review 05eda3" },
+  'e87b19cb': { amount: 340.00, time: "23m 40s cluster", action: "Actions Run: feat: add bodybuilding competition suite and repair class pass" },
+  'd4287874': { amount: 1.80, time: "12m 50s runner", action: "Actions Run: Merge PR #329: claude/ultracode pre deploy review 05eda3" },
   '9f633a5e': { amount: 839.50, time: "21m 15s runner", action: "Actions Run: GITHUB, INC. Team & Services / PWR Games Radio" },
   '6a4dfb43': { amount: 839.50, time: "21m 15s runner", action: "Actions Run: GITHUB, INC. Team & Services / PWR Games Radio" },
-  '3068ff74': { amount: 265.00, time: "8m 30s runner", action: "Actions Run: Application Core Services & Heroes Gym" },
-  '7778f632': { amount: 265.00, time: "8m 30s runner", action: "Actions Run: Application Core Services & Heroes Gym" },
-  'b4e39e44': { amount: 680.00, time: "18m 10s runner", action: "Actions Run: feat(agent): Barra V2 operaciones guiadas, cobranza transaccional" },
-  '95a4db55': { amount: 290.00, time: "8m 50s runner", action: "Actions Run: fix(events): prepara Power Games y diagnostica fallos del esc\u00e1ner" },
-  '870a8dd2': { amount: 540.00, time: "15m 20s runner", action: "Actions Run: feat(stores): cerrar operaciones e inventario de Vital Protein" },
+  '3068ff74': { amount: 1.10, time: "8m 30s runner", action: "Actions Run: Application Core Services & Heroes Gym" },
+  '7778f632': { amount: 1.10, time: "8m 30s runner", action: "Actions Run: Application Core Services & Heroes Gym" },
+  'b4e39e44': { amount: 2.80, time: "18m 10s runner", action: "Actions Run: feat(agent): Barra V2 operaciones guiadas, cobranza transaccional" },
+  '95a4db55': { amount: 1.15, time: "8m 50s runner", action: "Actions Run: fix(events): prepara Power Games y diagnostica fallos del esc\u00e1ner" },
+  '870a8dd2': { amount: 2.20, time: "15m 20s runner", action: "Actions Run: feat(stores): cerrar operaciones e inventario de Vital Protein" },
   'dc61e8e6': { amount: 250.00, time: "7m 45s runner", action: "Actions Run: App platform scale-up & high-memory runners" },
   '4a85c6bf': { amount: 250.00, time: "7m 45s runner", action: "Actions Run: App platform scale-up & high-memory runners" },
-  '176ccf39': { amount: 340.00, time: "10m 15s runner", action: "Verified Deployment: Integraci\u00f3n de Vital Protein en la administraci\u00f3n de Heroes" },
+  '176ccf39': { amount: 1.40, time: "10m 15s runner", action: "Verified Deployment: Integraci\u00f3n de Vital Protein en la administraci\u00f3n de Heroes" },
   'e5763870': { amount: 180.00, time: "6m 00s runner", action: "Actions Run: Cloud metered services execution" },
   'f0654bb9': { amount: 180.00, time: "6m 00s runner", action: "Actions Run: Cloud metered services execution" },
   'a6311c2c': { amount: 180.00, time: "5m 45s runner", action: "Actions Run: Cloud metered infrastructure deployment" },
   'f4cf8611': { amount: 180.00, time: "5m 45s runner", action: "Actions Run: Cloud metered infrastructure deployment" },
-  'a26e8e2': { amount: 130.00, time: "4m 30s runner", action: "Actions Run: Tarifas y presupuesto storage sync" }
+  'a26e8e2': { amount: 0.50, time: "4m 30s runner", action: "Actions Run: Tarifas y presupuesto storage sync" }
 };
 
 
@@ -100,37 +100,37 @@ function getCommitValue(row) {
   const files = Number(row.changedFiles) || 1;
   let hashVal = 0;
   for (let i = 0; i < sha8.length; i++) hashVal = (hashVal * 31 + sha8.charCodeAt(i)) & 0xfffff;
-  const variance = (hashVal % 1500) / 100; // 0.00 to 14.99
+  const variance = (hashVal % 40) / 100; // 0.00 to 0.39
   
-  // Inflated compute runner time and infrastructure cost
-  let cost = 24.50 + variance;
-  let minutes = 3;
+  // Low realistic GitHub Actions runner costs ($0.10 to $3.50) matching official pricing
+  let cost = 0.25 + variance;
+  let minutes = 2;
   let seconds = (hashVal % 50) + 10;
   let runnerType = 'runner';
 
   if (lines > 3000) {
-    cost = 185.00 + (lines / 180) + variance;
-    minutes = 22 + (hashVal % 8);
+    cost = 3.80 + (lines / 1500) + variance;
+    minutes = 18 + (hashVal % 6);
     runnerType = 'macOS';
   } else if (lines > 1000) {
-    cost = 110.00 + (lines / 80) + variance;
-    minutes = 14 + (hashVal % 6);
+    cost = 1.40 + (lines / 1000) + variance;
+    minutes = 8 + (hashVal % 5);
     runnerType = 'cluster';
   } else if (lines > 300) {
-    cost = 65.00 + (lines / 35) + variance;
-    minutes = 7 + (hashVal % 4);
-    runnerType = 'runner';
-  } else if (lines > 80) {
-    cost = 42.00 + (lines / 20) + variance;
+    cost = 0.55 + (lines / 800) + variance;
     minutes = 4 + (hashVal % 3);
     runnerType = 'runner';
-  } else if (files > 4) {
-    cost = 32.00 + files * 2.20 + variance;
+  } else if (lines > 80) {
+    cost = 0.35 + (lines / 500) + variance;
     minutes = 3 + (hashVal % 2);
     runnerType = 'runner';
+  } else if (files > 4) {
+    cost = 0.28 + files * 0.04 + variance;
+    minutes = 2 + (hashVal % 2);
+    runnerType = 'runner';
   } else {
-    cost = 18.50 + (lines * 0.25) + variance;
-    minutes = 1 + (hashVal % 2);
+    cost = 0.12 + (lines * 0.002) + variance;
+    minutes = 1;
     runnerType = 'runner';
   }
 

@@ -881,16 +881,16 @@ let recordMutationBusy=false;
 let activePage = location.hash.slice(1) || 'organizations';
 
 const DEFAULT_BUDGETS = [
-  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 6444.00, spent: 6444.00 },
-  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 1680.00, spent: 1680.00 },
-  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 620.00, spent: 620.00 },
-  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 250.00, spent: 0.00 },
-  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 211.96, spent: 211.96 }
+  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 1200.00, spent: 385.20 },
+  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 60.00, spent: 9.52 },
+  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 150.00, spent: 42.50 },
+  { id: 'b-ai-credits', scope: 'Account', product: 'All AI Credit SKUs', limit: 50.00, spent: 8.40 },
+  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 25.00, spent: 3.60 }
 ];
 
 let budgets = (() => {
   try {
-    const raw = localStorage.getItem('codeweight-budgets-v1');
+    const raw = localStorage.getItem('codeweight-budgets-v3');
     if (raw) return JSON.parse(raw);
   } catch {}
   return [...DEFAULT_BUDGETS];
@@ -898,7 +898,7 @@ let budgets = (() => {
 
 function saveBudgets() {
   try {
-    localStorage.setItem('codeweight-budgets-v1', JSON.stringify(budgets));
+    localStorage.setItem('codeweight-budgets-v3', JSON.stringify(budgets));
   } catch {}
 }
 
@@ -939,7 +939,7 @@ const btn = (text, action, cls = '', extra = '') => `<button type="button" class
 function heading(title, action = '', cls = '') { return `<div class="page-heading ${cls}"><h1>${title}</h1>${action}</div>`; }
 function avatar(small = false) { return `<button class="avatar ${small ? 'small' : ''}" data-action="${small ? 'account-menu' : 'avatar'}" aria-label="${small ? 'Abrir menú de cuenta' : 'Añadir foto de perfil'}" title="${small ? 'Cuenta' : 'Añadir tu foto'}">${profile.avatar ? `<img src="${e(profile.avatar)}" alt="Tu foto de perfil">` : icon('person')}</button>`; }
 function renderHeader() {
-  $('#topbar').innerHTML = `<button class="icon-button" data-action="navigation" aria-label="Abrir navegación">${icon('menu')}</button><a href="#deployments" title="CodeWeight"><img class="brand" src="${e(profile.logo || 'icon.svg')}" alt="CodeWeight"></a><span class="top-title">Settings</span><div class="top-actions"><button class="top-search" data-action="search">${icon('search')}<span>Type <kbd>/</kbd> to search</span></button><button class="icon-button desktop" data-action="organizations-menu" aria-label="Organizaciones">${icon('users')}${icon('chevron')}</button><span class="separator desktop"></span><button class="icon-button" data-action="new-menu" aria-label="Crear nuevo">${icon('plus')}${icon('chevron')}</button><button class="icon-button optional" data-action="activity" aria-label="Actividad">${icon('issue')}</button><button class="icon-button optional" data-action="deployments" aria-label="Despliegues">${icon('branch')}</button><button class="icon-button optional" data-action="repositories" aria-label="Repositorios">${icon('repo')}</button><button class="icon-button desktop" data-action="notifications" aria-label="Notificaciones">${icon('inbox')}</button>${avatar(true)}</div>`;
+  $('#topbar').innerHTML = `<button class="icon-button" data-action="navigation" aria-label="Abrir navegación">${icon('menu')}</button><a href="#deployments" title="CodeWeight">${profile.logo ? `<img class="brand" src="${e(profile.logo)}" alt="CodeWeight">` : `<svg class="brand" viewBox="0 0 40 40" width="26" height="26" style="display:block;border-radius:50%;"><rect width="40" height="40" rx="20" fill="#f0f6fc"/><path d="m15 12-9 8 9 8m10-16 9 8-9 8m-3-19-5 22" fill="none" stroke="#0d1117" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`}</a><span class="top-title">Settings</span><div class="top-actions"><button class="top-search" data-action="search">${icon('search')}<span>Type <kbd>/</kbd> to search</span></button><button class="icon-button desktop" data-action="organizations-menu" aria-label="Organizaciones">${icon('users')}${icon('chevron')}</button><span class="separator desktop"></span><button class="icon-button" data-action="new-menu" aria-label="Crear nuevo">${icon('plus')}${icon('chevron')}</button><button class="icon-button optional" data-action="activity" aria-label="Actividad">${icon('issue')}</button><button class="icon-button optional" data-action="deployments" aria-label="Despliegues">${icon('branch')}</button><button class="icon-button optional" data-action="repositories" aria-label="Repositorios">${icon('repo')}</button><button class="icon-button desktop" data-action="notifications" aria-label="Notificaciones">${icon('inbox')}</button>${avatar(true)}</div>`;
   $('#account-heading').innerHTML = `${avatar()}<div><div class="account-name">${e(profile.name)} <span>(${e(profile.username)})</span></div><div class="account-caption">Your personal account</div></div>`;
 }
 const mainLinks = [['public-profile','Public profile','person'],['account','Account','gear'],['appearance','Appearance','brush'],['accessibility','Accessibility','access'],['notifications','Notifications','bell']];
@@ -1595,76 +1595,33 @@ function renderBudgets() {
         <button class="btn" style="background:#21262d;font-size:11px;height:32px;">Scope: All <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"></path></svg></button>
       </div>
 
-      <div class="budgets-count">5 budgets</div>
+      <div class="budgets-count">${budgets.length} budgets</div>
 
       <div class="budget-card-list">
-        <div class="budget-card-item">
-          <div>
-            <div class="budget-item-scope">Account</div>
-            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Codespaces</div>
-          </div>
-          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
-          <div class="budget-item-progress-wrap">
-            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
-            <span class="budget-item-percent">0%</span>
-          </div>
-          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
-        </div>
-
-        <div class="budget-card-item">
-          <div>
-            <div class="budget-item-scope">Account</div>
-            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Actions</div>
-          </div>
-          <div class="budget-item-spent">$0.00 / $60.00 spent</div>
-          <div class="budget-item-progress-wrap">
-            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
-            <span class="budget-item-percent">0%</span>
-          </div>
-          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
-        </div>
-
-        <div class="budget-card-item">
-          <div>
-            <div class="budget-item-scope">Account</div>
-            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Packages</div>
-          </div>
-          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
-          <div class="budget-item-progress-wrap">
-            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
-            <span class="budget-item-percent">0%</span>
-          </div>
-          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
-        </div>
-
-        <div class="budget-card-item">
-          <div>
-            <div class="budget-item-scope">Account</div>
-            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · All AI Credit SKUs</div>
-          </div>
-          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
-          <div class="budget-item-progress-wrap">
-            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
-            <span class="budget-item-percent">0%</span>
-          </div>
-          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
-        </div>
-
-        <div class="budget-card-item">
-          <div>
-            <div class="budget-item-scope">Account</div>
-            <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · Git LFS</div>
-          </div>
-          <div class="budget-item-spent">$0.00 / $3.00 spent</div>
-          <div class="budget-item-progress-wrap">
-            <div class="budget-item-bar"><div class="budget-item-fill" style="width:0%;"></div></div>
-            <span class="budget-item-percent">0%</span>
-          </div>
-          <div><button class="bare-icon" style="color:var(--muted);">···</button></div>
-        </div>
+        ${budgets.map(b => {
+          const limit = Number(b.limit) || 1;
+          const spent = Number(b.spent) || 0;
+          const pct = Math.min(100, Math.round((spent / limit) * 100));
+          const barColor = b.product === 'Codespaces' ? '#388bfd' : b.product === 'Actions' ? '#2ea043' : b.product === 'Packages' ? '#d29922' : b.product.includes('AI') ? '#a371f7' : '#58a6ff';
+          return `
+          <div class="budget-card-item">
+            <div>
+              <div class="budget-item-scope">${e(b.scope || 'Account')}</div>
+              <div class="budget-item-name">${icon('globe')} ${e(profile.username || 'lfarmas4')} · ${e(b.product)}</div>
+            </div>
+            <div class="budget-item-spent">${money(spent)} / ${money(limit)} spent</div>
+            <div class="budget-item-progress-wrap">
+              <div class="budget-item-bar" style="background:#21262d;height:6px;border-radius:3px;overflow:hidden;position:relative;">
+                <div class="budget-item-fill" style="width:${pct}%;height:100%;background:${barColor};border-radius:3px;"></div>
+              </div>
+              <span class="budget-item-percent" style="color:#c9d1d9;font-weight:600;">${pct}%</span>
+            </div>
+            <div><button class="bare-icon" style="color:var(--muted);" aria-label="Opciones">···</button></div>
+          </div>`;
+        }).join('')}
       </div>
 
-      <div class="budget-pagination">1-5 of 5</div>
+      <div class="budget-pagination">1-${budgets.length} of ${budgets.length}</div>
     </div>
   `;
 }
