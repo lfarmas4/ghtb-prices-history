@@ -4,11 +4,11 @@ export const portfolioSummary = Object.freeze({
   source: 'supplied portfolio screenshot',
   currency: 'USD',
   crossbox: Object.freeze({
-    targetUsd: 4030,
-    latestUsd: 4030,
-    yearUsd: 10396,
-    averageUsd: 1039.6,
-    months: 11,
+    targetUsd: 8955.96,
+    latestUsd: 1245.55,
+    yearUsd: 8955.96,
+    averageUsd: 1492.66,
+    months: 6,
     growthPercent: 2885,
     latestMonth: 'November 2026',
   }),
@@ -77,7 +77,7 @@ function toCents(amount) {
   return cents;
 }
 
-export function allocateValuation(deployments, totalUsd = 4030) {
+export function allocateValuation(deployments, totalUsd = 8955.96) {
   if (!Array.isArray(deployments)) {
     throw new TypeError('Deployments must be an array.');
   }

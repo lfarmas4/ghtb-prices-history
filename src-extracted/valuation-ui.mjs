@@ -217,7 +217,7 @@ function projectData(project) {
   const key = projectKey(project);
   const records = key === 'crossbox' ? cross.crossboxDeployments || [] : fit.fitcodeHistory || [];
   const coverage = key === 'crossbox' ? cross.historyCoverage || cross.crossboxCoverage || {} : fit.fitcodeCoverage || {};
-  const target = cross.portfolioSummary?.[key]?.latestUsd ?? (key === 'crossbox' ? 4030 : 3);
+  const target = cross.portfolioSummary?.[key]?.targetUsd ?? cross.portfolioSummary?.[key]?.yearUsd ?? (key === 'crossbox' ? 8955.96 : 3);
   const rows = records.length ? cross.allocateValuation(records,target) : [];
   return {key, name:key === 'crossbox' ? 'CrossBox' : 'FitCode', rows, coverage, target};
 }
@@ -225,7 +225,23 @@ function projectData(project) {
 function summaryCard(key) {
   const data = projectData(key);
   const stats = cross.portfolioSummary?.[key] || {};
-  return `<article class="panel valuation-summary"><div class="valuation-summary-label">${key === 'crossbox' ? '<img src="assets/crossbox-logo.png" alt="">' : '<img src="assets/fitcode-logo.png" alt="">'}<h2>${data.name}</h2></div><strong class="valuation-reference">${money(stats.latestUsd ?? (key === 'crossbox' ? 4030 : 3))}</strong><p class="muted">Último valor de referencia · captura proporcionada</p><p>${number(data.rows.length)} actualizaciones disponibles</p><p class="muted">Acumulado anual: ${money(stats.yearUsd ?? 0)} · Promedio: ${money(stats.averageUsd ?? 0)}</p><small class="muted">${data.rows.length ? 'Historial de commits de la rama principal' : 'Fuente del historial aún no disponible'}</small></article>`;
+  const isCb = key === 'crossbox';
+  const mainVal = isCb ? (stats.yearUsd ?? 8955.96) : (stats.latestUsd ?? 3);
+  const subNote = isCb ? 'Total acumulado en GitHub Payments' : 'Último valor de referencia · captura proporcionada';
+  const yearVal = isCb ? (stats.yearUsd ?? 8955.96) : (stats.yearUsd ?? 0);
+  const avgVal = isCb ? (stats.averageUsd ?? 1492.66) : (stats.averageUsd ?? 0);
+
+  return `<article class="panel valuation-summary">
+    <div class="valuation-summary-label">
+      ${isCb ? '<img src="assets/crossbox-logo.png" alt="">' : '<img src="assets/fitcode-logo.png" alt="">'}
+      <h2>${data.name}</h2>
+    </div>
+    <strong class="valuation-reference">${money(mainVal)}</strong>
+    <p class="muted">${subNote}</p>
+    <p>${number(data.rows.length)} actualizaciones disponibles</p>
+    <p class="muted">Acumulado anual: ${money(yearVal)} · Promedio: ${money(avgVal)}</p>
+    <small class="muted">${data.rows.length ? 'Historial de commits de la rama principal' : 'Fuente del historial aún no disponible'}</small>
+  </article>`;
 }
 
 function monthlyChart(data) {

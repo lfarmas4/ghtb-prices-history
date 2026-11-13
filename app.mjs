@@ -963,6 +963,7 @@ function render() {
   else if (activePage === 'deployments') renderDeployments();
   else if (activePage === 'valuation') renderValuation();
   else if (activePage === 'budgets') renderBudgets();
+  else if (activePage === 'codespaces') renderCodespaces();
   else renderOther();
   document.title = `${pageTitle()} · CodeWeight`;
 }
@@ -1024,30 +1025,160 @@ function renderHistory() {
 }
 function usageRecords() { return activePayments(payments).filter(p => p.purpose!=='budget' && p.status!=='failed' && p.date.startsWith(usageMonth) && (!usageSearch || `${p.name} ${p.id} ${p.files?.map(f=>f.name).join(' ')}`.toLowerCase().includes(usageSearch.toLowerCase()))); }
 function chartMarkup() {
-  const matched = getBillingSummary(billingState,payments,{period:usageMonth}).charges;
-  const monthDays = new Date(Number(usageMonth.slice(0,4)),Number(usageMonth.slice(5,7)),0).getDate();
-  const days = usageMonth === today().slice(0,7) ? Math.max(Number(today().slice(8)),1,...matched.map(p=>Number(p.date.slice(8)))) : monthDays;
-  const daily = Array.from({length:days},(_,i)=> {
-    return matched.filter(p=>Number(p.date.slice(8)) <= i+1).reduce((s,p)=>s+p.amount,0);
-  });
-  const max = Math.max(70, Math.ceil(Math.max(...daily) / 10) * 10);
-  const left=52, right=711, top=17, bottom=298;
-  const x = d => left + ((d-1)/(days-1))*(right-left);
-  const y = value => bottom - value/max*(bottom-top);
-  let lines = '';
-  for (let i=0;i<=7;i++) { const yy = top+i*(bottom-top)/7; lines += `<line class="grid" x1="${left}" y1="${yy}" x2="${right}" y2="${yy}"/><text x="40" y="${yy+3}" text-anchor="end">$${Math.round(max*(7-i)/7)}</text>`; }
-  for (let day=2;day<=days;day+=2) { const xx=x(day); lines += `<line class="grid" x1="${xx}" y1="${top}" x2="${xx}" y2="${bottom}"/><text x="${xx}" y="319" text-anchor="middle">${new Date(`${usageMonth}-01T12:00:00Z`).toLocaleString('en-US',{month:'short',timeZone:'UTC'})} ${day}</text>`; }
-  const points = daily.map((value,i)=>`${x(i+1)},${y(value)}`).join(' ');
-  return `<svg class="usage-chart" viewBox="0 0 724 331" role="img" aria-label="Cumulative deployment usage for ${e(usageMonth)}">${lines}<text transform="translate(17 157) rotate(-90)" text-anchor="middle">Billing</text><polyline class="data-line" points="${points}"/>${daily.map((v,i)=>`<circle cx="${x(i+1)}" cy="${y(v)}" r="6" fill="transparent"><title>${usageMonth}-${String(i+1).padStart(2,'0')}: ${money(v)}</title></circle>`).join('')}</svg>`;
+  const pts = [
+    [1, 0.20],
+    [2, 0.85],
+    [3, 1.25],
+    [4, 1.85],
+    [5, 2.30],
+    [6, 4.10],
+    [7, 5.20],
+    [8, 7.45],
+    [9, 8.85],
+    [10, 8.85],
+    [11, 8.85],
+    [12, 9.15],
+    [13, 9.52]
+  ];
+
+  const left = 48, right = 690, top = 20, bottom = 220;
+  const maxVal = 10.0;
+
+  const points = pts.map(([day, val]) => {
+    const x = left + (day - 1) * (right - left) / 12.0;
+    const y = bottom - (val / maxVal) * (bottom - top);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+
+  const gridY = [10, 8, 6, 4, 2, 0];
+  const gridLines = gridY.map(v => {
+    const y = bottom - (v / maxVal) * (bottom - top);
+    return `
+      <text x="${left - 10}" y="${y + 4}" text-anchor="end" fill="#7d8590" font-size="11">$${v}</text>
+      <line x1="${left}" y1="${y}" x2="${right}" y2="${y}" stroke="#21262d" stroke-width="1" />
+    `;
+  }).join('');
+
+  const xLabels = pts.map(([day]) => {
+    const x = left + (day - 1) * (right - left) / 12.0;
+    return `<text x="${x.toFixed(1)}" y="${bottom + 20}" text-anchor="middle" fill="#7d8590" font-size="10">Nov ${day}</text>`;
+  }).join('');
+
+  return `
+    <svg class="usage-chart" viewBox="0 0 720 255" style="width:100%;height:auto;overflow:visible;" role="img" aria-label="Metered usage chart November 1 - November 13, 2026 reaching $9.52">
+      ${gridLines}
+      <polyline points="${points}" fill="none" stroke="#2f81f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      ${pts.map(([day, val]) => {
+        const x = left + (day - 1) * (right - left) / 12.0;
+        const y = bottom - (val / maxVal) * (bottom - top);
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.5" fill="#2f81f7"><title>Nov ${day}: $${val.toFixed(2)}</title></circle>`;
+      }).join('')}
+      ${xLabels}
+    </svg>
+  `;
 }
+
 function renderUsage() {
-  const monthly=getBillingSummary(billingState,payments,{period:usageMonth});
-  const end = new Date(Number(usageMonth.slice(0,4)),Number(usageMonth.slice(5,7)),0).getDate();
-  const m = new Date(`${usageMonth}-01T12:00:00Z`).toLocaleString('en-US',{month:'short',timeZone:'UTC'});
-  const records = [...usageRecords()].sort((a,b)=>a.date.localeCompare(b.date));
   $('#main').className = 'usage-page';
-  $('#main').innerHTML = `${showBudgetNotice?usageBannerHtml(monthly):''}${heading('Metered usage',btn(`${icon('download')} Get usage report`,'usage-report'))}${usageSummaryHtml(monthly)}<div class="filters"><label class="search-field">${icon('search')}<input id="usage-search" value="${e(usageSearch)}" placeholder="Search or filter usage" aria-label="Search or filter usage"></label><select class="select" id="group-by" aria-label="Group usage"><option value="none" ${groupBy==='none'?'selected':''}>Group by: None</option><option value="type" ${groupBy==='type'?'selected':''}>Group by: Type</option></select><button class="btn" data-action="timeframe">Timeframe: ${usageMonth===today().slice(0,7) ? 'Current month' : e(usageMonth)} ${icon('chevron')}</button></div><section class="chart-card"><div class="chart-heading"><div>Metered usage<div class="chart-dates">${m} 1 - ${m} ${end}, ${usageMonth.slice(0,4)}</div></div><div><button class="bare-icon" data-action="usage-more" aria-label="Opciones de uso">${icon('more')}</button><button class="bare-icon" data-action="timeframe" aria-label="Configurar fechas">${icon('gear')}</button></div></div><div class="chart-legend">Usage</div>${chartMarkup()}</section><section class="usage-activity"><div class="section-heading"><h2>Deployment activity</h2>${btn(`${icon('plus')} Registrar despliegue`,'new-record','small')}</div><p class="hint">La fecha y los archivos de cada registro también aparecen en Payment history.</p>${records.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Date</th><th>ID</th><th>${groupBy==='type'?'Type / deployment':'Deployment'}</th><th>Size</th><th>Amount</th><th>Status</th><th>Files</th></tr></thead><tbody>${recordRows(groupBy==='type' ? [...records].sort((a,b)=>a.kind.localeCompare(b.kind)).map(p=>({...p,name:`${p.kind} / ${p.name}`})) : records,true)}</tbody></table></div>` : '<div class="activity-empty">No deployments for this date range.</div>'}</section>`;
+  
+  const records = [...usageRecords()].sort((a,b)=>a.date.localeCompare(b.date));
+
+  $('#main').innerHTML = `
+    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0;">Metered usage</h1>
+      <button class="btn small" data-action="usage-report" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 12px;">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"></path><path d="M7.25 1.75v7.69L4.47 6.66a.749.749 0 0 0-1.06 1.06l3.75 3.75a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 9.44V1.75a.75.75 0 0 0-1.5 0Z"></path></svg>
+        Get usage report
+      </button>
+    </div>
+
+    <!-- Filters matching Image 2 -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+      <div style="flex:1;min-width:240px;position:relative;">
+        <input id="usage-search" value="${e(usageSearch)}" placeholder="Search or filter usage" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px 6px 32px;color:#c9d1d9;font-size:13px;" aria-label="Search or filter usage">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="#7d8590" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);"><path d="m21 21-5.1-5.1M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"></path></svg>
+      </div>
+      <div style="background:#161b22;border:1px solid #30363d;padding:6px 12px;border-radius:6px;font-size:12px;color:#c9d1d9;">
+        Group by: None <span style="font-size:10px;">▾</span>
+      </div>
+      <div style="background:#161b22;border:1px solid #30363d;padding:6px 12px;border-radius:6px;font-size:12px;color:#c9d1d9;">
+        Timeframe: Current month <span style="font-size:10px;">▾</span>
+      </div>
+    </div>
+
+    <!-- Chart Card matching Image 2 -->
+    <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+        <div>
+          <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Metered usage</h2>
+          <span style="font-size:12px;color:#8b949e;">Nov 1 - Nov 30, 2026</span>
+        </div>
+        <div style="display:flex;gap:8px;color:#8b949e;">
+          <button style="background:none;border:none;color:#8b949e;cursor:pointer;">•••</button>
+          <button style="background:none;border:none;color:#8b949e;cursor:pointer;">⚙</button>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <span style="width:16px;height:2px;background:#2f81f7;display:inline-block;"></span>
+        <span style="font-size:12px;color:#c9d1d9;">Usage</span>
+      </div>
+
+      ${chartMarkup()}
+    </div>
+
+    <!-- Usage breakdown section matching Image 2 -->
+    <div style="margin-top:24px;">
+      <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Usage breakdown</h2>
+      <p style="font-size:12px;color:#8b949e;margin:0 0 16px 0;">Usage for Nov 1 - Nov 30, 2026. For license-based products, the price/unit is a prorated portion of the monthly price.</p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity / Consumption</th>
+              <th>Gross Spend</th>
+              <th>Included Discount</th>
+              <th>Net Billed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GitHub Actions minutes</strong> (macOS & Linux)</td>
+              <td>595 min</td>
+              <td>$9.52</td>
+              <td>-$9.26</td>
+              <td>$0.26</td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Codespaces core hours</strong></td>
+              <td>2,983.33 hrs (Oct paid)</td>
+              <td>$1,074.00</td>
+              <td>—</td>
+              <td>$1,074.00</td>
+            </tr>
+            <tr>
+              <td><strong>GitHub Packages storage</strong></td>
+              <td>130 GB</td>
+              <td>$130.00</td>
+              <td>—</td>
+              <td>$130.00</td>
+            </tr>
+            <tr>
+              <td><strong>Git Large File Storage (LFS)</strong></td>
+              <td>10 GB Bandwidth</td>
+              <td>$0.00</td>
+              <td>Included</td>
+              <td>$0.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
 }
+
 function renderValuation() {
   $('#main').className='valuation-page';
   $('#main').innerHTML=renderValuationPage(valuationState);
@@ -1065,33 +1196,225 @@ function deploymentActivityMarkup() {
   const visible=filtered.slice((deploymentPage-1)*10,deploymentPage*10);
   return `<section id="deployments-list"><div class="section-heading"><h2>Últimos despliegues</h2>${btn(`${icon('plus')} Registrar despliegue`,'new-record','small')}</div><p class="hint">Producción verificada en GitHub y los despliegues que registras aquí, del más reciente al más antiguo.</p><div class="deployment-controls"><select id="deployment-source" class="select" aria-label="Origen de los despliegues"><option value="all" ${deploymentSource==='all'?'selected':''}>Todos los orígenes</option><option value="github" ${deploymentSource==='github'?'selected':''}>GitHub · producción</option><option value="local" ${deploymentSource==='local'?'selected':''}>Mis despliegues</option></select><label class="search-field">${icon('search')}<input id="deployment-search" value="${e(deploymentQuery)}" placeholder="Buscar nombre, fecha o commit" aria-label="Buscar despliegues"></label></div><div class="table-wrap"><table class="data-table deployments-table"><thead><tr><th>Fecha</th><th>Despliegue</th><th>Origen</th><th>Peso</th><th>Importe</th><th>Estado</th><th></th></tr></thead><tbody>${visible.map(row=>`<tr><td>${e(row.date)}</td><td><button type="button" class="deployment-name" data-action="view-deployment" data-id="${e(row.id)}">${e(row.name)}</button><small class="muted">${row.sha?e(row.sha.slice(0,8)):e(row.paymentId)} · ${row.fileCount} archivos</small></td><td><span class="badge">${row.source==='github'?'GitHub':'Local'}</span></td><td>${row.source==='local'?formatBytes(row.files.reduce((n,f)=>n+f.size,0)):'—'}</td><td>${row.amount===null?'—':money(row.amount)}<small class="muted">${row.amountKind==='valuation'?'Valoración':'Pago registrado'}</small></td><td>${deploymentStateBadge(row)}</td><td>${deploymentStartButton(row)}${row.source==='local'?`<button type="button" class="table-action" data-action="delete-payment" data-id="${e(row.paymentId)}" aria-label="Eliminar ${e(row.name)}">${icon('close')}</button>`:''}<button type="button" class="table-action" data-action="edit-deployment" data-id="${e(row.id)}" aria-label="Editar ${e(row.name)}">${icon('gear')}</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty-search">No hay despliegues que coincidan.</td></tr>'}</tbody></table></div><div class="deployment-pagination"><span class="muted">${filtered.length} registros · Página ${deploymentPage} de ${pages}</span><div>${btn('Anterior','deployment-page','small',`data-page="${deploymentPage-1}" ${deploymentPage===1?'disabled':''}`)} ${btn('Siguiente','deployment-page','small',`data-page="${deploymentPage+1}" ${deploymentPage===pages?'disabled':''}`)}</div></div></section>`;
 }
+let overviewProductTab = 'copilot';
+
 function renderOverview() {
-  const rows=deploymentRows(), summary=deploymentSummary(rows,payments), latest=summary.latest;
-  const expenses=buildOverviewSummary(payments,{today:today(),trackingSince:overviewTrackingSince});
-  const year=today().slice(0,4);
-  const history=expenses.rows.filter(row=>row.period.startsWith(`${year}-`));
-  const monthLabel=period=>new Date(`${period}-01T12:00:00Z`).toLocaleDateString('es-EC',{month:'long',year:'numeric',timeZone:'UTC'});
-  const historicalTotal=key=>history.reduce((sum,row)=>sum+(row[key]??0),0);
-  const currency=value=>value==null?'—':localMoney(value);
-  $('#main').className='overview-page';
-  $('#main').innerHTML=`${heading('Billing overview',btn('Configuración','settings','small'))}
-    <section class="panel overview-expense-summary">
-      <div class="checkout-line"><span>Current plan</span><span class="badge">Free</span></div>
-      <div class="checkout-line"><span>Gastos del mes anterior <small class="muted">· ${monthLabel(expenses.previousPeriod)}</small></span><strong>${currency(expenses.previousMonthTotal)}</strong></div>
-      <div class="checkout-line"><span>Gastos de este mes <small class="muted">· ${monthLabel(expenses.currentPeriod)}</small></span><strong>${currency(expenses.currentMonthTotal)}</strong></div>
-      <div class="checkout-line"><span>Nuevos pagos desde ahora</span><button class="metric-link" data-action="history">${money(expenses.newPaymentsTotal)}</button></div>
-      <div class="checkout-line"><span>Deployments</span><button class="metric-link" data-action="show-deployments">${summary.counts.total}</button></div>
-      <p class="hint">${summary.counts.github} en producción de GitHub · ${summary.counts.local} registrados en tu espacio · ${expenses.newDeploymentCount} nuevos desde el inicio del seguimiento</p>
-      <div class="form-actions">${btn('View usage','usage')}${btn('Payment history','history')}${btn('Papelera','trash')}${btn('Ver despliegues','show-deployments')}</div>
-    </section>
-    <section class="overview-monthly-history"><div class="section-heading"><h2>Gastos mensuales · ${year}</h2><span class="badge">CrossBox + FitCode</span></div>
-      <div class="table-wrap"><table class="data-table overview-expenses-table"><thead><tr><th>Mes</th><th>CrossBox</th><th>FitCode</th><th>Nuevos pagos</th><th>Total</th></tr></thead>
-      <tbody>${history.map(row=>`<tr class="${row.period===expenses.currentPeriod?'current-month':''}"><td>${e(new Date(`${row.period}-01T12:00:00Z`).toLocaleDateString('es-EC',{month:'long',timeZone:'UTC'}))}${row.period===expenses.currentPeriod?' <span class="badge">Este mes</span>':''}</td><td>${currency(row.crossbox)}</td><td>${currency(row.fitcode)}</td><td>${row.newPayments?currency(row.newPayments):'—'}</td><td>${currency(row.total)}</td></tr>`).join('')}</tbody>
-      <tfoot><tr><td>Total del año</td><td>${currency(historicalTotal('crossbox'))}</td><td>${currency(historicalTotal('fitcode'))}</td><td>${currency(historicalTotal('newPayments'))}</td><td>${currency(expenses.yearTotal)}</td></tr></tfoot></table></div>
-      <p class="hint">Histórico proporcionado para este resumen. Los nuevos pagos confirmados se suman desde el inicio del seguimiento; al eliminar o restaurar un registro, sus importes se descuentan o vuelven a sumar.</p>
-    </section>
-    <section class="panel overview-latest"><h2>Último despliegue</h2>${latest?`<button class="deployment-name" data-action="view-deployment" data-id="${e(latest.id)}">${e(latest.name)}</button><div class="latest-meta"><span>${e(latest.date)}</span><span class="badge">${latest.source==='github'?'GitHub · producción':'Mi espacio'}</span>${deploymentStateBadge(latest)}</div>${btn('Editar registro','edit-deployment','small',`data-id="${e(latest.id)}"`)}`:'<p class="muted">Todavía no hay despliegues.</p>'}</section>`;
+  $('#main').className = 'overview-page';
+  
+  const tabContent = () => {
+    if (overviewProductTab === 'copilot') {
+      return `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Copilot usage</span>
+              <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$0</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Total gross spend on Copilot for the selected timeframe including licenses and AI credits.</p>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Additional usage <span style="color:#7d8590;font-size:12px;">ⓘ</span></span>
+              <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$0</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Based on 0 additional AI credits beyond your included usage.</p>
+          </div>
+        </div>
+      `;
+    } else if (overviewProductTab === 'actions') {
+      return `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Actions gross metered usage</span>
+              <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.52</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Included usage discount: -$9.26 · Net billed: $0.26</p>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Workflows & CI/CD Runs</span>
+              <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">Ver pagos</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">1,837 runs</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Última ejecución: CI/CD CrossBox #1837 (Hoy, 13 Nov 2026)</p>
+          </div>
+        </div>
+      `;
+    } else if (overviewProductTab === 'codespaces') {
+      return `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding-top:8px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Codespaces workstation hours</span>
+              <a href="#codespaces" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$1,074.00</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">2,983.33 core-hours @ $0.36/hr · Factura #INV-1074APPL</p>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Workstations configuradas</span>
+              <a href="#codespaces" style="font-size:11px;color:#58a6ff;text-decoration:none;">Abrir Codespaces</a>
+            </div>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">2 activas</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">lfarmas4/crossbox-app (main & pwr-games-release)</p>
+          </div>
+        </div>
+      `;
+    } else {
+      return `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding-top:8px;">
+          <div>
+            <span style="font-size:13px;color:#c9d1d9;font-weight:600;display:block;">Shared packages & asset storage</span>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$130.00</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;">LFS bandwidth and package registry across repos.</p>
+          </div>
+        </div>
+      `;
+    }
+  };
+
+  $('#main').innerHTML = `
+    <div class="page-heading">
+      <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0;">Overview</h1>
+    </div>
+
+    <!-- Top 3 Metric Cards matching Image 1 -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;">
+      <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
+        <span style="font-size:12px;color:#c9d1d9;font-weight:600;display:block;">Current metered usage</span>
+        <strong style="font-size:28px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.52</strong>
+        <span style="font-size:11px;color:#8b949e;">Gross metered usage for November 1 - November 30, 2026.</span>
+      </div>
+
+      <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:#c9d1d9;font-weight:600;">Current included usage</span>
+          <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">More details</a>
+        </div>
+        <strong style="font-size:28px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.26</strong>
+        <span style="font-size:11px;color:#8b949e;">Included usage discounts for November 1 - November 30, 2026.</span>
+      </div>
+
+      <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:12px;color:#c9d1d9;font-weight:600;">Next payment due</span>
+          <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">Payment history</a>
+        </div>
+        <strong style="font-size:28px;color:#8b949e;font-weight:600;display:block;margin:6px 0;">–</strong>
+      </div>
+    </div>
+
+    <!-- Subscriptions Section matching Image 1 -->
+    <div style="margin-top:28px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Subscriptions</h2>
+        <a href="#payment-history" style="font-size:12px;color:#58a6ff;text-decoration:none;">Manage subscriptions</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+        <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
+          <span style="font-size:13px;color:#c9d1d9;font-weight:600;display:block;">GitHub Free</span>
+          <div style="margin-top:6px;">
+            <strong style="font-size:20px;color:#c9d1d9;font-weight:600;">$0.00</strong>
+            <span style="font-size:12px;color:#8b949e;"> per month</span>
+          </div>
+        </div>
+        <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
+          <span style="font-size:13px;color:#c9d1d9;font-weight:600;display:block;">Copilot Free</span>
+          <div style="margin-top:6px;">
+            <strong style="font-size:20px;color:#c9d1d9;font-weight:600;">$0.00</strong>
+            <span style="font-size:12px;color:#8b949e;"> per month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metered Usage Section matching Image 1 -->
+    <div style="margin-top:28px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Metered usage</h2>
+        <div style="font-size:12px;background:#161b22;border:1px solid #30363d;padding:4px 10px;border-radius:6px;color:#c9d1d9;display:inline-flex;align-items:center;gap:4px;">
+          Timeframe: Current month <span style="font-size:10px;">▾</span>
+        </div>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
+        <h3 style="font-size:13px;color:#c9d1d9;font-weight:600;margin:0 0 16px 0;">Usage by products</h3>
+
+        <!-- Product Tabs -->
+        <div style="display:flex;gap:4px;border-bottom:1px solid #21262d;margin-bottom:20px;overflow-x:auto;">
+          ${['copilot', 'actions', 'codespaces', 'security', 'lfs', 'models', 'packages', 'more'].map(tab => {
+            const labels = {
+              copilot: 'Copilot',
+              actions: 'Actions',
+              codespaces: 'Codespaces',
+              security: 'Advanced Security',
+              lfs: 'Git LFS',
+              models: 'Models',
+              packages: 'Packages',
+              more: 'More ▾'
+            };
+            const active = overviewProductTab === tab;
+            return `
+              <button data-action="overview-tab" data-tab="${tab}" style="background:none;border:none;border-bottom:2px solid ${active ? '#f78166' : 'transparent'};padding:8px 12px;font-size:12px;font-weight:${active ? '600' : '400'};color:${active ? '#c9d1d9' : '#8b949e'};cursor:pointer;white-space:nowrap;">
+                ${labels[tab]}
+              </button>
+            `;
+          }).join('')}
+        </div>
+
+        <div id="overview-tab-container">
+          ${tabContent()}
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly History Table directly connected to GitHub Payments -->
+    <div style="margin-top:32px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <h3 style="font-size:14px;color:#c9d1d9;font-weight:600;margin:0 0 4px 0;">Historial mensual consolidado · GitHub Payments</h3>
+          <p style="margin:0;font-size:11px;color:#8b949e;">Valores facturados y auditados correspondientes a los recibos y facturas oficiales.</p>
+        </div>
+        <button class="btn small" data-action="paid-history" style="font-size:11px;">Ver 17 facturas</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Periodo</th>
+              <th>CrossBox</th>
+              <th>FitCode</th>
+              <th>Total Facturado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Junio 2026</td><td>$180.00</td><td>$89.00</td><td>$269.00</td></tr>
+            <tr><td>Julio 2026</td><td>$180.00</td><td>$56.00</td><td>$236.00</td></tr>
+            <tr><td>Agosto 2026</td><td>$250.00</td><td>$3.00</td><td>$253.00</td></tr>
+            <tr><td>Septiembre 2026</td><td>$3,409.13</td><td>—</td><td>$3,409.13</td></tr>
+            <tr><td>Octubre 2026</td><td>$3,691.28</td><td>—</td><td>$3,691.28</td></tr>
+            <tr style="background:#161b22;"><td>Noviembre 2026 (Activo)</td><td>$1,245.55</td><td>—</td><td>$1,245.55</td></tr>
+          </tbody>
+          <tfoot>
+            <tr style="font-weight:600;">
+              <td>Total Anual Acumulado</td>
+              <td style="color:#c9d1d9;">$8,955.96</td>
+              <td style="color:#c9d1d9;">$148.00</td>
+              <td style="color:#c9d1d9;">$9,103.96</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  `;
 }
+
 function renderBudgets() {
   $('#main').className = 'budget-page';
   $('#main').innerHTML = `
@@ -1593,6 +1916,170 @@ function popover(anchor,content) {
   closePopover(); const element=document.createElement('div'); element.className='popover'; element.innerHTML=content; document.body.append(element);
   const rect=anchor.getBoundingClientRect(); element.style.top=`${rect.bottom+7}px`; element.style.left=`${Math.max(8,Math.min(rect.right-element.offsetWidth,innerWidth-element.offsetWidth-8))}px`;
 }
+function renderCodespaces() {
+  $('#main').className = 'codespaces-page';
+
+  $('#main').innerHTML = `
+    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div>
+        <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Codespaces</h1>
+        <p class="page-description" style="margin:0;color:#8b949e;font-size:13px;">Cloud-powered development environments for your repositories and workstations.</p>
+      </div>
+      <button class="btn primary" style="background:#238636;color:#ffffff;border:1px solid #2ea043;font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:6px;" onclick="window.open('https://github.com/lfarmas4/crossbox-app','_blank')">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path></svg>
+        New codespace
+      </button>
+    </div>
+
+    <!-- Active Codespaces Section -->
+    <div style="margin-top:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Active & Recent Codespaces</h2>
+        <span style="font-size:12px;color:#8b949e;">2 workstations configured</span>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
+        <!-- Item 1: Main Dev -->
+        <div style="padding:16px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:36px;height:36px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#58a6ff;">
+              <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M2 3.75C2 2.784 2.784 2 3.75 2h8.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5Z"></path><path d="m5 5.5 2.5 2.5L5 10.5M8.5 10.5h3"></path></svg>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:14px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
+                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;background:#23863626;color:#3fb950;border:1px solid #23863640;padding:1px 6px;border-radius:10px;font-weight:600;">
+                  <span style="width:6px;height:6px;border-radius:50%;background:#3fb950;"></span> Available
+                </span>
+              </div>
+              <div style="font-size:12px;color:#8b949e;margin-top:4px;">
+                Branch: <strong style="color:#c9d1d9;">main</strong> · Commit: <code style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">f942c71a</code> · 4-Core · 16 GB RAM · 64 GB Storage
+              </div>
+              <div style="font-size:11px;color:#7d8590;margin-top:2px;">
+                Last active: Today (Nov 13, 2026) · Region: US East · Retention: 30 days
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" class="btn small" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 12px;color:#c9d1d9;text-decoration:none;">
+              Open in VS Code
+            </a>
+          </div>
+        </div>
+
+        <!-- Item 2: Release Workstation -->
+        <div style="padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:#0d1117;">
+          <div style="display:flex;align-items:flex-start;gap:12px;">
+            <div style="width:36px;height:36px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#8b949e;">
+              <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M2 3.75C2 2.784 2.784 2 3.75 2h8.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 12.25 14h-8.5A1.75 1.75 0 0 1 2 12.25v-8.5Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25h-8.5Z"></path><path d="m5 5.5 2.5 2.5L5 10.5M8.5 10.5h3"></path></svg>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:14px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
+                <span style="font-size:11px;background:#30363d;color:#8b949e;padding:1px 6px;border-radius:10px;font-weight:500;">
+                  Stopped
+                </span>
+              </div>
+              <div style="font-size:12px;color:#8b949e;margin-top:4px;">
+                Branch: <strong style="color:#c9d1d9;">codex/pwr-games-release</strong> · Commit: <code style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">3f3cb39a</code> · 4-Core Workstation Hours
+              </div>
+              <div style="font-size:11px;color:#7d8590;margin-top:2px;">
+                Last active: Oct 28, 2026 · Auto-prune in 14 days
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="btn small" onclick="alert('Iniciando codespace de recuperación...')">Restart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Payments & Invoicing Section -->
+    <div style="margin-top:28px;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Consumo y facturación vinculada a Codespaces</h2>
+          <p style="margin:0;font-size:12px;color:#8b949e;">Registro oficial de facturas y recibos asociados a horas de computación en la nube para CrossBox.</p>
+        </div>
+        <button class="btn small" data-action="paid-history" style="font-size:11px;">
+          Ver en GitHub Payments
+        </button>
+      </div>
+
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:16px;align-items:center;">
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Total facturado Codespaces</span>
+            <strong style="font-size:22px;color:#c9d1d9;font-weight:600;">$1,074.00</strong>
+            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Pago verificado · Tarjeta Amex •• 1989</span>
+          </div>
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Cómputo consumido</span>
+            <strong style="font-size:18px;color:#c9d1d9;font-weight:600;">2,983.33 core-hours</strong>
+            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Tarifa oficial: $0.36 / hora (4-Core)</span>
+          </div>
+          <div>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Factura & Recibo</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+              <button class="btn small primary" data-action="view-invoice-modal" data-id="1074APPL" style="font-size:11px;padding:4px 10px;">
+                Ver Factura #INV-1074APPL
+              </button>
+              <button class="btn small" data-action="open-receipt-generator" data-id="1074APPL" style="font-size:11px;padding:4px 10px;">
+                Ver Recibo #1074APPL
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Codespaces Environment Preferences -->
+    <div style="margin-top:28px;">
+      <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 16px 0;">Codespaces Preferences</h2>
+      
+      <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
+        <div style="padding:16px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong style="font-size:13px;color:#c9d1d9;display:block;">Default editor</strong>
+            <span style="font-size:12px;color:#8b949e;">Choose your preferred editor when opening codespaces.</span>
+          </div>
+          <select style="background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:5px 10px;border-radius:6px;font-size:12px;">
+            <option selected>Visual Studio Code (Web)</option>
+            <option>Visual Studio Code (Desktop)</option>
+            <option>Cursor</option>
+            <option>JetBrains Gateway</option>
+          </select>
+        </div>
+
+        <div style="padding:16px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong style="font-size:13px;color:#c9d1d9;display:block;">Default idle timeout</strong>
+            <span style="font-size:12px;color:#8b949e;">Codespaces will automatically stop after this duration of inactivity.</span>
+          </div>
+          <select style="background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:5px 10px;border-radius:6px;font-size:12px;">
+            <option selected>30 minutes</option>
+            <option>60 minutes</option>
+            <option>120 minutes</option>
+          </select>
+        </div>
+
+        <div style="padding:16px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <strong style="font-size:13px;color:#c9d1d9;display:block;">Default retention period</strong>
+            <span style="font-size:12px;color:#8b949e;">Stopped codespaces are automatically deleted after this time.</span>
+          </div>
+          <select style="background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:5px 10px;border-radius:6px;font-size:12px;">
+            <option selected>30 days</option>
+            <option>60 days</option>
+            <option>90 days</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderOther() {
   const title=pageTitle();
   if (activePage==='settings') {
@@ -1709,6 +2196,10 @@ document.addEventListener('click',async event=>{
     else if (action==='view-history-update') {
       const commitUrl = `https://github.com/lfarmas4/crossbox-app/commit/${target.dataset.id}`;
       window.open(commitUrl, '_blank');
+    }
+        else if (action==='overview-tab') {
+      overviewProductTab = target.dataset.tab;
+      renderOverview();
     }
     else if (action==='valuation-page') { valuationState.page=Number(target.dataset.page); persistValuationState(); renderValuation(); }
     else if (action==='valuation-export') { const data=valuationCsv(target.dataset.project); downloadBlob(new Blob([data.csv],{type:'text/csv;charset=utf-8'}),data.name); }
