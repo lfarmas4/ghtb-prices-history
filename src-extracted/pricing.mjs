@@ -8,7 +8,7 @@ const pwrArchiveSize = 1_524;
 const pwrArchiveSha256 = '32f79dc2fb022e1dc9b190366da67573f5cd33aa0b59703c33e938379350c780';
 const pricedProjects = Object.freeze([
   Object.freeze({ pricingKey: atrPricingKey, archiveName: atrArchiveName, archiveSize: atrArchiveSize, sha256: atrArchiveSha256, configKey: 'atrPrice', defaultPrice: 150, name: 'atr-sistem' }),
-  Object.freeze({ pricingKey: pwrPricingKey, archiveName: pwrArchiveName, archiveSize: pwrArchiveSize, sha256: pwrArchiveSha256, configKey: 'pwrPrice', defaultPrice: 350, name: 'Mejora agente barra · PWR Games' }),
+  Object.freeze({ pricingKey: pwrPricingKey, archiveName: pwrArchiveName, archiveSize: pwrArchiveSize, sha256: pwrArchiveSha256, configKey: 'pwrPrice', defaultPrice: 350, name: 'Agent Bar Upgrade · PWR Games' }),
 ]);
 const identifiedPricingFiles = new WeakSet();
 const catalogPricingFiles = new WeakSet();
@@ -113,11 +113,11 @@ export function formatBytes(bytes) {
 }
 
 export const demoBundles = Object.freeze([
-  { id: 'auth', name: 'Autenticación', kind: 'Feature', description: 'Login, registro y recuperación de cuenta.', language: 'TypeScript', color: '#3178c6', icon: 'shield', files: [{ name: 'feature-auth.zip', size: 1_200_000, source: 'examples/feature-auth.zip' }] },
-  { id: 'chat', name: 'Chat en tiempo real', kind: 'Feature', description: 'Conversaciones, mensajes y notificaciones.', language: 'JavaScript', color: '#f1e05a', icon: 'message', files: [{ name: 'feature-chat.zip', size: 4_800_000, source: 'examples/feature-chat.zip' }] },
-  { id: 'store', name: 'Storefront', kind: 'App', description: 'Catálogo, carrito y panel de productos.', language: 'TypeScript', color: '#3178c6', icon: 'repo', files: [{ name: 'app-storefront.zip', size: 18_000_000, source: 'examples/app-storefront.zip' }] },
-  { id: atrPricingKey, title: 'atr-sistem', name: 'atr-sistem', kind: 'Feature', description: 'Configuración tipada y estado básico para un sistema ATR.', language: 'TypeScript', color: '#3178c6', icon: 'repo', pricingKey: atrPricingKey, files: [{ name: atrArchiveName, size: atrArchiveSize, source: 'examples/atr-sistem.zip', pricingKey: atrPricingKey, sha256: atrArchiveSha256 }] },
-  { id: pwrPricingKey, title: 'Mejora agente barra · PWR Games', name: 'Mejora agente barra · PWR Games', kind: 'Feature', description: 'Resumen tipado de estado y marcador para la barra de agente de PWR Games.', language: 'TypeScript', color: '#3178c6', icon: 'repo', pricingKey: pwrPricingKey, files: [{ name: pwrArchiveName, size: pwrArchiveSize, source: 'examples/mejora-agente-barra-pwr-games.zip', pricingKey: pwrPricingKey, sha256: pwrArchiveSha256 }] }
+  { id: 'auth', name: 'Authentication', kind: 'Feature', description: 'Login, registration, and account recovery.', language: 'TypeScript', color: '#3178c6', icon: 'shield', files: [{ name: 'feature-auth.zip', size: 1_200_000, source: 'examples/feature-auth.zip' }] },
+  { id: 'chat', name: 'Real-time Chat', kind: 'Feature', description: 'Conversations, messages, and notifications.', language: 'JavaScript', color: '#f1e05a', icon: 'message', files: [{ name: 'feature-chat.zip', size: 4_800_000, source: 'examples/feature-chat.zip' }] },
+  { id: 'store', name: 'Storefront', kind: 'App', description: 'Product catalog, shopping cart, and inventory panel.', language: 'TypeScript', color: '#3178c6', icon: 'repo', files: [{ name: 'app-storefront.zip', size: 18_000_000, source: 'examples/app-storefront.zip' }] },
+  { id: atrPricingKey, title: 'atr-sistem', name: 'atr-sistem', kind: 'Feature', description: 'Typed configuration and baseline state for an ATR system.', language: 'TypeScript', color: '#3178c6', icon: 'repo', pricingKey: atrPricingKey, files: [{ name: atrArchiveName, size: atrArchiveSize, source: 'examples/atr-sistem.zip', pricingKey: atrPricingKey, sha256: atrArchiveSha256 }] },
+  { id: pwrPricingKey, title: 'Agent Bar Upgrade · PWR Games', name: 'Agent Bar Upgrade · PWR Games', kind: 'Feature', description: 'Typed state summary and scoreboard for the PWR Games agent bar.', language: 'TypeScript', color: '#3178c6', icon: 'repo', pricingKey: pwrPricingKey, files: [{ name: pwrArchiveName, size: pwrArchiveSize, source: 'examples/mejora-agente-barra-pwr-games.zip', pricingKey: pwrPricingKey, sha256: pwrArchiveSha256 }] }
 ]);
 
 for (const file of demoBundles.flatMap(bundle => bundle.files)) {

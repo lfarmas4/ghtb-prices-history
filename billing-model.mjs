@@ -1,7 +1,7 @@
 const LEGACY_SAMPLE_PAYMENT_IDS = new Set(['19T5IGEN', '09FAPWZ5']);
 const MAX_AMOUNT = 1_000_000;
-const DEFAULTS_VERSION = 2;
-const DEFAULTS = Object.freeze({ budget: 300, baseUsage: 260, openingCredit: 130 });
+const DEFAULTS_VERSION = 3;
+const DEFAULTS = Object.freeze({ budget: 900, baseUsage: 740, openingCredit: 130 });
 const BASE_CHARGE_WEIGHTS = Object.freeze([35, 40, 55, 45, 85]);
 
 function cents(value, label = 'Amount') {

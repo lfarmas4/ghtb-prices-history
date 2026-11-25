@@ -10,23 +10,23 @@ const catalogFilesWithHashes = demoBundles
 
 function validateUploadFiles(files) {
   if (!Array.isArray(files) || files.length === 0) {
-    throw new Error('Selecciona al menos un archivo para analizar.');
+    throw new Error('Select at least one file to analyze.');
   }
   if (files.length > maxUploadFiles) {
-    throw new Error(`Puedes analizar hasta ${maxUploadFiles} archivos a la vez.`);
+    throw new Error(`You can analyze up to ${maxUploadFiles} files at once.`);
   }
 
   let totalBytes = 0;
   for (const file of files) {
     if (!file || typeof file.name !== 'string' || !file.name.trim() || !Number.isSafeInteger(file.size) || file.size < 0) {
-      throw new Error('Uno de los archivos tiene metadatos inválidos.');
+      throw new Error('One of the files has invalid metadata.');
     }
     if (file.size > maxUploadFileBytes) {
-      throw new Error('Cada archivo debe pesar como máximo 100 MB.');
+      throw new Error('Each file must be at most 100 MB.');
     }
     totalBytes += file.size;
     if (!Number.isSafeInteger(totalBytes) || totalBytes > maxUploadTotalBytes) {
-      throw new Error('El total de archivos debe pesar como máximo 250 MB.');
+      throw new Error('Total file size must be at most 250 MB.');
     }
   }
 }
@@ -38,10 +38,10 @@ export async function analyzeUploadFiles(files, {
 } = {}) {
   validateUploadFiles(files);
   if (typeof onStage !== 'function' || typeof delay !== 'function' || !Array.isArray(durations) || durations.length !== 3 || durations.some(value => !Number.isFinite(value) || value < 0)) {
-    throw new Error('La configuración del análisis no es válida.');
+    throw new Error('Invalid analysis configuration.');
   }
 
-  const name = files.length === 1 ? files[0].name : `${files.length} archivos`;
+  const name = files.length === 1 ? files[0].name : `${files.length} files`;
   await onStage({ name, stage: 'reading', percent: 20 });
   await delay(durations[0]);
 
@@ -108,7 +108,7 @@ async function checkFileIntegrity(files, loaded, available) {
 }
 
 export async function runDeploymentChecks(record, { loadFile, delay = async () => {} } = {}) {
-  if (typeof delay !== 'function') throw new Error('La función de espera no es válida.');
+  if (typeof delay !== 'function') throw new Error('Invalid delay function.');
   const checks = [];
   const addCheck = async (name, passed) => {
     checks.push(makeCheck(name, passed));
@@ -118,11 +118,11 @@ export async function runDeploymentChecks(record, { loadFile, delay = async () =
   const files = Array.isArray(record?.files)
     ? record.files
     : Array.isArray(record?.attachments) ? record.attachments : [];
-  await addCheck('Pago completado', record?.status === 'success');
-  await addCheck('Archivos adjuntos', files.length > 0);
+  await addCheck('Payment completed', record?.status === 'success');
+  await addCheck('Attached files', files.length > 0);
 
   const loadedResult = await loadAttachments(files, loadFile);
-  await addCheck('Archivos disponibles y tamaños correctos', loadedResult.available);
+  await addCheck('Files available and sizes verified', loadedResult.available);
 
   let integrityPassed = false;
   try {
@@ -130,10 +130,10 @@ export async function runDeploymentChecks(record, { loadFile, delay = async () =
   } catch {
     integrityPassed = false;
   }
-  await addCheck('Integridad y huella de los archivos', integrityPassed);
+  await addCheck('File integrity and fingerprint', integrityPassed);
 
   if (checks.some(check => !check.passed)) {
-    const error = new Error('No se pudo validar el despliegue. Revisa los checks y vuelve a intentarlo.');
+    const error = new Error('Deployment validation failed. Review the checks and try again.');
     error.checks = checks;
     throw error;
   }

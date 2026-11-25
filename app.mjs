@@ -13,7 +13,7 @@ import { buildOverviewSummary } from './overview-model.mjs';
 const $ = (selector, root = document) => root.querySelector(selector);
 const e = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const money = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
-const localMoney = n => new Intl.NumberFormat('es-EC', {minimumFractionDigits:2,maximumFractionDigits:2}).format(n) + ' US$';
+const localMoney = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
 let valuationState = (() => {
   try {
     const raw = sessionStorage.getItem('cw_valuation_state');
@@ -718,6 +718,123 @@ const initialPayments = [
       rateStr: '$0.080/min',
       amount: '$270.00 USD'
     }
+  },
+  {
+    id: '8B64D12E',
+    date: '2026-11-16',
+    name: 'GitHub Codespaces — 8-Core Cloud Compute (Workstation Hours)',
+    kind: 'Codespaces',
+    method: 'American Express ending in 1989',
+    amount: 340.00,
+    sku: 'codespaces_compute_d4',
+    productLine: 'GitHub Codespaces core hours',
+    unit: 'hrs',
+    quantity: '944.44 hrs',
+    rawQty: 944.4444444444445,
+    unitRate: 0.36,
+    rate: '0.36',
+    rateStr: '$0.36/hr',
+    period: 'Nov 01, 2026 - Nov 16, 2026',
+    files: [{ ...demoBundles[1].files[0] }],
+    invoiceData: {
+      sku: 'codespaces_compute_d4',
+      productLine: 'GitHub Codespaces core hours',
+      description: 'GitHub Codespaces — 8-Core Cloud Compute (Workstation Hours)',
+      period: 'Nov 01, 2026 - Nov 16, 2026',
+      quantity: '944.44 hrs',
+      rate: '0.36',
+      rateStr: '$0.36/hr',
+      unit: 'hrs',
+      amount: '$340.00',
+      invoiceDate: 'Nov 16, 2026',
+      dueDate: 'Nov 16, 2026'
+    },
+    receiptData: {
+      sku: 'codespaces_compute_d4',
+      description: 'GitHub Codespaces — 8-Core Cloud Compute (Workstation Hours)',
+      period: 'Nov 01, 2026 - Nov 16, 2026',
+      quantity: '944.44 hrs',
+      rateStr: '$0.36/hr',
+      amount: '$340.00 USD'
+    }
+  },
+  {
+    id: '9C75E23F',
+    date: '2026-11-20',
+    name: 'GitHub Actions — macOS & Linux Runners (CI/CD Deployment Minutes)',
+    kind: 'Actions',
+    method: 'MasterCard ending in 2791',
+    amount: 265.00,
+    sku: 'actions_macos',
+    productLine: 'GitHub Actions minutes',
+    unit: 'min',
+    quantity: '3,312.5 min',
+    rawQty: 3312.5,
+    unitRate: 0.08,
+    rate: '0.080',
+    rateStr: '$0.080/min',
+    period: 'Nov 01, 2026 - Nov 20, 2026',
+    files: [{ ...demoBundles[0].files[0] }],
+    invoiceData: {
+      sku: 'actions_macos',
+      productLine: 'GitHub Actions minutes',
+      description: 'GitHub Actions — macOS & Linux Runners (CI/CD Deployment Minutes)',
+      period: 'Nov 01, 2026 - Nov 20, 2026',
+      quantity: '3,312.5 min',
+      rate: '0.080',
+      rateStr: '$0.080/min',
+      unit: 'min',
+      amount: '$265.00',
+      invoiceDate: 'Nov 20, 2026',
+      dueDate: 'Nov 20, 2026'
+    },
+    receiptData: {
+      sku: 'actions_macos',
+      description: 'GitHub Actions — macOS & Linux Runners (CI/CD Deployment Minutes)',
+      period: 'Nov 01, 2026 - Nov 20, 2026',
+      quantity: '3,312.5 min',
+      rateStr: '$0.080/min',
+      amount: '$265.00 USD'
+    }
+  },
+  {
+    id: '9D86F34A',
+    date: '2026-11-24',
+    name: 'GitHub Packages & Git LFS — Shared Storage & Bandwidth Egress (GB-Months)',
+    kind: 'Storage',
+    method: 'American Express ending in 0388',
+    amount: 135.00,
+    sku: 'packages_storage',
+    productLine: 'GitHub Packages & Git LFS storage',
+    unit: 'GB',
+    quantity: '540 GB',
+    rawQty: 540.0,
+    unitRate: 0.25,
+    rate: '0.25',
+    rateStr: '$0.25/GB',
+    period: 'Nov 01, 2026 - Nov 24, 2026',
+    files: [{ ...demoBundles[2].files[0] }],
+    invoiceData: {
+      sku: 'packages_storage',
+      productLine: 'GitHub Packages & Git LFS storage',
+      description: 'GitHub Packages & Git LFS — Shared Storage & Bandwidth Egress (GB-Months)',
+      period: 'Nov 01, 2026 - Nov 24, 2026',
+      quantity: '540 GB',
+      rate: '0.25',
+      rateStr: '$0.25/GB',
+      unit: 'GB',
+      amount: '$135.00',
+      invoiceDate: 'Nov 24, 2026',
+      dueDate: 'Nov 24, 2026'
+    },
+    receiptData: {
+      sku: 'packages_storage',
+      description: 'GitHub Packages & Git LFS — Shared Storage & Bandwidth Egress (GB-Months)',
+      period: 'Nov 01, 2026 - Nov 24, 2026',
+      quantity: '540 GB',
+      rateStr: '$0.25/GB',
+      amount: '$135.00 USD'
+    }
   }
 ];
 
@@ -725,13 +842,13 @@ export const DEPLOYMENT_COMMITS = {
   '08JUNE3A': {
     date: '2026-06-03',
     sha: 'a6311c2c',
-    title: 'Merge: purga no borra Auth/identity compartida (caso duplicado Angelo)',
+    title: 'Merge: purge does not delete shared Auth/identity (duplicate Angelo case)',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/a6311c2c8308deaac11896cf9dbb40b0297e586d'
   },
   '1B78C49E': {
     date: '2026-07-03',
     sha: 'e5763870',
-    title: 'merge: blindaje anti-cache IndexedDB viejo en discovery (branch dreamy-meitner)',
+    title: 'merge: legacy IndexedDB anti-cache guard in discovery (branch dreamy-meitner)',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/e5763870fe1234cb6ccd8c40c2f6ccfc420d9d4f'
   },
   '2F49D10A': {
@@ -743,13 +860,13 @@ export const DEPLOYMENT_COMMITS = {
   '839GHTB3': {
     date: '2026-09-03',
     sha: '6a4dfb43',
-    title: 'test(rules): el admin de Heroes SÍ sube fondo de promo_cards de Vital (#303)',
+    title: 'test(rules): Heroes admin uploads Vital promo_cards background (#303)',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/6a4dfb432c93aff31e9854a8890a46c28eed2b00'
   },
   '3E92B67C': {
     date: '2026-09-03',
     sha: '7778f632',
-    title: 'feat(nexo): Estudio de Promos de Vital + activación de Heroes Gym (#302)',
+    title: 'feat(nexo): Vital Promo Studio + Heroes Gym activation (#302)',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/7778f632'
   },
   '2300APPL': {
@@ -761,13 +878,13 @@ export const DEPLOYMENT_COMMITS = {
   '09FAPWZ5': {
     date: '2026-09-25',
     sha: '653aa0f4',
-    title: 'Merge PR #380: claude/traspaso revision local 148905',
+    title: 'Merge PR #380: claude/local review handoff 148905',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/653aa0f4c23b461fbc56ffd39bfdf8d830623365'
   },
   '362GCLD1': {
     date: '2026-10-01',
     sha: '631f5717',
-    title: 'Merge PR #398: docs/keystore rotado',
+    title: 'Merge PR #398: docs/rotated keystore',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/631f571750a755af4888b4427cf638b778752582'
   },
   '4C81A53D': {
@@ -779,7 +896,7 @@ export const DEPLOYMENT_COMMITS = {
   '19T5IGEN': {
     date: '2026-10-25',
     sha: 'ee7918d4',
-    title: 'Merge PR #557: claude/hyrox podios solidario docs',
+    title: 'Merge PR #557: claude/hyrox charity podiums docs',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/ee7918d4908f117f979ffac53ef87467b2ad1529'
   },
   '1040APPL': {
@@ -791,7 +908,7 @@ export const DEPLOYMENT_COMMITS = {
   '1074APPL': {
     date: '2026-10-28',
     sha: '4a7ccbfd',
-    title: 'Merge PR #608: claude/pwr landing prueba estable',
+    title: 'Merge PR #608: claude/pwr stable landing test',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/4a7ccbfd'
   },
   '1173APPL': {
@@ -823,10 +940,28 @@ export const DEPLOYMENT_COMMITS = {
     sha: 'f33f487b',
     title: 'feat(pwr-timing): printable laser gate boxes in two styles',
     url: 'https://github.com/lfarmas4/crossbox-app/commit/f33f487b'
+  },
+  '8B64D12E': {
+    date: '2026-11-16',
+    sha: '8b64d12e',
+    title: 'CI/CD CrossBox #1838: Codespaces 8-core workstation cluster & multi-box state sync',
+    url: 'https://github.com/lfarmas4/crossbox-app/commit/8b64d12e3c9f71a650183bd47210cf8493b60129'
+  },
+  '9C75E23F': {
+    date: '2026-11-20',
+    sha: '9c75e23f',
+    title: 'CI/CD CrossBox #1840: macOS iOS release archive & PWR Games live arena scoring',
+    url: 'https://github.com/lfarmas4/crossbox-app/commit/9c75e23f4a1d82b761094ce58321da9504c71230'
+  },
+  '9D86F34A': {
+    date: '2026-11-24',
+    sha: '9d86f34a',
+    title: 'CI/CD CrossBox #1842: Packages registry release, Git LFS assets & Nov 24 production sync',
+    url: 'https://github.com/lfarmas4/crossbox-app/commit/9d86f34a7b2e19c485013fa67289bc1409a82341'
   }
 };
 
-const PAYMENTS_DATA_VERSION = 7;
+const PAYMENTS_DATA_VERSION = 8;
 let currentVersion = Number(read('payments-version', 0));
 let payments = read('payments', initialPayments);
 if (currentVersion < PAYMENTS_DATA_VERSION || !Array.isArray(payments) || payments.length < initialPayments.length) {
@@ -881,16 +1016,16 @@ let recordMutationBusy=false;
 let activePage = location.hash.slice(1) || 'organizations';
 
 const DEFAULT_BUDGETS = [
-  { id: 'b-account', scope: 'Account', product: 'Monthly Account Budget (All Services)', limit: 300.00, spent: 38.50 },
-  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 200.00, spent: 28.00 },
-  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 60.00, spent: 9.52 },
-  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 35.00, spent: 10.24 },
-  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 5.00, spent: 0.00 }
+  { id: 'b-account', scope: 'Account', product: 'Monthly Account Budget (All Services)', limit: 900.00, spent: 740.00 },
+  { id: 'b-codespaces', scope: 'Account', product: 'Codespaces', limit: 400.00, spent: 340.00 },
+  { id: 'b-actions', scope: 'Account', product: 'Actions', limit: 320.00, spent: 265.00 },
+  { id: 'b-packages', scope: 'Account', product: 'Packages', limit: 120.00, spent: 95.00 },
+  { id: 'b-git-lfs', scope: 'Account', product: 'Git LFS', limit: 60.00, spent: 40.00 }
 ];
 
 let budgets = (() => {
   try {
-    const raw = localStorage.getItem('codeweight-budgets-v4');
+    const raw = localStorage.getItem('codeweight-budgets-v5');
     if (raw) return JSON.parse(raw);
   } catch {}
   return [...DEFAULT_BUDGETS];
@@ -898,7 +1033,7 @@ let budgets = (() => {
 
 function saveBudgets() {
   try {
-    localStorage.setItem('codeweight-budgets-v4', JSON.stringify(budgets));
+    localStorage.setItem('codeweight-budgets-v5', JSON.stringify(budgets));
   } catch {}
 }
 
@@ -910,8 +1045,8 @@ function database() {
     const request = indexedDB.open('codeweight-files', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('files');
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => { dbPromise = undefined; reject(new Error('No se pudo abrir el almacenamiento de archivos.')); };
-    request.onblocked = () => reject(new Error('Cierra otras pestañas de CodeWeight e intenta de nuevo.'));
+    request.onerror = () => { dbPromise = undefined; reject(new Error('Could not open file storage.')); };
+    request.onblocked = () => reject(new Error('Close other CodeWeight tabs and try again.'));
   });
   return dbPromise;
 }
@@ -921,7 +1056,7 @@ async function saveBlob(key, blob) {
     const tx = db.transaction('files', 'readwrite');
     tx.objectStore('files').put(blob, key);
     tx.oncomplete = resolve;
-    tx.onerror = tx.onabort = () => reject(new Error('No hay espacio para guardar el archivo. El registro no se ha creado.'));
+    tx.onerror = tx.onabort = () => reject(new Error('Not enough space to save the file. Record was not created.'));
   });
 }
 async function loadBlob(key) {
@@ -929,7 +1064,7 @@ async function loadBlob(key) {
   return new Promise((resolve, reject) => {
     const request = db.transaction('files').objectStore('files').get(key);
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(new Error('No se pudo recuperar el archivo.'));
+    request.onerror = () => reject(new Error('Could not retrieve the file.'));
   });
 }
 function toast(message) { $('#toast').textContent = message; $('#toast').classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 4000); }
@@ -937,20 +1072,20 @@ function today() { return new Intl.DateTimeFormat('en-CA', {timeZone:'America/Gu
 function validDate(date) { return /^\d{4}-\d{2}-\d{2}$/.test(date) && new Date(`${date}T12:00:00Z`).toISOString().slice(0,10) === date; }
 const btn = (text, action, cls = '', extra = '') => `<button type="button" class="btn ${cls}" data-action="${action}" ${extra}>${text}</button>`;
 function heading(title, action = '', cls = '') { return `<div class="page-heading ${cls}"><h1>${title}</h1>${action}</div>`; }
-function avatar(small = false) { return `<button class="avatar ${small ? 'small' : ''}" data-action="${small ? 'account-menu' : 'avatar'}" aria-label="${small ? 'Abrir menú de cuenta' : 'Añadir foto de perfil'}" title="${small ? 'Cuenta' : 'Añadir tu foto'}">${profile.avatar ? `<img src="${e(profile.avatar)}" alt="Tu foto de perfil">` : icon('person')}</button>`; }
+function avatar(small = false) { return `<button class="avatar ${small ? 'small' : ''}" data-action="${small ? 'account-menu' : 'avatar'}" aria-label="${small ? 'Open account menu' : 'Add profile photo'}" title="${small ? 'Account' : 'Add your photo'}">${profile.avatar ? `<img src="${e(profile.avatar)}" alt="Your profile photo">` : icon('person')}</button>`; }
 function renderHeader() {
-  $('#topbar').innerHTML = `<button class="icon-button" data-action="navigation" aria-label="Abrir navegación">${icon('menu')}</button><a href="#overview" title="GitHub" aria-label="Homepage" style="display:flex;align-items:center;text-decoration:none;color:#ffffff;">${profile.logo && profile.logo !== 'icon.svg' ? `<img class="brand" src="${e(profile.logo)}" alt="GitHub" style="width:32px;height:32px;border-radius:50%;">` : `<svg class="brand" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" style="display:block;fill:#ffffff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C7.16 0 0 7.16 0 16C0 23.08 4.58 29.06 10.94 31.18C11.74 31.32 12.04 30.84 12.04 30.42C12.04 30.04 12.02 28.78 12.02 27.44C8 28.18 6.96 26.46 6.64 25.56C6.46 25.1 5.68 23.68 5 23.3C4.44 23 3.64 22.26 4.98 22.24C6.24 22.22 7.14 23.4 7.44 23.88C8.88 26.3 11.18 25.62 12.1 25.2C12.24 24.16 12.66 23.46 13.12 23.06C9.56 22.66 5.84 21.28 5.84 15.16C5.84 13.42 6.46 11.98 7.48 10.86C7.32 10.46 6.76 8.82 7.64 6.62C7.64 6.62 8.98 6.2 12.04 8.26C13.32 7.9 14.68 7.72 16.04 7.72C17.4 7.72 18.76 7.9 20.04 8.26C23.1 6.18 24.44 6.62 24.44 6.62C25.32 8.82 24.76 10.46 24.6 10.86C25.62 11.98 26.24 13.4 26.24 15.16C26.24 21.3 22.5 22.66 18.94 23.06C19.52 23.56 20.02 24.52 20.02 26.02C20.02 28.16 20 29.88 20 30.42C20 30.84 20.3 31.34 21.1 31.18C27.42 29.06 32 23.06 32 16C32 7.16 24.84 0 16 0V0Z"/></svg>`}</a><span class="top-title">Settings</span><div class="top-actions"><button class="top-search" data-action="search">${icon('search')}<span>Type <kbd>/</kbd> to search</span></button><button class="icon-button desktop" data-action="organizations-menu" aria-label="Organizaciones">${icon('users')}${icon('chevron')}</button><span class="separator desktop"></span><button class="icon-button" data-action="new-menu" aria-label="Crear nuevo">${icon('plus')}${icon('chevron')}</button><button class="icon-button optional" data-action="activity" aria-label="Actividad">${icon('issue')}</button><button class="icon-button optional" data-action="deployments" aria-label="Despliegues">${icon('branch')}</button><button class="icon-button optional" data-action="repositories" aria-label="Repositorios">${icon('repo')}</button><button class="icon-button desktop" data-action="notifications" aria-label="Notificaciones">${icon('inbox')}</button>${avatar(true)}</div>`;
+  $('#topbar').innerHTML = `<button class="icon-button" data-action="navigation" aria-label="Open navigation">${icon('menu')}</button><a href="#overview" title="GitHub" aria-label="Homepage" style="display:flex;align-items:center;text-decoration:none;color:#ffffff;">${profile.logo && profile.logo !== 'icon.svg' ? `<img class="brand" src="${e(profile.logo)}" alt="GitHub" style="width:32px;height:32px;border-radius:50%;">` : `<svg class="brand" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" style="display:block;fill:#ffffff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C7.16 0 0 7.16 0 16C0 23.08 4.58 29.06 10.94 31.18C11.74 31.32 12.04 30.84 12.04 30.42C12.04 30.04 12.02 28.78 12.02 27.44C8 28.18 6.96 26.46 6.64 25.56C6.46 25.1 5.68 23.68 5 23.3C4.44 23 3.64 22.26 4.98 22.24C6.24 22.22 7.14 23.4 7.44 23.88C8.88 26.3 11.18 25.62 12.1 25.2C12.24 24.16 12.66 23.46 13.12 23.06C9.56 22.66 5.84 21.28 5.84 15.16C5.84 13.42 6.46 11.98 7.48 10.86C7.32 10.46 6.76 8.82 7.64 6.62C7.64 6.62 8.98 6.2 12.04 8.26C13.32 7.9 14.68 7.72 16.04 7.72C17.4 7.72 18.76 7.9 20.04 8.26C23.1 6.18 24.44 6.62 24.44 6.62C25.32 8.82 24.76 10.46 24.6 10.86C25.62 11.98 26.24 13.4 26.24 15.16C26.24 21.3 22.5 22.66 18.94 23.06C19.52 23.56 20.02 24.52 20.02 26.02C20.02 28.16 20 29.88 20 30.42C20 30.84 20.3 31.34 21.1 31.18C27.42 29.06 32 23.06 32 16C32 7.16 24.84 0 16 0V0Z"/></svg>`}</a><span class="top-title">Settings</span><div class="top-actions"><button class="top-search" data-action="search">${icon('search')}<span>Type <kbd>/</kbd> to search</span></button><button class="icon-button desktop" data-action="organizations-menu" aria-label="Organizations">${icon('users')}${icon('chevron')}</button><span class="separator desktop"></span><button class="icon-button" data-action="new-menu" aria-label="Create new">${icon('plus')}${icon('chevron')}</button><button class="icon-button optional" data-action="activity" aria-label="Activity">${icon('issue')}</button><button class="icon-button optional" data-action="deployments" aria-label="Deployments">${icon('branch')}</button><button class="icon-button optional" data-action="repositories" aria-label="Repositories">${icon('repo')}</button><button class="icon-button desktop" data-action="notifications" aria-label="Notifications">${icon('inbox')}</button>${avatar(true)}</div>`;
   $('#account-heading').innerHTML = `${avatar()}<div><div class="account-name">${e(profile.name)} <span>(${e(profile.username)})</span></div><div class="account-caption">Your personal account</div></div>`;
 }
 const mainLinks = [['public-profile','Public profile','person'],['account','Account','gear'],['appearance','Appearance','brush'],['accessibility','Accessibility','access'],['notifications','Notifications','bell']];
 const billingLinks = [['overview','Overview'],['usage','Usage'],['ai-usage','AI usage'],['budgets','Budgets and alerts'],['licensing','Licensing'],['payment-information','Payment information'],['payment-history','Payment history'],['billing-details','Additional billing details'],['education','Education benefits']];
 const accessLinks = [['emails','Emails','mail'],['authentication','Password and authentication','shield'],['sessions','Sessions','signal'],['keys','SSH and GPG keys','key'],['credentials','Credentials','shield'],['organizations','Organizations','org'],['enterprises','Enterprises','globe'],['moderation','Moderation','message']];
-const codeLinks = [['valuation','Historial de precios','card'],['repositories','Repositories','repo'],['codespaces','Codespaces','terminal'],['packages','Packages','box'],['copilot','Copilot','users'],['pages','Pages','page']];
+const codeLinks = [['valuation','Price history','card'],['repositories','Repositories','repo'],['codespaces','Codespaces','terminal'],['packages','Packages','box'],['copilot','Copilot','users'],['pages','Pages','page']];
 function navLink([id,title,ico], sub = false) { return `<a class="nav-link ${activePage === id ? 'active' : ''} ${['organizations','usage','payment-history','deployments'].includes(id) ? 'mobile-tab' : ''}" href="#${id}" ${activePage === id ? 'aria-current="page"' : ''}>${ico ? icon(ico) : ''}<span>${title}</span>${id === 'deployments' ? '<span class="nav-new">New</span>' : ''}</a>`; }
 function renderSidebar() {
   const billingActive = billingLinks.some(([id]) => id === activePage);
-  $('#sidebar').innerHTML = `<div class="nav-group">${mainLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Access</div><button class="nav-toggle" data-action="toggle-billing" aria-expanded="${billOpen || billingActive}">${icon('card')}<span>Billing and licensing</span>${icon('chevron','chevron')}</button><div class="nav-sub ${billOpen || billingActive ? '' : 'hidden'}">${billingLinks.map(x=>navLink(x,true)).join('')}</div>${accessLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Code, planning, and automation</div>${navLink(['deployments','Despliegues','rocket'])}${codeLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Integrations</div>${navLink(['applications','Applications','box'])}${navLink(['settings','Configuración','gear'])}</div>`;
-  if(profile.mascot) $('#sidebar').insertAdjacentHTML('beforeend',`<div class="workspace-art"><button data-action="mascot" title="Cambiar imagen del espacio"><img src="${e(profile.mascot)}" alt="Imagen del espacio"></button></div>`);
+  $('#sidebar').innerHTML = `<div class="nav-group">${mainLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Access</div><button class="nav-toggle" data-action="toggle-billing" aria-expanded="${billOpen || billingActive}">${icon('card')}<span>Billing and licensing</span>${icon('chevron','chevron')}</button><div class="nav-sub ${billOpen || billingActive ? '' : 'hidden'}">${billingLinks.map(x=>navLink(x,true)).join('')}</div>${accessLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Code, planning, and automation</div>${navLink(['deployments','Deployments','rocket'])}${codeLinks.map(x=>navLink(x)).join('')}</div><div class="nav-section"><div class="nav-label">Integrations</div>${navLink(['applications','Applications','box'])}${navLink(['settings','Workspace settings','gear'])}</div>`;
+  if(profile.mascot) $('#sidebar').insertAdjacentHTML('beforeend',`<div class="workspace-art"><button data-action="mascot" title="Change workspace image"><img src="${e(profile.mascot)}" alt="Workspace image"></button></div>`);
 }
 function render() {
   closePopover(); renderHeader(); renderSidebar();
@@ -968,23 +1103,23 @@ function render() {
   else renderOther();
   document.title = `${pageTitle()} · GitHub`;
 }
-function pageTitle() { return [...mainLinks,...billingLinks,...accessLinks,...codeLinks,['deployments','Despliegues'],['settings','Configuración']].find(([id])=>id===activePage)?.[1] || 'Developer settings'; }
+function pageTitle() { return [...mainLinks,...billingLinks,...accessLinks,...codeLinks,['deployments','Deployments'],['settings','Workspace settings']].find(([id])=>id===activePage)?.[1] || 'Developer settings'; }
 function navigate(id) { if (activePage === id) render(); else location.hash = id; }
 function renderOrganizations() {
   $('#main').className = 'organization-page';
   $('#main').innerHTML = `${heading('Organizations',btn('New organization','new-organization','small'),'no-border')}<div>${organizations.length ? organizations.map(o=>`<div class="org-card">${icon('org')}<div><strong>${e(o.name)}</strong><div class="muted">${e(o.description || 'Your organization')}</div></div><span class="badge" style="margin-left:auto">Owner</span></div>`).join('') : '<div class="empty-org">You are not a member of any organizations.</div>'}</div><section class="move-org"><h2>Move to an organization</h2><p>Your personal account cannot be converted to an organization. You must create a new organization and transfer your repositories and projects to it instead. You can then rename your personal account and the organization if you want your organization to have the same name that you are currently using for your personal account.</p>${btn('Move work to an organization','move-organization')}</section>`;
 }
 function statusBadge(status='success') {
-  const labels={success:'Success',deployed:'Deployed',pending:'Pending',failed:'Failed',ready:'Listo',deploying:'Desplegando'};
+  const labels={success:'Success',deployed:'Deployed',pending:'Pending',failed:'Failed',ready:'Ready',deploying:'Deploying'};
   return `<span class="status status-${e(status)}">${labels[status]||'Success'}</span>`;
 }
 function deploymentStateBadge(row) { return statusBadge(row.source==='local'&&row.status==='success'?row.deploymentStatus:row.status); }
 function deploymentStartButton(row) {
   if(row.source!=='local'||row.status!=='success'||row.deploymentStatus==='deployed') return '';
-  return btn(row.deploymentStatus==='deploying'?'Continuar':'Desplegar','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
+  return btn(row.deploymentStatus==='deploying'?'Continue':'Deploy','deploy-now','small primary',`data-id="${e(row.paymentId)}"`);
 }
 function recordRows(records, detailed = false) {
-  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="white-space:nowrap;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Descargar recibo oficial en PDF" aria-label="Descargar recibo ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="Ver recibo oficial en página aparte" aria-label="Ver recibo ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td style="white-space:nowrap;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Descargar factura oficial en PDF" aria-label="Descargar factura ${e(p.id)}">${icon('download')}</button></td>`}</tr>`).join('');
+  return records.map(p=>`<tr><td>${e(p.date)}</td><td class="mono">${e(p.id)}</td>${detailed ? `<td>${e(p.name)}</td><td>${formatBytes((p.files || []).reduce((s,f)=>s+f.size,0))}</td>` : `<td>${icon('card')} ${e(p.method)}</td>`}<td>${money(p.amount)}</td><td>${statusBadge(p.status)}</td><td style="white-space:nowrap;"><button class="table-action" data-action="download-receipt" data-id="${e(p.id)}" title="Download official PDF receipt" aria-label="Download receipt ${e(p.id)}">${icon('download')}</button><button class="table-action" data-action="open-receipt-generator" data-id="${e(p.id)}" title="View official receipt in new tab" aria-label="View receipt ${e(p.id)}">${icon('eye')}</button></td>${detailed ? '' : `<td style="white-space:nowrap;"><button class="table-action" data-action="download-invoice" data-id="${e(p.id)}" title="Download official PDF invoice" aria-label="Download invoice ${e(p.id)}">${icon('download')}</button></td>`}</tr>`).join('');
 }
 function renderHistory() {
   const records = [...activePayments(payments)].sort((a,b)=>b.date.localeCompare(a.date)||(b.createdAt||'').localeCompare(a.createdAt||''));
@@ -998,13 +1133,13 @@ function renderHistory() {
           </a>
         </div>
         <div style="font-size:11px;color:#8b949e;">
-          Fecha de despliegue: <strong>${e(p.date)}</strong> · Factura: <strong class="mono" style="color:#e6edf3;">${e(generateNumericInvoiceNum(p.id))}</strong> · Commit: <code style="background:#161b22;padding:2px 5px;border-radius:3px;color:#58a6ff;">${e(dep.sha)}</code>
+          Deployment date: <strong>${e(p.date)}</strong> · Invoice: <strong style="color:#e6edf3;">${e(generateNumericInvoiceNum(p.id))}</strong> · Commit: <span style="background:#161b22;padding:2px 5px;border-radius:3px;color:#58a6ff;">${e(dep.sha)}</span>
           ${p.quantity ? ` · <span style="color:#7ee787;font-weight:600;">${e(p.quantity)}</span> (${e(p.sku || '')}${p.rateStr ? ` @ ${e(p.rateStr)}` : ''})` : ''}
         </div>
       </div>
       <div>
         <a href="${e(dep.url)}" target="_blank" rel="noopener noreferrer" class="btn small" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;text-decoration:none;">
-          ${icon('link')} Ver cambios
+          ${icon('link')} View changes
         </a>
       </div>
     </li>`;
@@ -1015,9 +1150,9 @@ function renderHistory() {
   <div style="margin-top:35px;background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
     <div style="background:#161b22;padding:12px 16px;border-bottom:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;">
       <h3 style="margin:0;font-size:13px;font-weight:600;color:#c9d1d9;display:flex;align-items:center;gap:8px;">
-        ${icon('rocket')} Despliegues reales ejecutados en estas fechas (GitHub Actions / Commits)
+        ${icon('rocket')} Verified production deployments executed on these dates (GitHub Actions / Commits)
       </h3>
-      <span style="font-size:11px;color:#8b949e;">${records.length} despliegues verificados</span>
+      <span style="font-size:11px;color:#8b949e;">${records.length} verified deployments</span>
     </div>
     <ul style="list-style:none;margin:0;padding:0;background:#0d1117;">
       ${deploysListHtml}
@@ -1027,31 +1162,30 @@ function renderHistory() {
 function usageRecords() { return activePayments(payments).filter(p => p.purpose!=='budget' && p.status!=='failed' && p.date.startsWith(usageMonth) && (!usageSearch || `${p.name} ${p.id} ${p.files?.map(f=>f.name).join(' ')}`.toLowerCase().includes(usageSearch.toLowerCase()))); }
 function chartMarkup() {
   const pts = [
-    [1, 0.20],
-    [2, 0.85],
-    [3, 1.25],
-    [4, 1.85],
-    [5, 2.30],
-    [6, 4.10],
-    [7, 5.20],
-    [8, 7.45],
-    [9, 8.85],
-    [10, 8.85],
-    [11, 8.85],
-    [12, 9.15],
-    [13, 9.52]
+    [1, 18.50],
+    [3, 62.00],
+    [5, 118.40],
+    [7, 176.00],
+    [9, 245.50],
+    [11, 312.00],
+    [13, 378.80],
+    [16, 485.00],
+    [18, 558.20],
+    [20, 628.00],
+    [22, 686.50],
+    [24, 740.00]
   ];
 
   const left = 48, right = 690, top = 20, bottom = 220;
-  const maxVal = 10.0;
+  const maxVal = 800.0;
 
   const points = pts.map(([day, val]) => {
-    const x = left + (day - 1) * (right - left) / 12.0;
+    const x = left + (day - 1) * (right - left) / 23.0;
     const y = bottom - (val / maxVal) * (bottom - top);
     return `${x.toFixed(1)},${y.toFixed(1)}`;
   }).join(' ');
 
-  const gridY = [10, 8, 6, 4, 2, 0];
+  const gridY = [800, 640, 480, 320, 160, 0];
   const gridLines = gridY.map(v => {
     const y = bottom - (v / maxVal) * (bottom - top);
     return `
@@ -1061,16 +1195,16 @@ function chartMarkup() {
   }).join('');
 
   const xLabels = pts.map(([day]) => {
-    const x = left + (day - 1) * (right - left) / 12.0;
+    const x = left + (day - 1) * (right - left) / 23.0;
     return `<text x="${x.toFixed(1)}" y="${bottom + 20}" text-anchor="middle" fill="#7d8590" font-size="10">Nov ${day}</text>`;
   }).join('');
 
   return `
-    <svg class="usage-chart" viewBox="0 0 720 255" style="width:100%;height:auto;overflow:visible;" role="img" aria-label="Metered usage chart November 1 - November 13, 2026 reaching $9.52">
+    <svg class="usage-chart" viewBox="0 0 720 255" style="width:100%;height:auto;overflow:visible;" role="img" aria-label="Metered usage chart November 1 - November 24, 2026 reaching $740.00">
       ${gridLines}
       <polyline points="${points}" fill="none" stroke="#2f81f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       ${pts.map(([day, val]) => {
-        const x = left + (day - 1) * (right - left) / 12.0;
+        const x = left + (day - 1) * (right - left) / 23.0;
         const y = bottom - (val / maxVal) * (bottom - top);
         return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.5" fill="#2f81f7"><title>Nov ${day}: $${val.toFixed(2)}</title></circle>`;
       }).join('')}
@@ -1085,18 +1219,17 @@ function renderUsage() {
   const records = [...usageRecords()].sort((a,b)=>a.date.localeCompare(b.date));
 
   $('#main').innerHTML = `
-    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0;">Metered usage</h1>
-      <button class="btn small" data-action="usage-report" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 12px;">
+    <div class="page-heading">
+      <h1>Metered usage</h1>
+      <button class="btn small" data-action="usage-report">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z"></path><path d="M7.25 1.75v7.69L4.47 6.66a.749.749 0 0 0-1.06 1.06l3.75 3.75a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 9.44V1.75a.75.75 0 0 0-1.5 0Z"></path></svg>
         Get usage report
       </button>
     </div>
 
-    <!-- Filters matching Image 2 -->
     <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
       <div style="flex:1;min-width:240px;position:relative;">
-        <input id="usage-search" value="${e(usageSearch)}" placeholder="Search or filter usage" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px 6px 32px;color:#c9d1d9;font-size:13px;" aria-label="Search or filter usage">
+        <input id="usage-search" value="${e(usageSearch)}" placeholder="Search or filter usage" style="width:100%;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px 6px 32px;color:#c9d1d9;font-size:12px;" aria-label="Search or filter usage">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="#7d8590" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);"><path d="m21 21-5.1-5.1M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0"></path></svg>
       </div>
       <div style="background:#161b22;border:1px solid #30363d;padding:6px 12px;border-radius:6px;font-size:12px;color:#c9d1d9;">
@@ -1107,12 +1240,11 @@ function renderUsage() {
       </div>
     </div>
 
-    <!-- Chart Card matching Image 2 -->
     <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;margin-bottom:24px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
         <div>
           <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Metered usage</h2>
-          <span style="font-size:12px;color:#8b949e;">Nov 1 - Nov 30, 2026</span>
+          <span style="font-size:12px;color:#8b949e;">Nov 1 - Nov 24, 2026</span>
         </div>
         <div style="display:flex;gap:8px;color:#8b949e;">
           <button style="background:none;border:none;color:#8b949e;cursor:pointer;">•••</button>
@@ -1122,16 +1254,15 @@ function renderUsage() {
 
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
         <span style="width:16px;height:2px;background:#2f81f7;display:inline-block;"></span>
-        <span style="font-size:12px;color:#c9d1d9;">Usage</span>
+        <span style="font-size:12px;color:#c9d1d9;">Usage ($740.00 net spent as of Nov 24)</span>
       </div>
 
       ${chartMarkup()}
     </div>
 
-    <!-- Usage breakdown section matching Image 2 -->
     <div style="margin-top:24px;">
-      <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Usage breakdown</h2>
-      <p style="font-size:12px;color:#8b949e;margin:0 0 16px 0;">Usage for Nov 1 - Nov 30, 2026. For license-based products, the price/unit is a prorated portion of the monthly price.</p>
+      <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Usage breakdown</h2>
+      <p style="font-size:12px;color:#8b949e;margin:0 0 16px 0;">Usage for Nov 1 - Nov 24, 2026. Budget usage ($740.00 net) distributed across cloud services.</p>
 
       <div class="table-wrap">
         <table class="data-table">
@@ -1146,68 +1277,76 @@ function renderUsage() {
           </thead>
           <tbody>
             <tr>
-              <td><strong>GitHub Actions minutes</strong> (macOS & Linux)</td>
-              <td>595 min</td>
-              <td>$9.52</td>
-              <td>-$9.26</td>
-              <td>$0.26</td>
+              <td><strong>GitHub Codespaces core hours</strong></td>
+              <td>944.44 hrs</td>
+              <td>$340.00</td>
+              <td>—</td>
+              <td>$340.00</td>
             </tr>
             <tr>
-              <td><strong>GitHub Codespaces core hours</strong></td>
-              <td>2,983.33 hrs (Oct paid)</td>
-              <td>$1,074.00</td>
-              <td>—</td>
-              <td>$1,074.00</td>
+              <td><strong>GitHub Actions minutes</strong> (macOS & Linux)</td>
+              <td>3,428.25 min</td>
+              <td>$274.26</td>
+              <td>-$9.26</td>
+              <td>$265.00</td>
             </tr>
             <tr>
               <td><strong>GitHub Packages storage</strong></td>
-              <td>130 GB</td>
-              <td>$130.00</td>
+              <td>380 GB</td>
+              <td>$95.00</td>
               <td>—</td>
-              <td>$130.00</td>
+              <td>$95.00</td>
             </tr>
             <tr>
               <td><strong>Git Large File Storage (LFS)</strong></td>
-              <td>10 GB Bandwidth</td>
-              <td>$0.00</td>
-              <td>Included</td>
-              <td>$0.00</td>
+              <td>80 GB Bandwidth</td>
+              <td>$40.00</td>
+              <td>—</td>
+              <td>$40.00</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr style="font-weight:600;border-top:2px solid #30363d;background:#161b22;">
+              <td>Total current cycle (Nov 1 – Nov 24, 2026)</td>
+              <td>4 active services</td>
+              <td>$749.26</td>
+              <td>-$9.26</td>
+              <td><strong>$740.00</strong></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
 
-            <!-- Pronóstico y aproximado al 30 de noviembre -->
     <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:18px;">
         <div style="flex:1;min-width:280px;">
-          <h3 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
+          <h3 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
             <svg viewBox="0 0 16 16" width="16" height="16" fill="#58a6ff"><path d="M1.5 3A1.5 1.5 0 0 1 3 1.5h10A1.5 1.5 0 0 1 14.5 3v10a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 13V3ZM3 2.5a.5.5 0 0 0-.5.5v1h11V3a.5.5 0 0 0-.5-.5H3Zm11 2.5H2v8a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V5Z"></path><path d="M4.5 7.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm-4 3a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"></path></svg>
-            Aproximado al 30 de este mes y proyección de cierre (Nov 30, 2026)
+            Month-end estimate and closing projection (Nov 30, 2026)
           </h3>
           <p style="font-size:12px;color:#8b949e;margin:0 0 10px 0;">
-            Cálculo proyectado para el ciclo en curso de <strong>Noviembre 2026</strong>. Presupuesto asignado de <strong>$300.00 USD</strong> con monitoreo continuo y alertas configuradas ante umbrales de consumo.
+            Projected calculation for the current <strong>November 2026</strong> billing cycle. Assigned budget of <strong>$900.00 USD</strong> with continuous monitoring and configured threshold alerts.
           </p>
           <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;font-size:11px;color:#8b949e;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <span style="display:inline-flex;align-items:center;gap:5px;color:#7ee787;font-weight:600;">
-              <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2ea043;"></span> Alertas de presupuesto: On
+              <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2ea043;"></span> Budget alerts: On
             </span>
-            <span>· Límite mensual: <strong style="color:#c9d1d9;">$300.00 USD</strong></span>
-            <span>· Alertas al alcanzar: <strong>75% ($225)</strong> y <strong>90% ($270)</strong></span>
-            <span style="color:#58a6ff;">· Margen disponible: $53.29 USD</span>
+            <span>· Monthly limit: <strong style="color:#c9d1d9;">$900.00 USD</strong></span>
+            <span>· Alerts at: <strong>75% ($675)</strong> and <strong>90% ($810)</strong></span>
+            <span style="color:#58a6ff;">· Available headroom today: $160.00 USD</span>
           </div>
         </div>
         <div style="display:flex;gap:24px;align-items:flex-end;">
           <div style="text-align:right;">
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto real del mes</span>
-            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$38.50</strong>
-            <small style="color:#8b949e;font-size:11px;">Al corte del 13 nov</small>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Current month net</span>
+            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$740.00</strong>
+            <small style="color:#8b949e;font-size:11px;">As of Nov 24</small>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
-            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$246.71</strong>
-            <small style="color:#8b949e;font-size:11px;">Presupuesto fijado: $300.00</small>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Projected net (Nov 30)</span>
+            <strong style="display:block;font-size:24px;color:#c9d1d9;font-weight:600;">$865.00</strong>
+            <small style="color:#8b949e;font-size:11px;">Set budget: $900.00</small>
           </div>
         </div>
       </div>
@@ -1216,77 +1355,76 @@ function renderUsage() {
         <table class="data-table">
           <thead>
             <tr>
-              <th>Producto</th>
-              <th>Consumo al 13 nov</th>
-              <th>Ritmo diario</th>
-              <th>Proyección al 30 nov</th>
-              <th>Neto facturado proyectado</th>
-              <th>Próximo mes estimado</th>
+              <th>Product</th>
+              <th>Usage as of Nov 24</th>
+              <th>Daily rate</th>
+              <th>Projected by Nov 30</th>
+              <th>Projected net billed</th>
+              <th>Estimated next month</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>GitHub Actions</strong> (macOS & Linux)</td>
-              <td>595 min ($9.52 bruto / $0.26 neto)</td>
-              <td>45.8 min/día ($0.73/día)</td>
-              <td>1,373 min ($21.97 bruto)</td>
-              <td><strong style="color:#c9d1d9;">$12.71</strong> <small style="color:#8b949e;">(-$9.26 dcto.)</small></td>
-              <td>$15.00 – $25.00</td>
+              <td><strong>GitHub Codespaces</strong> core hours</td>
+              <td>944.44 hrs ($340.00 net)</td>
+              <td>39.4 hrs/day ($14.17/day)</td>
+              <td>1,111.11 hrs</td>
+              <td><strong style="color:#c9d1d9;">$400.00</strong></td>
+              <td>$360.00 – $400.00</td>
             </tr>
             <tr>
-              <td><strong>GitHub Codespaces</strong> core hours</td>
-              <td>78.2 hrs ($28.00 neto)</td>
-              <td>Workstations bajo demanda</td>
-              <td>550 hrs</td>
-              <td><strong style="color:#c9d1d9;">$199.00</strong></td>
-              <td>$180.00 – $220.00</td>
+              <td><strong>GitHub Actions</strong> (macOS & Linux)</td>
+              <td>3,428.25 min ($274.26 gross / $265.00 net)</td>
+              <td>142.8 min/day ($11.04/day)</td>
+              <td>3,990 min ($319.26 gross)</td>
+              <td><strong style="color:#c9d1d9;">$310.00</strong> <small style="color:#8b949e;">(-$9.26 disc.)</small></td>
+              <td>$250.00 – $310.00</td>
             </tr>
             <tr>
               <td><strong>GitHub Packages</strong> storage</td>
-              <td>35 GB ($10.24)</td>
-              <td>Artefactos y caché CI/CD</td>
-              <td>48 GB</td>
-              <td><strong style="color:#c9d1d9;">$35.00</strong></td>
-              <td>$30.00 – $40.00</td>
+              <td>380 GB ($95.00)</td>
+              <td>CI/CD artifacts and cache</td>
+              <td>420 GB</td>
+              <td><strong style="color:#c9d1d9;">$105.00</strong></td>
+              <td>$90.00 – $115.00</td>
             </tr>
             <tr>
               <td><strong>Git Large File Storage (LFS)</strong></td>
-              <td>2.5 GB Bandwidth ($0.00)</td>
-              <td>Dentro de cuota base</td>
-              <td>8.5 GB</td>
-              <td><strong style="color:#c9d1d9;">$0.00</strong> <small style="color:#8b949e;">(Incluido)</small></td>
-              <td>$0.00</td>
+              <td>80 GB Bandwidth ($40.00)</td>
+              <td>Media & release assets</td>
+              <td>100 GB</td>
+              <td><strong style="color:#c9d1d9;">$50.00</strong></td>
+              <td>$40.00 – $55.00</td>
             </tr>
           </tbody>
           <tfoot>
             <tr style="font-weight:600;border-top:2px solid #30363d;background:#161b22;">
-              <td>Total estimado mensual</td>
-              <td>$38.50 neto consumido</td>
+              <td>Estimated monthly total</td>
+              <td>$740.00 net used</td>
               <td>—</td>
-              <td>30 días completos</td>
-              <td><span style="color:#c9d1d9;font-size:14px;">$246.71 USD</span></td>
-              <td>$225.00 – $285.00</td>
+              <td>Full 30 days</td>
+              <td><span style="color:#c9d1d9;">$865.00 USD</span></td>
+              <td>$740.00 – $880.00</td>
             </tr>
           </tfoot>
         </table>
       </div>
     </div>
 
-    <!-- Distribución de presupuestos correspondientes al Payment Overview -->
     <div style="margin-top:28px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
         <div>
-          <h3 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
+          <h3 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;display:flex;align-items:center;gap:8px;">
             <svg viewBox="0 0 16 16" width="16" height="16" fill="#3fb950"><path d="M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 15H2.75A1.75 1.75 0 0 1 1 13.25V2.75Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H2.75ZM8 4a.75.75 0 0 1 .75.75v.27c1.173.23 2 1.155 2 2.23 0 1.25-.97 2.25-2.25 2.25H7.5c-.414 0-.75.336-.75.75s.336.75.75.75h2a.75.75 0 0 1 0 1.5v.25a.75.75 0 0 1-1.5 0v-.27c-1.173-.23-2-1.155-2-2.23 0-1.25.97-2.25 2.25-2.25H9c.414 0 .75-.336.75-.75s-.336-.75-.75-.75H7a.75.75 0 0 1 0-1.5V4.75A.75.75 0 0 1 8 4Z"></path></svg>
-            Distribución de presupuestos asignados (Payment Overview Conciliation)
+            Allocated budget distribution (Payment Overview Reconciliation)
           </h3>
           <p style="font-size:12px;color:#8b949e;margin:0;">
-            Presupuestos asignados distribuidos por producto, conciliados directamente con el total histórico de <strong>$8,955.96 USD</strong> en Payment Overview (promedio mensual: <strong>$1,492.66 USD</strong>).
+            Allocated budgets distributed by product, directly reconciled with the historical total of <strong>$9,695.96 USD</strong> in Payment Overview (monthly average: <strong>$1,615.99 USD</strong>).
           </p>
         </div>
         <div style="text-align:right;">
-          <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Presupuesto Total Acumulado</span>
-          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$8,955.96</strong>
+          <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Total Accumulated Budget</span>
+          <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$9,695.96</strong>
         </div>
       </div>
 
@@ -1294,58 +1432,58 @@ function renderUsage() {
         <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Codespaces Workstations</span>
-            <span style="font-size:11px;color:#8b949e;">71.9%</span>
+            <span style="font-size:11px;color:#8b949e;">70.0%</span>
           </div>
-          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$6,444.00</div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$6,784.00</div>
           <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
             <div style="width:100%;height:100%;background:#388bfd;"></div>
           </div>
-          <p style="font-size:11px;color:#8b949e;margin:0;">Presupuesto asignado para workstations de desarrollo e instancias de 8 y 16 núcleos.</p>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Allocated budget for development workstations and 8-core / 16-core instances (+$340.00 in Nov).</p>
         </div>
 
         <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Actions Runners</span>
-            <span style="font-size:11px;color:#8b949e;">18.8%</span>
+            <span style="font-size:11px;color:#8b949e;">20.1%</span>
           </div>
-          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$1,680.00</div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$1,945.00</div>
           <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
             <div style="width:98%;height:100%;background:#2ea043;"></div>
           </div>
-          <p style="font-size:11px;color:#8b949e;margin:0;">Compilaciones nativas iOS (macOS), Android APK, runners cluster y flujos CI/CD.</p>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Native iOS (macOS) builds, Android APK, cluster runners, and CI/CD workflows (+$265.00 in Nov).</p>
         </div>
 
         <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Packages & Storage</span>
-            <span style="font-size:11px;color:#8b949e;">6.9%</span>
+            <span style="font-size:11px;color:#8b949e;">7.4%</span>
           </div>
-          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$620.00</div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$715.00</div>
           <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
             <div style="width:94%;height:100%;background:#d29922;"></div>
           </div>
-          <p style="font-size:11px;color:#8b949e;margin:0;">Almacenamiento de paquetes npm, contenedores Docker y artefactos de despliegue.</p>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Storage for npm packages, Docker containers, and deployment artifacts (+$95.00 in Nov).</p>
         </div>
 
         <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-size:13px;font-weight:600;color:#c9d1d9;">Git LFS & Egress</span>
-            <span style="font-size:11px;color:#8b949e;">2.4%</span>
+            <span style="font-size:11px;color:#8b949e;">2.6%</span>
           </div>
-          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$211.96</div>
+          <div style="font-size:18px;font-weight:600;color:#c9d1d9;margin-bottom:4px;">$251.96</div>
           <div style="width:100%;background:#21262d;height:6px;border-radius:3px;overflow:hidden;margin-bottom:6px;">
             <div style="width:90%;height:100%;background:#a371f7;"></div>
           </div>
-          <p style="font-size:11px;color:#8b949e;margin:0;">Ancho de banda para assets pesados de Power Games, trailers y egress de datos.</p>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Bandwidth for large Power Games assets, trailers, and data egress (+$40.00 in Nov).</p>
         </div>
       </div>
 
       <div style="display:flex;gap:12px;align-items:center;justify-content:flex-end;">
         <a href="#payment-history" class="btn small" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          Ver 17 recibos en Payment history
+          View 20 receipts in Payment history
         </a>
         <a href="#budgets" class="btn small primary" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">
-          Ajustar límites en Budgets and alerts
+          Adjust limits in Budgets and alerts
         </a>
       </div>
     </div>
@@ -1357,7 +1495,7 @@ function renderValuation() {
   $('#main').innerHTML=renderValuationPage(valuationState);
 }
 function fileRows(files, kind) {
-  return files.map((file,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(file.name)}</span><small>${formatBytes(file.size)}</small></div><button type="button" class="bare-icon" data-action="remove-${kind}" data-index="${i}" aria-label="Quitar ${e(file.name)}">${icon('close')}</button></div>`).join('');
+  return files.map((file,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(file.name)}</span><small>${formatBytes(file.size)}</small></div><button type="button" class="bare-icon" data-action="remove-${kind}" data-index="${i}" aria-label="Remove ${e(file.name)}">${icon('close')}</button></div>`).join('');
 }
 function deploymentRows() { return buildDeploymentRows({payments,overrides:deploymentOverrides}); }
 function paidTotal() { return activePayments(payments).filter(p=>(p.status??'success')==='success').reduce((sum,p)=>sum+Math.round(p.amount*100),0)/100; }
@@ -1367,7 +1505,7 @@ function deploymentActivityMarkup() {
   const pages=Math.max(1,Math.ceil(filtered.length/10));
   deploymentPage=Math.max(1,Math.min(deploymentPage,pages));
   const visible=filtered.slice((deploymentPage-1)*10,deploymentPage*10);
-  return `<section id="deployments-list"><div class="section-heading"><h2>Últimos despliegues</h2>${btn(`${icon('plus')} Registrar despliegue`,'new-record','small')}</div><p class="hint">Producción verificada en GitHub y los despliegues que registras aquí, del más reciente al más antiguo.</p><div class="deployment-controls"><select id="deployment-source" class="select" aria-label="Origen de los despliegues"><option value="all" ${deploymentSource==='all'?'selected':''}>Todos los orígenes</option><option value="github" ${deploymentSource==='github'?'selected':''}>GitHub · producción</option><option value="local" ${deploymentSource==='local'?'selected':''}>Mis despliegues</option></select><label class="search-field">${icon('search')}<input id="deployment-search" value="${e(deploymentQuery)}" placeholder="Buscar nombre, fecha o commit" aria-label="Buscar despliegues"></label></div><div class="table-wrap"><table class="data-table deployments-table"><thead><tr><th>Fecha</th><th>Despliegue</th><th>Origen</th><th>Peso</th><th>Importe</th><th>Estado</th><th></th></tr></thead><tbody>${visible.map(row=>`<tr><td>${e(row.date)}</td><td><button type="button" class="deployment-name" data-action="view-deployment" data-id="${e(row.id)}">${e(row.name)}</button><small class="muted">${row.sha?e(row.sha.slice(0,8)):e(row.paymentId)} · ${row.fileCount} archivos</small></td><td><span class="badge">${row.source==='github'?'GitHub':'Local'}</span></td><td>${row.source==='local'?formatBytes(row.files.reduce((n,f)=>n+f.size,0)):'—'}</td><td>${row.amount===null?'—':money(row.amount)}<small class="muted">${row.amountKind==='valuation'?'Valoración':'Pago registrado'}</small></td><td>${deploymentStateBadge(row)}</td><td>${deploymentStartButton(row)}${row.source==='local'?`<button type="button" class="table-action" data-action="delete-payment" data-id="${e(row.paymentId)}" aria-label="Eliminar ${e(row.name)}">${icon('close')}</button>`:''}<button type="button" class="table-action" data-action="edit-deployment" data-id="${e(row.id)}" aria-label="Editar ${e(row.name)}">${icon('gear')}</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty-search">No hay despliegues que coincidan.</td></tr>'}</tbody></table></div><div class="deployment-pagination"><span class="muted">${filtered.length} registros · Página ${deploymentPage} de ${pages}</span><div>${btn('Anterior','deployment-page','small',`data-page="${deploymentPage-1}" ${deploymentPage===1?'disabled':''}`)} ${btn('Siguiente','deployment-page','small',`data-page="${deploymentPage+1}" ${deploymentPage===pages?'disabled':''}`)}</div></div></section>`;
+  return `<section id="deployments-list"><div class="section-heading"><h2>Recent deployments</h2>${btn(`${icon('plus')} Record deployment`,'new-record','small')}</div><p class="hint">Verified production runs on GitHub and deployments you record here, from newest to oldest.</p><div class="deployment-controls"><select id="deployment-source" class="select" aria-label="Deployment source"><option value="all" ${deploymentSource==='all'?'selected':''}>All sources</option><option value="github" ${deploymentSource==='github'?'selected':''}>GitHub · production</option><option value="local" ${deploymentSource==='local'?'selected':''}>My deployments</option></select><label class="search-field">${icon('search')}<input id="deployment-search" value="${e(deploymentQuery)}" placeholder="Search name, date, or commit" aria-label="Search deployments"></label></div><div class="table-wrap"><table class="data-table deployments-table"><thead><tr><th>Date</th><th>Deployment</th><th>Source</th><th>Size</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody>${visible.map(row=>`<tr><td>${e(row.date)}</td><td><button type="button" class="deployment-name" data-action="view-deployment" data-id="${e(row.id)}">${e(row.name)}</button><small class="muted">${row.sha?e(row.sha.slice(0,8)):e(row.paymentId)} · ${row.fileCount} files</small></td><td><span class="badge">${row.source==='github'?'GitHub':'Local'}</span></td><td>${row.source==='local'?formatBytes(row.files.reduce((n,f)=>n+f.size,0)):'—'}</td><td>${row.amount===null?'—':money(row.amount)}<small class="muted">${row.amountKind==='valuation'?'Valuation':'Recorded payment'}</small></td><td>${deploymentStateBadge(row)}</td><td>${deploymentStartButton(row)}${row.source==='local'?`<button type="button" class="table-action" data-action="delete-payment" data-id="${e(row.paymentId)}" aria-label="Delete ${e(row.name)}">${icon('close')}</button>`:''}<button type="button" class="table-action" data-action="edit-deployment" data-id="${e(row.id)}" aria-label="Edit ${e(row.name)}">${icon('gear')}</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty-search">No matching deployments found.</td></tr>'}</tbody></table></div><div class="deployment-pagination"><span class="muted">${filtered.length} records · Page ${deploymentPage} of ${pages}</span><div>${btn('Previous','deployment-page','small',`data-page="${deploymentPage-1}" ${deploymentPage===1?'disabled':''}`)} ${btn('Next','deployment-page','small',`data-page="${deploymentPage+1}" ${deploymentPage===pages?'disabled':''}`)}</div></div></section>`;
 }
 let overviewProductTab = 'copilot';
 
@@ -1404,16 +1542,16 @@ function renderOverview() {
               <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Actions gross metered usage</span>
               <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
             </div>
-            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.52</strong>
-            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Included usage discount: -$9.26 · Net billed: $0.26</p>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$274.26</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Included usage discount: -$9.26 · Net billed: $265.00</p>
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
               <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Workflows & CI/CD Runs</span>
-              <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">Ver pagos</a>
+              <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">View payments</a>
             </div>
-            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">1,837 runs</strong>
-            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Última ejecución: CI/CD CrossBox #1837 (Hoy, 13 Nov 2026)</p>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">1,842 runs</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">Latest run: CI/CD CrossBox #1842 (Nov 24, 2026)</p>
           </div>
         </div>
       `;
@@ -1425,15 +1563,15 @@ function renderOverview() {
               <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Codespaces workstation hours</span>
               <a href="#codespaces" style="font-size:11px;color:#58a6ff;text-decoration:none;">View details</a>
             </div>
-            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$1,074.00</strong>
-            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">2,983.33 core-hours @ $0.36/hr · Factura #INV-1074APPL</p>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$340.00</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">944.44 core-hours in Nov ($1,414.00 cumulative with Oct) @ $0.36/hr</p>
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Workstations configuradas</span>
-              <a href="#codespaces" style="font-size:11px;color:#58a6ff;text-decoration:none;">Abrir Codespaces</a>
+              <span style="font-size:13px;color:#c9d1d9;font-weight:600;">Configured workstations</span>
+              <a href="#codespaces" style="font-size:11px;color:#58a6ff;text-decoration:none;">Open Codespaces</a>
             </div>
-            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">2 activas</strong>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">2 active</strong>
             <p style="font-size:11px;color:#8b949e;margin:0;line-height:1.4;">lfarmas4/crossbox-app (main & pwr-games-release)</p>
           </div>
         </div>
@@ -1443,8 +1581,8 @@ function renderOverview() {
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;padding-top:8px;">
           <div>
             <span style="font-size:13px;color:#c9d1d9;font-weight:600;display:block;">Shared packages & asset storage</span>
-            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$130.00</strong>
-            <p style="font-size:11px;color:#8b949e;margin:0;">LFS bandwidth and package registry across repos.</p>
+            <strong style="font-size:24px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$135.00</strong>
+            <p style="font-size:11px;color:#8b949e;margin:0;">$95.00 Packages storage + $40.00 Git LFS bandwidth (Nov 1 – Nov 24, 2026).</p>
           </div>
         </div>
       `;
@@ -1453,15 +1591,14 @@ function renderOverview() {
 
   $('#main').innerHTML = `
     <div class="page-heading">
-      <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0;">Overview</h1>
+      <h1>Overview</h1>
     </div>
 
-    <!-- Top 3 Metric Cards matching Image 1 -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;">
       <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
         <span style="font-size:12px;color:#c9d1d9;font-weight:600;display:block;">Current metered usage</span>
-        <strong style="font-size:28px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.52</strong>
-        <span style="font-size:11px;color:#8b949e;">Gross metered usage for November 1 - November 30, 2026.</span>
+        <strong style="font-size:28px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$749.26</strong>
+        <span style="font-size:11px;color:#8b949e;">Gross metered usage for November 1 - November 24, 2026 ($740.00 net).</span>
       </div>
 
       <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
@@ -1470,7 +1607,7 @@ function renderOverview() {
           <a href="#usage" style="font-size:11px;color:#58a6ff;text-decoration:none;">More details</a>
         </div>
         <strong style="font-size:28px;color:#c9d1d9;font-weight:600;display:block;margin:6px 0;">$9.26</strong>
-        <span style="font-size:11px;color:#8b949e;">Included usage discounts for November 1 - November 30, 2026.</span>
+        <span style="font-size:11px;color:#8b949e;">Included usage discounts for November 1 - November 24, 2026.</span>
       </div>
 
       <div style="padding:16px 20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;">
@@ -1478,11 +1615,11 @@ function renderOverview() {
           <span style="font-size:12px;color:#c9d1d9;font-weight:600;">Next payment due</span>
           <a href="#payment-history" style="font-size:11px;color:#58a6ff;text-decoration:none;">Payment history</a>
         </div>
-        <strong style="font-size:28px;color:#8b949e;font-weight:600;display:block;margin:6px 0;">–</strong>
+        <strong style="font-size:28px;color:#3fb950;font-weight:600;display:block;margin:6px 0;">$0.00</strong>
+        <span style="font-size:11px;color:#8b949e;">$740.00 current cycle budget settled through Nov 24, 2026.</span>
       </div>
     </div>
 
-    <!-- Monthly Budget & Alert Status matching user settings -->
     <div style="margin-top:20px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px 20px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
         <div>
@@ -1490,42 +1627,40 @@ function renderOverview() {
             <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0;">Monthly spending limit & alerts</h2>
             <span style="background:#238636;color:#ffffff;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;">Alerts: On</span>
           </div>
-          <p style="font-size:11px;color:#8b949e;margin:0;">Límite mensual fijado en <strong>$300.00 USD</strong>. Notificaciones automáticas por correo al 75% ($225.00), 90% ($270.00) y alerta de bloqueo preventivo al 100% ($300.00).</p>
+          <p style="font-size:11px;color:#8b949e;margin:0;">Monthly limit set to <strong>$900.00 USD</strong>. Automatic email notifications at 75% ($675.00), 90% ($810.00), and preventive cap alert at 100% ($900.00).</p>
         </div>
         <div style="display:flex;gap:24px;align-items:baseline;">
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto real del mes</span>
-            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$38.50</strong>
-            <small style="color:#8b949e;font-size:11px;">Al corte del 13 nov</small>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Current month net</span>
+            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$740.00</strong>
+            <small style="color:#8b949e;font-size:11px;">As of Nov 24</small>
           </div>
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Neto proyectado 30 nov</span>
-            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$246.71</strong>
-            <small style="color:#8b949e;font-size:11px;">Estimado fin de mes</small>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Projected net (Nov 30)</span>
+            <strong style="display:block;font-size:22px;color:#c9d1d9;font-weight:600;">$865.00</strong>
+            <small style="color:#8b949e;font-size:11px;">Month-end estimate</small>
           </div>
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Presupuesto fijado</span>
-            <strong style="display:block;font-size:22px;color:#58a6ff;font-weight:600;">$300.00</strong>
-            <small style="color:#8b949e;font-size:11px;"><a href="#budgets" style="color:#58a6ff;text-decoration:none;">Editar límite</a></small>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Set budget</span>
+            <strong style="display:block;font-size:22px;color:#58a6ff;font-weight:600;">$900.00</strong>
+            <small style="color:#8b949e;font-size:11px;"><a href="#budgets" style="color:#58a6ff;text-decoration:none;">Edit limit</a></small>
           </div>
         </div>
       </div>
-      <!-- Budget Progress Bar -->
       <div style="background:#21262d;height:8px;border-radius:4px;overflow:hidden;position:relative;margin:12px 0 6px 0;">
-        <div style="background:#2ea043;height:100%;width:12.8%;position:absolute;left:0;top:0;" title="Consumo real: $38.50 (12.8%)"></div>
-        <div style="background:#388bfd33;border-right:2px solid #58a6ff;height:100%;width:82.2%;position:absolute;left:0;top:0;" title="Proyección al 30 nov: $246.71 (82.2%)"></div>
+        <div style="background:#2ea043;height:100%;width:82.2%;position:absolute;left:0;top:0;" title="Actual usage: $740.00 (82.2%)"></div>
+        <div style="background:#388bfd33;border-right:2px solid #58a6ff;height:100%;width:96.1%;position:absolute;left:0;top:0;" title="Projected by Nov 30: $865.00 (96.1%)"></div>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;">
-        <span>Consumo real: <strong>$38.50</strong> (12.8%)</span>
-        <span>Proyección a fin de mes: <strong>$246.71</strong> (82.2% del presupuesto)</span>
-        <span style="color:#7ee787;">✓ Margen seguro ($53.29 disponible antes de la alerta máxima)</span>
+        <span>Actual usage: <strong>$740.00</strong> (82.2%)</span>
+        <span>Projected by month-end: <strong>$865.00</strong> (96.1% of budget)</span>
+        <span style="color:#7ee787;">✓ Safe headroom ($160.00 available today before maximum cap)</span>
       </div>
     </div>
 
-    <!-- Subscriptions Section matching Image 1 -->
     <div style="margin-top:28px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Subscriptions</h2>
+        <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0;">Subscriptions</h2>
         <a href="#payment-history" style="font-size:12px;color:#58a6ff;text-decoration:none;">Manage subscriptions</a>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
@@ -1546,10 +1681,9 @@ function renderOverview() {
       </div>
     </div>
 
-    <!-- Metered Usage Section matching Image 1 -->
     <div style="margin-top:28px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Metered usage</h2>
+        <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0;">Metered usage</h2>
         <div style="font-size:12px;background:#161b22;border:1px solid #30363d;padding:4px 10px;border-radius:6px;color:#c9d1d9;display:inline-flex;align-items:center;gap:4px;">
           Timeframe: Current month <span style="font-size:10px;">▾</span>
         </div>
@@ -1558,7 +1692,6 @@ function renderOverview() {
       <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
         <h3 style="font-size:13px;color:#c9d1d9;font-weight:600;margin:0 0 16px 0;">Usage by products</h3>
 
-        <!-- Product Tabs -->
         <div style="display:flex;gap:4px;border-bottom:1px solid #21262d;margin-bottom:20px;overflow-x:auto;">
           ${['copilot', 'actions', 'codespaces', 'security', 'lfs', 'models', 'packages', 'more'].map(tab => {
             const labels = {
@@ -1586,40 +1719,39 @@ function renderOverview() {
       </div>
     </div>
 
-    <!-- Monthly History Table directly connected to GitHub Payments -->
     <div style="margin-top:32px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <div>
-          <h3 style="font-size:14px;color:#c9d1d9;font-weight:600;margin:0 0 4px 0;">Historial mensual consolidado · GitHub Payments</h3>
-          <p style="margin:0;font-size:11px;color:#8b949e;">Valores facturados y auditados correspondientes a los recibos y facturas oficiales.</p>
+          <h3 style="font-size:14px;color:#c9d1d9;font-weight:600;margin:0 0 4px 0;">Consolidated monthly history · GitHub Payments</h3>
+          <p style="margin:0;font-size:11px;color:#8b949e;">Billed and audited amounts corresponding to official receipts and invoices.</p>
         </div>
-        <button class="btn small" data-action="paid-history" style="font-size:11px;">Ver 17 facturas</button>
+        <button class="btn small" data-action="paid-history" style="font-size:11px;">View 20 invoices</button>
       </div>
 
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Periodo</th>
+              <th>Period</th>
               <th>CrossBox</th>
               <th>FitCode</th>
-              <th>Total Facturado</th>
+              <th>Total Billed</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>Junio 2026</td><td>$180.00</td><td>$89.00</td><td>$269.00</td></tr>
-            <tr><td>Julio 2026</td><td>$180.00</td><td>$56.00</td><td>$236.00</td></tr>
-            <tr><td>Agosto 2026</td><td>$250.00</td><td>$3.00</td><td>$253.00</td></tr>
-            <tr><td>Septiembre 2026</td><td>$3,409.13</td><td>—</td><td>$3,409.13</td></tr>
-            <tr><td>Octubre 2026</td><td>$3,691.28</td><td>—</td><td>$3,691.28</td></tr>
-            <tr style="background:#161b22;"><td>Noviembre 2026 (Activo)</td><td>$1,245.55</td><td>—</td><td>$1,245.55</td></tr>
+            <tr><td>June 2026</td><td>$180.00</td><td>$89.00</td><td>$269.00</td></tr>
+            <tr><td>July 2026</td><td>$180.00</td><td>$56.00</td><td>$236.00</td></tr>
+            <tr><td>August 2026</td><td>$250.00</td><td>$3.00</td><td>$253.00</td></tr>
+            <tr><td>September 2026</td><td>$3,409.13</td><td>—</td><td>$3,409.13</td></tr>
+            <tr><td>October 2026</td><td>$3,691.28</td><td>—</td><td>$3,691.28</td></tr>
+            <tr style="background:#161b22;"><td>November 2026 (Active · as of Nov 24)</td><td>$1,985.55</td><td>—</td><td>$1,985.55</td></tr>
           </tbody>
           <tfoot>
             <tr style="font-weight:600;">
-              <td>Total Anual Acumulado</td>
-              <td style="color:#c9d1d9;">$8,955.96</td>
+              <td>Total Annual Accumulated</td>
+              <td style="color:#c9d1d9;">$9,695.96</td>
               <td style="color:#c9d1d9;">$148.00</td>
-              <td style="color:#c9d1d9;">$9,103.96</td>
+              <td style="color:#c9d1d9;">$9,843.96</td>
             </tr>
           </tfoot>
         </table>
@@ -1673,7 +1805,7 @@ function renderBudgets() {
               </div>
               <span class="budget-item-percent" style="color:#c9d1d9;font-weight:600;">${pct}%</span>
             </div>
-            <div><button class="bare-icon" style="color:var(--muted);" aria-label="Opciones">···</button></div>
+            <div><button class="bare-icon" style="color:var(--muted);" aria-label="Options">···</button></div>
           </div>`;
         }).join('')}
       </div>
@@ -1685,10 +1817,10 @@ function renderBudgets() {
 function openBudgetCheckout() {
   if(deploymentBusy||recordMutationBusy)return;
   const summary=getBillingSummary(billingState,payments);
-  if(summary.amountDue<=0) { toast('El saldo del mes ya está regularizado.'); return; }
-  const invoiceFile=new File([JSON.stringify({period:summary.period,invoiceId:summary.invoiceId,usage:summary.totalUsage,credit:summary.openingCredit,paid:summary.totalPaid,amount:summary.amountDue},null,2)],`consumo-${summary.period}.json`,{type:'application/json'});
+  if(summary.amountDue<=0) { toast('The monthly balance is already settled.'); return; }
+  const invoiceFile=new File([JSON.stringify({period:summary.period,invoiceId:summary.invoiceId,usage:summary.totalUsage,credit:summary.openingCredit,paid:summary.totalPaid,amount:summary.amountDue},null,2)],`usage-${summary.period}.json`,{type:'application/json'});
   checkout={mode:'budget',invoice:summary,quote:{total:summary.amountDue,bytes:invoiceFile.size,count:1},files:[{name:invoiceFile.name,size:invoiceFile.size,blob:invoiceFile}],processing:false,locked:false,cancelled:false};
-  modal('Regularizar saldo mensual',checkoutReviewHtml({quote:checkout.quote,files:[],profile,date:today(),mode:'budget',invoice:summary}),760);
+  modal('Settle monthly balance',checkoutReviewHtml({quote:checkout.quote,files:[],profile,date:today(),mode:'budget',invoice:summary}),760);
 }
 function exportUsageReport() {
   const summary=getBillingSummary(billingState,payments,{period:usageMonth});
@@ -1699,65 +1831,65 @@ function exportUsageReport() {
 function isExamplePayment(record) { return ['atr-sistem','pwr-games-agent-bar'].includes(record.scenarioKey)||(record.scenarioKeys||[]).some(key=>['atr-sistem','pwr-games-agent-bar'].includes(key)); }
 function openDeletePayment(id) {
   const record=findRecord(id); if(!record||record.deletedAt)return;
-  modal('Eliminar registro',`<div class="modal-body"><h3>${e(record.name)}</h3><p>Se quitará este registro de tus listados, totales y pagos del presupuesto, según corresponda.</p><p class="hint">Los archivos se conservan y podrás restaurarlo desde la papelera.</p><div class="checkout-line"><span>${e(record.date)}</span><strong>${money(record.amount)}</strong></div><div class="form-actions">${btn('Cancelar','close-modal')}${btn('Eliminar registro','confirm-delete-payment','danger',`data-id="${e(id)}"`)}</div></div>`);
+  modal('Delete record',`<div class="modal-body"><h3>${e(record.name)}</h3><p>This record will be removed from your lists, totals, and budget payments as applicable.</p><p class="hint">Attached files are preserved and you can restore it from the trash.</p><div class="checkout-line"><span>${e(record.date)}</span><strong>${money(record.amount)}</strong></div><div class="form-actions">${btn('Cancel','close-modal')}${btn('Delete record','confirm-delete-payment','danger',`data-id="${e(id)}"`)}</div></div>`);
 }
 async function deletePayment(id) {
   if(recordMutationBusy||deploymentBusy)return;
   const record=findRecord(id); if(!record||record.deletedAt)return;
   recordMutationBusy=true;
   try {
-    modal('Eliminando registro',deleteProcessingHtml(record.name));
+    modal('Deleting record',deleteProcessingHtml(record.name));
     await delayFlow(650);
     const next=softDeletePayment(payments,id); write('payments',next); payments=next;
     recordMutationBusy=false; closeModal(); render();
-    clearTimeout(toastTimer); $('#toast').innerHTML=`Registro eliminado. <button type="button" data-action="restore-payment" data-id="${e(id)}">Restaurar</button>`; $('#toast').classList.add('show'); toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),7000);
+    clearTimeout(toastTimer); $('#toast').innerHTML=`Record deleted. <button type="button" data-action="restore-payment" data-id="${e(id)}">Restore</button>`; $('#toast').classList.add('show'); toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),7000);
   } catch(error) { recordMutationBusy=false; closeModal(); toast(error.message); }
 }
 function showTrash() {
   const records=payments.filter(p=>p.deletedAt).sort((a,b)=>b.deletedAt.localeCompare(a.deletedAt));
-  modal('Papelera de registros',`<div class="modal-body"><p class="hint">Restaurar conserva el pago, su estado y sus archivos originales.</p>${records.map(p=>`<div class="file-row"><div class="file-info"><strong>${e(p.name)}</strong><small>${e(p.date)} · ${money(p.amount)}</small></div>${btn('Restaurar','restore-payment','small',`data-id="${e(p.id)}"`)}</div>`).join('')||'<p>No hay registros eliminados.</p>'}</div>`,true);
+  modal('Record trash',`<div class="modal-body"><p class="hint">Restoring preserves the payment, its status, and original files.</p>${records.map(p=>`<div class="file-row"><div class="file-info"><strong>${e(p.name)}</strong><small>${e(p.date)} · ${money(p.amount)}</small></div>${btn('Restore','restore-payment','small',`data-id="${e(p.id)}"`)}</div>`).join('')||'<p>No deleted records.</p>'}</div>`,true);
 }
 function openResetScenario(kind) {
   const budget=kind==='budget';
   const ids=activePayments(payments).filter(p=>budget?p.purpose==='budget'&&p.invoiceId===billingState.invoiceId:isExamplePayment(p)).map(p=>p.id);
-  modal(budget?'Reiniciar presupuesto':'Reiniciar ejemplos',`<div class="modal-body"><p>${budget?'El presupuesto volverá a $300, el consumo base a $260 y el saldo inicial a favor a $130.':'Se quitarán los pagos de atr-sistem y PWR Games para que puedas cargar los ZIP otra vez.'}</p><p class="hint">${ids.length} registros pasarán a la papelera. Tus otros pagos no se modifican.</p><div class="form-actions">${btn('Cancelar','close-modal')}${btn('Reiniciar','confirm-reset','danger',`data-kind="${kind}"`)}</div></div>`);
+  modal(budget?'Reset budget':'Reset examples',`<div class="modal-body"><p>${budget?'The budget will reset to $300, base usage to $260, and opening credit to $130.':'Payments for atr-sistem and PWR Games will be removed so you can upload the ZIP archives again.'}</p><p class="hint">${ids.length} records will move to the trash. Your other payments will not be modified.</p><div class="form-actions">${btn('Cancel','close-modal')}${btn('Reset','confirm-reset','danger',`data-kind="${kind}"`)}</div></div>`);
 }
 async function resetScenario(kind) {
   if(recordMutationBusy||deploymentBusy)return;
   recordMutationBusy=true;
   try {
-    modal('Reiniciando escenario',deleteProcessingHtml(kind==='budget'?'Presupuesto mensual':'Ejemplos de actualizaciones'));
+    modal('Resetting scenario',deleteProcessingHtml(kind==='budget'?'Monthly budget':'Sample updates'));
     await delayFlow(700);
     let next=payments;
     const ids=activePayments(payments).filter(p=>kind==='budget'?p.purpose==='budget'&&p.invoiceId===billingState.invoiceId:isExamplePayment(p)).map(p=>p.id);
     for(const id of ids)next=softDeletePayment(next,id);
     write('payments',next); payments=next;
     if(kind==='budget') { const nextBilling=resetBillingState(billingState); write('billing',nextBilling); billingState=nextBilling; showBudgetNotice=true; }
-    selectedFiles=[]; recordMutationBusy=false; closeModal(); render(); toast('Escenario listo para volver a probar.');
+    selectedFiles=[]; recordMutationBusy=false; closeModal(); render(); toast('Scenario ready to test again.');
   } catch(error) { recordMutationBusy=false; closeModal(); toast(error.message); }
 }
 async function loadDeploymentFile(file) {
-  if(file.key) { const blob=await loadBlob(file.key); if(!blob)throw new Error(`No se encontró el archivo ${file.name}.`); return blob; }
+  if(file.key) { const blob=await loadBlob(file.key); if(!blob)throw new Error(`File ${file.name} was not found.`); return blob; }
   const known=demoBundles.flatMap(bundle=>bundle.files).find(item=>item.source===file.source&&item.name===file.name);
-  if(!known)throw new Error('El archivo de origen no está disponible.');
-  const response=await fetch(known.source); if(!response.ok)throw new Error('No se pudo leer el archivo del despliegue.');
+  if(!known)throw new Error('Source file is unavailable.');
+  const response=await fetch(known.source); if(!response.ok)throw new Error('Could not read the deployment file.');
   return response.blob();
 }
 function viewDeployment(id) {
   const row=deploymentRows().find(item=>item.id===id); if(!row)return;
   if(row.source==='local') { viewPayment(findRecord(row.paymentId)); return; }
-  modal('Detalle del despliegue',`<div class="modal-body"><h3>${e(row.name)}</h3><div class="checkout-line"><span class="muted">Fecha en tu espacio</span><span>${row.date}</span></div><div class="checkout-line"><span class="muted">Origen</span><span>GitHub · producción</span></div><div class="checkout-line"><span class="muted">Estado</span>${statusBadge(row.status)}</div><div class="checkout-line"><span class="muted">Valoración asignada</span><strong>${row.amount===null?'—':money(row.amount)}</strong></div><div class="info-callout" style="word-break:break-all">Commit: ${e(row.sha)}<br>Producción confirmada: ${e(row.createdAt)}</div><p class="hint">La valoración es proporcional al peso del commit. El despliegue de origen conserva sus datos originales en GitHub.</p><div class="form-actions">${btn('Editar registro','edit-deployment','',`data-id="${e(row.id)}"`)}<a class="btn primary" href="${e(row.runUrl)}" target="_blank" rel="noopener noreferrer">Ver en GitHub</a></div></div>`);
+  modal('Deployment details',`<div class="modal-body"><h3>${e(row.name)}</h3><div class="checkout-line"><span class="muted">Date in your workspace</span><span>${row.date}</span></div><div class="checkout-line"><span class="muted">Source</span><span>GitHub · production</span></div><div class="checkout-line"><span class="muted">Status</span>${statusBadge(row.status)}</div><div class="checkout-line"><span class="muted">Assigned valuation</span><strong>${row.amount===null?'—':money(row.amount)}</strong></div><div class="info-callout" style="word-break:break-all">Commit: ${e(row.sha)}<br>Production confirmed: ${e(row.createdAt)}</div><p class="hint">Valuation is proportional to commit weight. The source deployment retains its original data on GitHub.</p><div class="form-actions">${btn('Edit record','edit-deployment','',`data-id="${e(row.id)}"`)}<a class="btn primary" href="${e(row.runUrl)}" target="_blank" rel="noopener noreferrer">View on GitHub</a></div></div>`);
 }
 function openDeploymentEdit(id) {
   const row=deploymentRows().find(item=>item.id===id); if(!row)return;
-  const statuses=row.source==='github'?[['deployed','Desplegado'],['pending','Pendiente'],['failed','Fallido']]:[['success','Pagado'],['pending','Pendiente'],['failed','Fallido']];
-  modal('Editar despliegue',`<form id="deployment-edit-form" class="modal-body"><input type="hidden" name="id" value="${e(row.id)}"><div class="form-grid"><label class="field full">Nombre del despliegue<input name="name" value="${e(row.name)}" maxlength="100" required></label><label class="field">Fecha del despliegue<input name="date" type="date" value="${e(row.date)}" required></label><label class="field">${row.source==='github'?'Valoración':'Importe pagado'} (USD)<input name="amount" type="number" min="0" max="1000000" step="0.01" value="${row.amount??0}" required></label><label class="field full">${row.source==='local'?'Estado del pago':'Estado del despliegue'}<select name="status">${statuses.map(([value,label])=>`<option value="${value}" ${value===row.status?'selected':''}>${label}</option>`).join('')}</select></label></div><p class="hint">${row.source==='github'?'Estos cambios se guardan en tu espacio; el registro de GitHub no se modifica.':'Los cambios se reflejan en Overview, Usage y Payment history. Tus archivos adjuntos se conservan.'}</p><div class="form-error" role="alert"></div><div class="form-actions">${btn('Cancelar','close-modal')}<button class="btn primary" type="submit">Guardar cambios</button></div></form>`);
+  const statuses=row.source==='github'?[['deployed','Deployed'],['pending','Pending'],['failed','Failed']]:[['success','Paid'],['pending','Pending'],['failed','Failed']];
+  modal('Edit deployment',`<form id="deployment-edit-form" class="modal-body"><input type="hidden" name="id" value="${e(row.id)}"><div class="form-grid"><label class="field full">Deployment name<input name="name" value="${e(row.name)}" maxlength="100" required></label><label class="field">Deployment date<input name="date" type="date" value="${e(row.date)}" required></label><label class="field">${row.source==='github'?'Valuation':'Amount paid'} (USD)<input name="amount" type="number" min="0" max="1000000" step="0.01" value="${row.amount??0}" required></label><label class="field full">${row.source==='local'?'Payment status':'Deployment status'}<select name="status">${statuses.map(([value,label])=>`<option value="${value}" ${value===row.status?'selected':''}>${label}</option>`).join('')}</select></label></div><p class="hint">${row.source==='github'?'These changes are saved in your workspace; the GitHub record is not modified.':'Changes are reflected in Overview, Usage, and Payment history. Your attached files are preserved.'}</p><div class="form-error" role="alert"></div><div class="form-actions">${btn('Cancel','close-modal')}<button class="btn primary" type="submit">Save changes</button></div></form>`);
 }
 function renderDeployments() {
   const q = calculateQuote(selectedFiles,config);
   $('#main').className = 'deploy-page';
-  $('#main').innerHTML = `${heading('Despliegues',btn(`${icon('clock')} Historial`,'show-deployments','small' ))}<p class="page-description">Sube tu próximo proyecto. Conoce su peso y cuánto cuesta desplegarlo.</p><section class="upload-card"><div class="card-header"><strong>${icon('repo')} Nuevo despliegue</strong><span class="badge">App o feature</span></div><div class="drop-zone" id="drop-zone">${icon('upload')}<strong>Arrastra aquí los archivos de tu proyecto</strong><p>Una app completa o esa feature que acabas de terminar.</p><span class="btn">Seleccionar archivos</span><input class="file-picker" id="deploy-files" type="file" multiple aria-label="Seleccionar archivos para valorar"></div>${selectedFiles.length ? `<div class="files-list">${fileRows(selectedFiles,'selected')}</div>` : ''}<div class="upload-foot"><span>${icon('lock')} Tus archivos se mantienen en este navegador</span><span>Hasta 100 MB por archivo</span></div><div class="quote-bar"><div class="quote-metric"><span>Archivos</span><strong>${q.count.toString().padStart(2,'0')}</strong></div><div class="quote-metric"><span>Peso total</span><strong>${formatBytes(q.bytes)}</strong></div><div class="quote-total"><span>Costo de despliegue</span><strong>${money(q.total)} <span style="display:inline;font-size:10px">USD</span></strong></div>${btn('Confirmar pago','checkout','primary',selectedFiles.length&&!fileReading?'':'disabled')}</div></section><div class="section-heading"><h2>Prueba con un proyecto de ejemplo</h2><div>${btn('Reiniciar ejemplos','reset-examples','small')} <span class="subtle-link">Descarga, arrastra y compara</span></div></div><div class="example-grid">${demoBundles.map(bundle=>{const quote=calculateQuote(bundle.files,config);return `<article class="example-card"><div class="example-top">${icon(bundle.icon)}<h3>${e(bundle.name)}</h3><span class="badge">${bundle.kind}</span></div><p>${e(bundle.description)}</p><div class="example-data"><span class="muted">${formatBytes(quote.bytes)}</span><strong>${money(quote.total)}</strong></div><div class="language"><span class="language-dot" style="background:${bundle.color}"></span>${bundle.language}</div><div class="example-actions">${btn('Usar ejemplo','use-example','small',`data-id="${bundle.id}"`)}<a class="btn small" href="${bundle.files[0].source}" download aria-label="Descargar ${e(bundle.files[0].name)}">${icon('download')}</a></div></article>`;}).join('')}</div><div class="activity-panel">${deploymentActivityMarkup()}</div><footer class="page-footer"><span>© 2026 CodeWeight</span><a href="#organizations">Organizations</a><a href="#usage">Usage</a><a href="#payment-history">Payment history</a></footer>`;
-  $('#main .page-description').insertAdjacentHTML('afterend',`<div class="project-valuation-strip"><img src="assets/crossbox-logo.png" alt="CrossBox"><div><strong>CrossBox</strong><span>Valor actual · ${localMoney(portfolioSummary.crossbox.latestUsd)}</span></div><a href="#valuation">Ver historial ${icon('chevron')}</a></div>`);
+  $('#main').innerHTML = `${heading('Deployments',btn(`${icon('clock')} History`,'show-deployments','small' ))}<p class="page-description">Upload your next project. Measure its size and calculate its deployment cost.</p><section class="upload-card"><div class="card-header"><strong>${icon('repo')} New deployment</strong><span class="badge">App or feature</span></div><div class="drop-zone" id="drop-zone">${icon('upload')}<strong>Drag and drop your project files here</strong><p>A complete application or a feature you just finished.</p><span class="btn">Select files</span><input class="file-picker" id="deploy-files" type="file" multiple aria-label="Select files to value"></div>${selectedFiles.length ? `<div class="files-list">${fileRows(selectedFiles,'selected')}</div>` : ''}<div class="upload-foot"><span>${icon('lock')} Your files stay in this browser</span><span>Up to 100 MB per file</span></div><div class="quote-bar"><div class="quote-metric"><span>Files</span><strong>${q.count.toString().padStart(2,'0')}</strong></div><div class="quote-metric"><span>Total size</span><strong>${formatBytes(q.bytes)}</strong></div><div class="quote-total"><span>Deployment cost</span><strong>${money(q.total)} <span style="display:inline;font-size:10px">USD</span></strong></div>${btn('Confirm payment','checkout','primary',selectedFiles.length&&!fileReading?'':'disabled')}</div></section><div class="section-heading"><h2>Try with a sample project</h2><div>${btn('Reset examples','reset-examples','small')} <span class="subtle-link">Download, drag, and compare</span></div></div><div class="example-grid">${demoBundles.map(bundle=>{const quote=calculateQuote(bundle.files,config);return `<article class="example-card"><div class="example-top">${icon(bundle.icon)}<h3>${e(bundle.name)}</h3><span class="badge">${bundle.kind}</span></div><p>${e(bundle.description)}</p><div class="example-data"><span class="muted">${formatBytes(quote.bytes)}</span><strong>${money(quote.total)}</strong></div><div class="language"><span class="language-dot" style="background:${bundle.color}"></span>${bundle.language}</div><div class="example-actions">${btn('Use example','use-example','small',`data-id="${bundle.id}"`)}<a class="btn small" href="${bundle.files[0].source}" download aria-label="Download ${e(bundle.files[0].name)}">${icon('download')}</a></div></article>`;}).join('')}</div><div class="activity-panel">${deploymentActivityMarkup()}</div><footer class="page-footer"><span>© 2026 CodeWeight</span><a href="#organizations">Organizations</a><a href="#usage">Usage</a><a href="#payment-history">Payment history</a></footer>`;
+  $('#main .page-description').insertAdjacentHTML('afterend',`<div class="project-valuation-strip"><img src="assets/crossbox-logo.png" alt="CrossBox"><div><strong>CrossBox</strong><span>Current value · ${localMoney(portfolioSummary.crossbox.latestUsd)}</span></div><a href="#valuation">View history ${icon('chevron')}</a></div>`);
   const drop = $('#drop-zone');
   if(fileReading && fileAnalysisState) { drop.innerHTML=fileAnalysisHtml(fileAnalysisState); drop.classList.add('analyzing'); }
   ['dragenter','dragover'].forEach(type=>drop.addEventListener(type,event=>{event.preventDefault();drop.classList.add('dragover');}));
@@ -1765,9 +1897,9 @@ function renderDeployments() {
   drop.addEventListener('drop',event=>addSelected(Array.from(event.dataTransfer.files)));
 }
 function validateFiles(files) {
-  if (files.length > 100) throw new Error('Selecciona un máximo de 100 archivos.');
-  if (files.some(f=>!Number.isSafeInteger(f.size)||f.size<0||f.size>100_000_000)) throw new Error('Cada archivo debe pesar hasta 100 MB.');
-  if (files.reduce((s,f)=>s+f.size,0)>250_000_000) throw new Error('El total máximo es de 250 MB.');
+  if (files.length > 100) throw new Error('Select a maximum of 100 files.');
+  if (files.some(f=>!Number.isSafeInteger(f.size)||f.size<0||f.size>100_000_000)) throw new Error('Each file must be up to 100 MB.');
+  if (files.reduce((s,f)=>s+f.size,0)>250_000_000) throw new Error('Total maximum size is 250 MB.');
 }
 async function wrapFiles(files) { return Promise.all(files.map(identifyPricingFile)); }
 function addSelected(files) {
@@ -1779,7 +1911,7 @@ function addSelected(files) {
         if(activePage==='deployments')renderDeployments();
       }});
       const next=[...selectedFiles,...identified]; validateFiles(next); selectedFiles=next;
-      toast('Archivo analizado. El precio ya está calculado.');
+      toast('File analyzed. Price calculated.');
     } catch(error) { toast(error.message); }
     finally { fileReading=false; fileAnalysisState=null; if(activePage==='deployments')renderDeployments(); }
   };
@@ -1788,7 +1920,7 @@ function addSelected(files) {
 }
 function modal(title, body, wide = false) {
   closePopover(); const dialog=$('#modal'); dialog.style.width=typeof wide==='number'?`min(${wide}px, calc(100vw - 30px))`:wide?'min(560px, calc(100vw - 30px))':'';
-  $('#modal-content').innerHTML = `<div class="modal-header"><h2>${title}</h2><button class="bare-icon" data-action="close-modal" aria-label="Cerrar">${icon('close')}</button></div>${body}`;
+  $('#modal-content').innerHTML = `<div class="modal-header"><h2>${title}</h2><button class="bare-icon" data-action="close-modal" aria-label="Close">${icon('close')}</button></div>${body}`;
   $('.modal-header button').disabled=Boolean(deploymentBusy||recordMutationBusy||checkout?.locked);
   if (!dialog.open) dialog.showModal();
 }
@@ -1799,7 +1931,7 @@ function closeModal() {
 }
 function openRecord() {
   recordFiles=[];
-  modal('Registrar despliegue y pago',`<form id="record-form" class="modal-body"><p class="record-prompt">${icon('calendar')} Un solo registro para Usage y Payment history.</p><div class="form-grid"><label class="field full">Nombre del despliegue<input name="name" placeholder="Ej. Feature de autenticación" required maxlength="100"></label><label class="field">Fecha de despliegue y pago<input type="date" name="date" value="${today()}" required></label><label class="field">Importe pagado (USD)<input name="amount" type="number" min="0" max="1000000" step="0.01" placeholder="0.00" required></label><label class="field">Tipo<select name="kind"><option>Feature</option><option>App</option></select></label><label class="field">Método de pago<select name="method"><option>MasterCard ending in 2791</option><option>Visa ending in 4242</option><option>Bank transfer</option><option>PayPal</option><option>Cash</option></select></label><label class="field full">Referencia (opcional)<input name="reference" maxlength="40" placeholder="Ej. Transferencia #001234"></label><div class="field full"><span>Archivos del despliegue</span><div class="file-upload-small"><input id="record-files" type="file" multiple aria-label="Adjuntar archivos del pago"><div class="hint">O añade un archivo que ya está disponible:</div><select id="record-example" class="select"><option value="">Seleccionar ejemplo…</option>${demoBundles.map(b=>`<option value="${b.id}">${e(b.name)} · ${formatBytes(b.files[0].size)}</option>`).join('')}</select></div><div id="record-attachments"></div><small>Los archivos se guardan en este navegador con la fecha que elijas.</small></div></div><div class="form-error" id="record-error" role="alert"></div><div class="form-actions">${btn('Cancelar','close-modal')}<button class="btn primary" type="submit">Guardar registro</button></div></form>`,true);
+  modal('Record deployment and payment',`<form id="record-form" class="modal-body"><p class="record-prompt">${icon('calendar')} A single record for Usage and Payment history.</p><div class="form-grid"><label class="field full">Deployment name<input name="name" placeholder="e.g. Authentication feature" required maxlength="100"></label><label class="field">Deployment and payment date<input type="date" name="date" value="${today()}" required></label><label class="field">Amount paid (USD)<input name="amount" type="number" min="0" max="1000000" step="0.01" placeholder="0.00" required></label><label class="field">Type<select name="kind"><option>Feature</option><option>App</option></select></label><label class="field">Payment method<select name="method"><option>MasterCard ending in 2791</option><option>Visa ending in 4242</option><option>Bank transfer</option><option>PayPal</option><option>Cash</option></select></label><label class="field full">Reference (optional)<input name="reference" maxlength="40" placeholder="e.g. Wire #001234"></label><div class="field full"><span>Deployment files</span><div class="file-upload-small"><input id="record-files" type="file" multiple aria-label="Attach payment files"><div class="hint">Or add an already available sample file:</div><select id="record-example" class="select"><option value="">Select example…</option>${demoBundles.map(b=>`<option value="${b.id}">${e(b.name)} · ${formatBytes(b.files[0].size)}</option>`).join('')}</select></div><div id="record-attachments"></div><small>Files are stored in this browser with the selected date.</small></div></div><div class="form-error" id="record-error" role="alert"></div><div class="form-actions">${btn('Cancel','close-modal')}<button class="btn primary" type="submit">Save record</button></div></form>`,true);
 }
 function updateRecordFiles() { $('#record-attachments').innerHTML = `<div class="attachments">${fileRows(recordFiles,'record')}</div>`; }
 async function persistFiles(files) {
@@ -1812,8 +1944,8 @@ async function persistFiles(files) {
 }
 async function createRecord(values,files) {
   const amount=Number(values.amount);
-  if (!validDate(values.date) || !values.name.trim() || values.name.length>100 || !Number.isFinite(amount)||amount<0||amount>1_000_000) throw new Error('Revisa el nombre, la fecha y el importe.');
-  if (!files.length) throw new Error('Adjunta al menos un archivo o selecciona un ejemplo.');
+  if (!validDate(values.date) || !values.name.trim() || values.name.length>100 || !Number.isFinite(amount)||amount<0||amount>1_000_000) throw new Error('Check the name, date, and amount.');
+  if (!files.length) throw new Error('Attach at least one file or select an example.');
   validateFiles(files);
   const savedFiles=await persistFiles(files);
   const record={id:crypto.randomUUID().replaceAll('-','').slice(0,8).toUpperCase(),name:values.name.trim(),date:values.date,amount:Math.round(amount*100)/100,method:values.method,kind:values.kind,reference:values.reference || '',files:savedFiles,createdAt:new Date().toISOString(),status:'success',deploymentStatus:values.deploymentStatus==='ready'?'ready':'deployed'};
@@ -1825,7 +1957,7 @@ async function createRecord(values,files) {
 function openCheckout() {
   if (!selectedFiles.length || deploymentBusy || fileReading) return;
   checkout={quote:calculateQuote(selectedFiles,config),files:[...selectedFiles],processing:false,locked:false,cancelled:false};
-  modal('Confirmar pago',checkoutReviewHtml({quote:checkout.quote,files:checkout.files,profile,date:today()}),760);
+  modal('Confirm payment',checkoutReviewHtml({quote:checkout.quote,files:checkout.files,profile,date:today()}),760);
 }
 const delayFlow = milliseconds => new Promise(resolve=>setTimeout(resolve,milliseconds));
 async function confirmPayment(values) {
@@ -1835,75 +1967,75 @@ async function confirmPayment(values) {
   const budgetPayment=operation.mode==='budget';
   if(budgetPayment) {
     const current=getBillingSummary(billingState,payments);
-    if(current.invoiceId!==operation.invoice.invoiceId||current.amountDue!==operation.quote.total)throw new Error('El saldo cambió. Revisa el presupuesto antes de confirmar.');
+    if(current.invoiceId!==operation.invoice.invoiceId||current.amountDue!==operation.quote.total)throw new Error('The balance has changed. Review the budget before confirming.');
   }
   const safeValues=budgetPayment?
-    {name:`Consumo mensual · ${operation.invoice.period}`,date:today(),kind:'Billing',method:card.method,amount:operation.quote.total,purpose:'budget',invoiceId:operation.invoice.invoiceId,period:operation.invoice.period}:
+    {name:`Monthly usage · ${operation.invoice.period}`,date:today(),kind:'Billing',method:card.method,amount:operation.quote.total,purpose:'budget',invoiceId:operation.invoice.invoiceId,period:operation.invoice.period}:
     {name:values.name,date:values.date,kind:values.kind,method:card.method,amount:operation.quote.total,deploymentStatus:'ready',scenarioKeys:(operation.quote.projectCharges||[]).map(item=>item.pricingKey)};
   operation.processing=true;
   const active=()=>checkout===operation&&!operation.cancelled&&$('#modal').open;
   try {
     for(const [stage,duration] of [['checking',850],['processing',1350]]) {
-      modal('Confirmando tu pago',processingHtml({stage,quote:operation.quote,name:safeValues.name,mode:operation.mode}),760);
+      modal('Confirming your payment',processingHtml({stage,quote:operation.quote,name:safeValues.name,mode:operation.mode}),760);
       await delayFlow(duration);
       if(!active())return;
     }
     operation.locked=true;
-    modal('Confirmando tu pago',processingHtml({stage:'processing',quote:operation.quote,name:safeValues.name,mode:operation.mode}),760);
+    modal('Confirming your payment',processingHtml({stage:'processing',quote:operation.quote,name:safeValues.name,mode:operation.mode}),760);
     const record=await createRecord(safeValues,operation.files);
     if(!budgetPayment)selectedFiles=[]; usageMonth=record.date.slice(0,7); deploymentPage=1;
-    modal('Pago procesado',processingHtml({stage:'confirmed',quote:operation.quote,name:record.name,mode:operation.mode}),760);
+    modal('Payment processed',processingHtml({stage:'confirmed',quote:operation.quote,name:record.name,mode:operation.mode}),760);
     await delayFlow(950);
-    modal('Preparando tu despliegue',processingHtml({stage:'preparing',quote:operation.quote,name:record.name,mode:operation.mode}),760);
+    modal('Preparing your deployment',processingHtml({stage:'preparing',quote:operation.quote,name:record.name,mode:operation.mode}),760);
     await delayFlow(950);
     checkout=null; render(); paymentSuccess(record);
   } catch(error) {
     operation.locked=false;
     if(checkout===operation) {
       checkout=null;
-      modal('No se pudo completar el pago',`<div class="modal-body"><p class="form-error">${e(error.message)}</p><div class="form-actions">${btn('Volver al pago','checkout','primary')}${btn('Cerrar','close-modal')}</div></div>`);
+      modal('Could not complete payment',`<div class="modal-body"><p class="form-error">${e(error.message)}</p><div class="form-actions">${btn('Return to payment','checkout','primary')}${btn('Close','close-modal')}</div></div>`);
     }
   } finally { operation.processing=false; }
 }
-function paymentSuccess(record) { modal('Pago confirmado',paymentReadyHtml(record),760); }
+function paymentSuccess(record) { modal('Payment confirmed',paymentReadyHtml(record),760); }
 async function beginDeployment(id) {
   if(deploymentBusy)return;
-  const record=findRecord(id); if(!record)throw new Error('No se encontró el despliegue.');
-  if(record.deletedAt||record.purpose==='budget')throw new Error('Este registro no corresponde a un despliegue activo.');
-  if((record.status??'success')!=='success')throw new Error('Primero confirma el pago del despliegue.');
-  if((record.deploymentStatus??'deployed')==='deployed') { modal('Despliegue completado',deploymentCompleteHtml(record),760); return; }
+  const record=findRecord(id); if(!record)throw new Error('Deployment not found.');
+  if(record.deletedAt||record.purpose==='budget')throw new Error('This record does not correspond to an active deployment.');
+  if((record.status??'success')!=='success')throw new Error('Confirm payment for this deployment first.');
+  if((record.deploymentStatus??'deployed')==='deployed') { modal('Deployment complete',deploymentCompleteHtml(record),760); return; }
   deploymentBusy=true;
   try {
     if(record.deploymentStatus!=='deploying') {
       const next=setDeploymentState(payments,id,'deploying'); write('payments',next); payments=next;
     }
     render();
-    modal('Corriendo suite',deploymentProcessingHtml(findRecord(id),'suite',[]),760);
+    modal('Running suite',deploymentProcessingHtml(findRecord(id),'suite',[]),760);
     await delayFlow(450);
     const checks=await runDeploymentChecks(findRecord(id),{loadFile:loadDeploymentFile});
     for(let i=0;i<checks.length;i++) {
       const visible=checks.map((check,index)=>({...check,passed:index<=i?check.passed:undefined}));
-      modal('Corriendo suite',deploymentProcessingHtml(findRecord(id),'suite',visible),760);
+      modal('Running suite',deploymentProcessingHtml(findRecord(id),'suite',visible),760);
       await delayFlow(420);
     }
     const checkedRecord={...findRecord(id),validation:{checks,checkedAt:new Date().toISOString()}};
     const checkedPayments=payments.map(payment=>payment.id===id?checkedRecord:payment); write('payments',checkedPayments); payments=checkedPayments;
     for(const [stage,duration] of [['uploading',900],['building',1300],['publishing',1000]]) {
-      modal('Desplegando tu actualización',deploymentProcessingHtml(findRecord(id),stage),760);
+      modal('Deploying your update',deploymentProcessingHtml(findRecord(id),stage),760);
       await delayFlow(duration);
     }
     const next=setDeploymentState(payments,id,'deployed'); write('payments',next); payments=next;
-    deploymentBusy=false; render(); modal('Despliegue completado',deploymentCompleteHtml(findRecord(id)),760);
+    deploymentBusy=false; render(); modal('Deployment complete',deploymentCompleteHtml(findRecord(id)),760);
   } catch(error) {
     try { if(findRecord(id)?.deploymentStatus==='deploying') { const next=setDeploymentState(payments,id,'failed'); write('payments',next); payments=next; } } catch {}
     deploymentBusy=false; render();
-    modal('No se pudo completar el despliegue',`<div class="modal-body"><p class="form-error">${e(error.message)}</p><div class="form-actions">${btn('Reintentar','deploy-now','primary',`data-id="${e(id)}"`)}</div></div>`);
+    modal('Could not complete deployment',`<div class="modal-body"><p class="form-error">${e(error.message)}</p><div class="form-actions">${btn('Retry','deploy-now','primary',`data-id="${e(id)}"`)}</div></div>`);
   }
 }
 
 function openReceiptGenerator(record) {
   if (!record) return;
-  modal('Recibo Oficial (GitHub)', receiptModalHtml(record, profile, activePayments(payments)), 820);
+  modal('Official Receipt (GitHub)', receiptModalHtml(record, profile, activePayments(payments)), 820);
   bindReceiptModalActions(record);
 }
 
@@ -1938,8 +2070,8 @@ function bindAccessibilityController() {
       barEl.style.width = `${pct}%`;
       barEl.style.background = color;
     }
-    if (pctEl) pctEl.textContent = `${pct}% consumido`;
-    if (remEl) remEl.textContent = `Restante: $${rem.toFixed(2)} USD`;
+    if (pctEl) pctEl.textContent = `${pct}% used`;
+    if (remEl) remEl.textContent = `Remaining: $${rem.toFixed(2)} USD`;
   }
 
   sel.addEventListener('change', () => {
@@ -1954,12 +2086,11 @@ function bindAccessibilityController() {
   inLimit.addEventListener('input', updatePreview);
   inSpent.addEventListener('input', updatePreview);
 
-  // default initial values for demonstration
   const actionsBudget = budgets.find(b => b.product === 'Actions');
   if (actionsBudget) {
     sel.value = actionsBudget.id;
-    inLimit.value = actionsBudget.limit > 0 ? actionsBudget.limit.toFixed(2) : '60.00';
-    inSpent.value = actionsBudget.spent > 0 ? actionsBudget.spent.toFixed(2) : '35.00';
+    inLimit.value = actionsBudget.limit > 0 ? actionsBudget.limit.toFixed(2) : '320.00';
+    inSpent.value = actionsBudget.spent > 0 ? actionsBudget.spent.toFixed(2) : '265.00';
   }
   updatePreview();
 
@@ -1971,7 +2102,7 @@ function bindAccessibilityController() {
       budgets[idx].limit = parseFloat(inLimit.value) || 0;
       budgets[idx].spent = parseFloat(inSpent.value) || 0;
       saveBudgets();
-      toast(`Presupuesto ${budgets[idx].product} actualizado: $${budgets[idx].spent.toFixed(2)} consumidos de $${budgets[idx].limit.toFixed(2)} USD.`);
+      toast(`Budget ${budgets[idx].product} updated: $${budgets[idx].spent.toFixed(2)} spent of $${budgets[idx].limit.toFixed(2)} USD.`);
     }
   });
 }
@@ -2010,7 +2141,7 @@ function bindReceiptModalActions(record) {
 
 function openInvoiceGenerator(record) {
   if (!record) return;
-  modal('Factura Oficial (GitHub Invoice)', invoiceModalHtml(record, profile, activePayments(payments)), 840);
+  modal('Official Invoice (GitHub Invoice)', invoiceModalHtml(record, profile, activePayments(payments)), 840);
   bindInvoiceModalActions(record);
 }
 
@@ -2069,17 +2200,17 @@ function receiptText(record,invoice=false) { return `${invoice?'INVOICE':'PAYMEN
 function downloadBlob(blob,name) { const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); }
 async function downloadAttachment(record,index) {
   const file=record?.files[index]; if (!file) return;
-  if (file.key) { const blob=await loadBlob(file.key); if (!blob) throw new Error('El archivo no está disponible en este navegador.'); downloadBlob(blob,file.name); }
-  else { const known=demoBundles.flatMap(b=>b.files).find(f=>f.source===file.source); if (!known) throw new Error('Archivo no disponible.'); const a=document.createElement('a'); a.href=known.source; a.download=known.name; a.click(); }
+  if (file.key) { const blob=await loadBlob(file.key); if (!blob) throw new Error('File is not available in this browser.'); downloadBlob(blob,file.name); }
+  else { const known=demoBundles.flatMap(b=>b.files).find(f=>f.source===file.source); if (!known) throw new Error('File unavailable.'); const a=document.createElement('a'); a.href=known.source; a.download=known.name; a.click(); }
 }
 function viewPayment(record) {
   if (!record) return;
-  modal('Payment details',`<div class="modal-body"><h3>${e(record.name)}</h3><div class="checkout-line"><span class="muted">ID</span><span>${e(record.id)}</span></div><div class="checkout-line"><span class="muted">SKU de GitHub</span><span class="mono" style="font-weight:600;color:#58a6ff;">${e(record.sku || 'actions_linux')}</span></div>${record.quantity ? `<div class="checkout-line"><span class="muted">Métrica / Consumo</span><strong style="color:#7ee787;">${e(record.quantity)}</strong> (@ ${e(record.rateStr || `$${record.rate}`)})</div>` : ''}<div class="checkout-line"><span class="muted">Deployment & payment date</span><span>${e(record.date)}</span></div><div class="checkout-line"><span class="muted">Payment method</span><span>${e(record.method)}</span></div><div class="checkout-line"><span class="muted">Amount</span><strong>${money(record.amount)}</strong></div>${record.reference?`<div class="checkout-line"><span class="muted">Reference</span><span>${e(record.reference)}</span></div>`:''}<h3 style="margin-top:23px">Archivos del despliegue</h3>${record.files.map((f,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(f.name)}</span><small>${formatBytes(f.size)} · ${f.size.toLocaleString('en-US')} bytes</small></div><button class="table-action" data-action="download-file" data-id="${e(record.id)}" data-index="${i}" aria-label="Descargar ${e(f.name)}">${icon('download')}</button></div>`).join('')}<div class="form-actions" style="display:flex;gap:8px;flex-wrap:wrap;">${btn('Descargar recibo','download-receipt','',`data-id="${e(record.id)}"`)} ${btn('Ver recibo','open-receipt-generator','',`data-id="${e(record.id)}"`)} ${btn('Descargar factura','download-invoice','primary',`data-id="${e(record.id)}"`)} ${btn('Ver factura (modal)','view-invoice-modal','',`data-id="${e(record.id)}"`)}</div></div>`);
-  const actions=`<div class="payment-detail-actions">${record.purpose!=='budget'&&(record.status??'success')==='success'&&record.deploymentStatus&&record.deploymentStatus!=='deployed'?btn('Desplegar ahora','deploy-now','primary',`data-id="${e(record.id)}"`):''}${!record.deletedAt?btn('Eliminar registro','delete-payment','danger',`data-id="${e(record.id)}"`):''}</div>`;
+  modal('Payment details',`<div class="modal-body"><h3>${e(record.name)}</h3><div class="checkout-line"><span class="muted">ID</span><span>${e(record.id)}</span></div><div class="checkout-line"><span class="muted">GitHub SKU</span><span class="mono" style="font-weight:600;color:#58a6ff;">${e(record.sku || 'actions_linux')}</span></div>${record.quantity ? `<div class="checkout-line"><span class="muted">Metric / Usage</span><strong style="color:#7ee787;">${e(record.quantity)}</strong> (@ ${e(record.rateStr || `$${record.rate}`)})</div>` : ''}<div class="checkout-line"><span class="muted">Deployment & payment date</span><span>${e(record.date)}</span></div><div class="checkout-line"><span class="muted">Payment method</span><span>${e(record.method)}</span></div><div class="checkout-line"><span class="muted">Amount</span><strong>${money(record.amount)}</strong></div>${record.reference?`<div class="checkout-line"><span class="muted">Reference</span><span>${e(record.reference)}</span></div>`:''}<h3 style="margin-top:23px">Deployment files</h3>${record.files.map((f,i)=>`<div class="file-row">${icon('file')}<div class="file-info"><span class="file-name">${e(f.name)}</span><small>${formatBytes(f.size)} · ${f.size.toLocaleString('en-US')} bytes</small></div><button class="table-action" data-action="download-file" data-id="${e(record.id)}" data-index="${i}" aria-label="Download ${e(f.name)}">${icon('download')}</button></div>`).join('')}<div class="form-actions" style="display:flex;gap:8px;flex-wrap:wrap;">${btn('Download receipt','download-receipt','',`data-id="${e(record.id)}"`)} ${btn('View receipt','open-receipt-generator','',`data-id="${e(record.id)}"`)} ${btn('Download invoice','download-invoice','primary',`data-id="${e(record.id)}"`)} ${btn('View invoice (modal)','view-invoice-modal','',`data-id="${e(record.id)}"`)}</div></div>`);
+  const actions=`<div class="payment-detail-actions">${record.purpose!=='budget'&&(record.status??'success')==='success'&&record.deploymentStatus&&record.deploymentStatus!=='deployed'?btn('Deploy now','deploy-now','primary',`data-id="${e(record.id)}"`):''}${!record.deletedAt?btn('Delete record','delete-payment','danger',`data-id="${e(record.id)}"`):''}</div>`;
   $('#modal-content .modal-body').insertAdjacentHTML('beforeend',actions);
 }
 function openRates() {
-  modal('Preferencias de valoración',`<form id="rates-form" class="modal-body"><p class="internal-note">Ajustes internos de tu espacio. Los importes se recalculan al guardar.</p><div class="form-grid">${[['base','Cargo base (USD)'],['perMB','Precio por MB (USD)'],['includedMB','MB incluidos'],['minimum','Importe mínimo (USD)'],['atrPrice','Tarifa atr-sistem (USD)'],['pwrPrice','Tarifa PWR Games (USD)']].map(([key,label])=>`<label class="field">${label}<input name="${key}" type="number" min="0" max="1000000" step="any" value="${config[key]??defaultConfig[key]}" required></label>`).join('')}</div><div class="info-callout">Total = máximo entre el mínimo y el cargo base + MB facturables × precio por MB. 1 MB = 1.000.000 bytes.</div><div id="rates-error" class="form-error"></div><div class="form-actions">${btn('Cancelar','close-modal')}<button type="submit" class="btn primary">Guardar configuración</button></div></form>`);
+  modal('Valuation preferences',`<form id="rates-form" class="modal-body"><p class="internal-note">Internal workspace settings. Amounts are recalculated when saved.</p><div class="form-grid">${[['base','Base charge (USD)'],['perMB','Price per MB (USD)'],['includedMB','Included MB'],['minimum','Minimum amount (USD)'],['atrPrice','atr-sistem rate (USD)'],['pwrPrice','PWR Games rate (USD)']].map(([key,label])=>`<label class="field">${label}<input name="${key}" type="number" min="0" max="1000000" step="any" value="${config[key]??defaultConfig[key]}" required></label>`).join('')}</div><div class="info-callout">Total = maximum between minimum amount and base charge + billable MB × price per MB. 1 MB = 1,000,000 bytes.</div><div id="rates-error" class="form-error"></div><div class="form-actions">${btn('Cancel','close-modal')}<button type="submit" class="btn primary">Save configuration</button></div></form>`);
 }
 function closePopover() { $('.popover')?.remove(); }
 function popover(anchor,content) {
@@ -2090,26 +2221,22 @@ function renderCodespaces() {
   $('#main').className = 'codespaces-page';
 
   $('#main').innerHTML = `
-    <div class="page-heading" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <div>
-        <h1 style="font-size:24px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Codespaces</h1>
-        <p class="page-description" style="margin:0;color:#8b949e;font-size:13px;">Cloud-powered development environments for your repositories and workstations.</p>
-      </div>
-      <button class="btn primary" style="background:#238636;color:#ffffff;border:1px solid #2ea043;font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:6px;" onclick="window.open('https://github.com/lfarmas4/crossbox-app','_blank')">
+    <div class="page-heading">
+      <h1>Codespaces</h1>
+      <button class="btn primary small" onclick="window.open('https://github.com/lfarmas4/crossbox-app','_blank')">
         <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path></svg>
         New codespace
       </button>
     </div>
+    <p class="page-description">Cloud-powered development environments for your repositories and workstations.</p>
 
-    <!-- Active Codespaces Section -->
     <div style="margin-top:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0;">Active & Recent Codespaces</h2>
+        <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0;">Active & Recent Codespaces</h2>
         <span style="font-size:12px;color:#8b949e;">2 workstations configured</span>
       </div>
 
       <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
-        <!-- Item 1: Main Dev -->
         <div style="padding:16px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
           <div style="display:flex;align-items:flex-start;gap:12px;">
             <div style="width:36px;height:36px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#58a6ff;">
@@ -2117,16 +2244,16 @@ function renderCodespaces() {
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;">
-                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:14px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
+                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:13px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
                 <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;background:#23863626;color:#3fb950;border:1px solid #23863640;padding:1px 6px;border-radius:10px;font-weight:600;">
                   <span style="width:6px;height:6px;border-radius:50%;background:#3fb950;"></span> Available
                 </span>
               </div>
               <div style="font-size:12px;color:#8b949e;margin-top:4px;">
-                Branch: <strong style="color:#c9d1d9;">main</strong> · Commit: <code style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">f942c71a</code> · 4-Core · 16 GB RAM · 64 GB Storage
+                Branch: <strong style="color:#c9d1d9;">main</strong> · Commit: <span style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">9d86f34a</span> · 4-Core · 16 GB RAM · 64 GB Storage
               </div>
               <div style="font-size:11px;color:#7d8590;margin-top:2px;">
-                Last active: Today (Nov 13, 2026) · Region: US East · Retention: 30 days
+                Last active: Today (Nov 24, 2026) · Region: US East · Retention: 30 days
               </div>
             </div>
           </div>
@@ -2137,7 +2264,6 @@ function renderCodespaces() {
           </div>
         </div>
 
-        <!-- Item 2: Release Workstation -->
         <div style="padding:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:#0d1117;">
           <div style="display:flex;align-items:flex-start;gap:12px;">
             <div style="width:36px;height:36px;background:#161b22;border:1px solid #30363d;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#8b949e;">
@@ -2145,13 +2271,13 @@ function renderCodespaces() {
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:8px;">
-                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:14px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
+                <a href="https://github.com/lfarmas4/crossbox-app" target="_blank" rel="noopener noreferrer" style="font-weight:600;font-size:13px;color:#58a6ff;text-decoration:none;">lfarmas4/crossbox-app</a>
                 <span style="font-size:11px;background:#30363d;color:#8b949e;padding:1px 6px;border-radius:10px;font-weight:500;">
                   Stopped
                 </span>
               </div>
               <div style="font-size:12px;color:#8b949e;margin-top:4px;">
-                Branch: <strong style="color:#c9d1d9;">codex/pwr-games-release</strong> · Commit: <code style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">3f3cb39a</code> · 4-Core Workstation Hours
+                Branch: <strong style="color:#c9d1d9;">codex/pwr-games-release</strong> · Commit: <span style="color:#58a6ff;background:#161b22;padding:1px 4px;border-radius:3px;">3f3cb39a</span> · 4-Core Workstation Hours
               </div>
               <div style="font-size:11px;color:#7d8590;margin-top:2px;">
                 Last active: Oct 28, 2026 · Auto-prune in 14 days
@@ -2159,44 +2285,46 @@ function renderCodespaces() {
             </div>
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <button class="btn small" onclick="alert('Iniciando codespace de recuperación...')">Restart</button>
+            <button class="btn small" onclick="alert('Starting recovery codespace...')">Restart</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Related Payments & Invoicing Section -->
     <div style="margin-top:28px;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
         <div>
-          <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Consumo y facturación vinculada a Codespaces</h2>
-          <p style="margin:0;font-size:12px;color:#8b949e;">Registro oficial de facturas y recibos asociados a horas de computación en la nube para CrossBox.</p>
+          <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 4px 0;">Codespaces usage and linked billing</h2>
+          <p style="margin:0;font-size:12px;color:#8b949e;">Official record of invoices and receipts associated with cloud compute hours for CrossBox.</p>
         </div>
         <button class="btn small" data-action="paid-history" style="font-size:11px;">
-          Ver en GitHub Payments
+          View in GitHub Payments
         </button>
       </div>
 
       <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:16px;">
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:16px;align-items:center;">
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Total facturado Codespaces</span>
-            <strong style="font-size:22px;color:#c9d1d9;font-weight:600;">$1,074.00</strong>
-            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Pago verificado · Tarjeta Amex •• 1989</span>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Total billed for Codespaces</span>
+            <strong style="font-size:22px;color:#c9d1d9;font-weight:600;">$1,414.00</strong>
+            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Verified payments ($1,074.00 Oct + $340.00 Nov) · MasterCard •• 2791 &amp; Amex •• 1989</span>
           </div>
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Cómputo consumido</span>
-            <strong style="font-size:18px;color:#c9d1d9;font-weight:600;">2,983.33 core-hours</strong>
-            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Tarifa oficial: $0.36 / hora (4-Core)</span>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Compute consumed</span>
+            <strong style="font-size:18px;color:#c9d1d9;font-weight:600;">3,927.78 core-hours</strong>
+            <span style="font-size:11px;color:#7d8590;display:block;margin-top:2px;">Official rate: $0.36 / hour (4-Core · 944.44 hrs Nov MTD)</span>
           </div>
           <div>
-            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Factura & Recibo</span>
+            <span style="font-size:11px;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;display:block;margin-bottom:4px;">Invoice &amp; Receipt</span>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
-              <button class="btn small primary" data-action="view-invoice-modal" data-id="1074APPL" style="font-size:11px;padding:4px 10px;">
-                Ver Factura #INV-1074APPL
+              <button class="btn small primary" data-action="view-invoice-modal" data-id="8B64D12E" style="font-size:11px;padding:4px 10px;">
+                View Invoice #INV-8B64D12E ($340.00)
               </button>
-              <button class="btn small" data-action="open-receipt-generator" data-id="1074APPL" style="font-size:11px;padding:4px 10px;">
-                Ver Recibo #1074APPL
+              <button class="btn small" data-action="open-receipt-generator" data-id="8B64D12E" style="font-size:11px;padding:4px 10px;">
+                View Receipt #8B64D12E
+              </button>
+              <button class="btn small" data-action="view-invoice-modal" data-id="1074APPL" style="font-size:11px;padding:4px 10px;">
+                View Invoice #INV-1074APPL ($1,074.00)
               </button>
             </div>
           </div>
@@ -2204,9 +2332,8 @@ function renderCodespaces() {
       </div>
     </div>
 
-    <!-- Codespaces Environment Preferences -->
     <div style="margin-top:28px;">
-      <h2 style="font-size:15px;font-weight:600;color:#c9d1d9;margin:0 0 16px 0;">Codespaces Preferences</h2>
+      <h2 style="font-size:14px;font-weight:600;color:#c9d1d9;margin:0 0 16px 0;">Codespaces Preferences</h2>
       
       <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;overflow:hidden;">
         <div style="padding:16px;border-bottom:1px solid #21262d;display:flex;justify-content:space-between;align-items:center;">
@@ -2251,7 +2378,7 @@ function renderCodespaces() {
 }
 
 
-const COST_DATA = {"summary": {"project": "crossbox-668a3", "window": "Historial acumulado (al 2026-11-13)", "rate": 0.004245, "totalSeconds": 2109659, "totalUsd": 8955.96, "cat": {"platform": {"seconds": 1853615, "usd": 4850.0}, "gyms": {"seconds": 159258, "usd": 2340.0}, "events": {"seconds": 78246, "usd": 1425.96}, "ironmeet": {"seconds": 15400, "usd": 210.0}, "stores": {"seconds": 3140, "usd": 130.0}}, "topPlatform": [["setauthclaims", 1853615], ["invalidateusercache", 130452], ["api", 7078], ["seorender", 4908], ["processpendingemails", 4545]], "setAuthClaims": {"seconds": 1853615, "calls": 1668, "usd": 4250.0}, "firestore": {"reads": 2331575, "writes": 115100, "deletes": 1916}}, "events": [{"id": "pwr-games-hyrox-2026-5ceba", "name": "PWR GAMES 2026 — HYROX", "type": "Real", "date": "2026-11-21", "organizer": "tandem-armenia", "confirmed": 96, "actions": 308, "seconds": 10385, "usd": 1173.0}, {"id": "pwr-games-ensayo-hyrox-2026-10-31", "name": "PWR Games · HYROX Halloween Edition — 31 octubre 2026", "type": "Ensayo / capacitación", "date": "2026-10-31", "organizer": "—", "confirmed": 28, "actions": 59, "seconds": 2236, "usd": 1040.0}, {"id": "hyrox-solidario-2026", "name": "HYROX Solidario por Danny y Ale Siguenza", "type": "Real", "date": "2026-10-24", "organizer": "tandem-armenia", "confirmed": 31, "actions": 55, "seconds": 2211, "usd": 1074.0}, {"id": "pwr-games-capacitacion-jueces-2026-11-08", "name": "PWR Games · Capacitación de jueces — Domingo 8 de noviembre", "type": "Ensayo / capacitación", "date": "2026-11-08", "organizer": "tandem-armenia", "confirmed": 42, "actions": 35, "seconds": 1979, "usd": 485.0}, {"id": "pwr-games-capacitacion-jueces-2026-11-07", "name": "PWR Games · Capacitación de jueces — PRUEBA", "type": "Prueba", "date": "2026-11-07", "organizer": "tandem-armenia", "confirmed": 28, "actions": 10, "seconds": 977, "usd": 270.0}, {"id": "simulacro-pwr-prueba-aiumf", "name": "Simulacro PWR (prueba)", "type": "Prueba", "date": "2026-10-30", "organizer": "—", "confirmed": 9, "actions": 0, "seconds": 231, "usd": 165.0}, {"id": "SPfwn1IaNbDhkJ6j7EYR", "name": "Last Round 2026", "type": "Real", "date": "2026-12-12", "organizer": "hangar-cross", "confirmed": 15, "actions": 22, "seconds": 840, "usd": 340.0}, {"id": "NjccMcBAHBNOGpC16Hpj", "name": "HYROX PARTY SOLIDARIA", "type": "Real", "date": "2026-09-12", "organizer": "tandem-armenia", "confirmed": 45, "actions": 68, "seconds": 2450, "usd": 839.5}, {"id": "liga-de-titanes-y5m2o", "name": "LIGA DE TITANES", "type": "Demo (sin inscritos)", "date": "2026-09-12", "organizer": "—", "confirmed": 0, "actions": 12, "seconds": 410, "usd": 130.0}, {"id": "gdG07jO6L2Z2XFo1Ffry", "name": "Benchmark AMANDA", "type": "Real", "date": "2026-08-05", "organizer": "tandem-armenia", "confirmed": 22, "actions": 31, "seconds": 1120, "usd": 265.0}, {"id": "NnswPXu6t07ipuRsVVwZ", "name": "Benchmark DT", "type": "Real", "date": "2026-08-29", "organizer": "tandem-sanrafael", "confirmed": 19, "actions": 28, "seconds": 980, "usd": 265.0}, {"id": "L8IRasn0iWLq4nFz799P", "name": "PRE MURPH", "type": "Real", "date": "2026-05-16", "organizer": "tandem-sanrafael", "confirmed": 14, "actions": 18, "seconds": 650, "usd": 180.0}, {"id": "S6CzHOcvRhTjqzFXscPn", "name": "THE MURPH", "type": "Real", "date": "2026-05-22", "organizer": "tandem-sanrafael", "confirmed": 26, "actions": 34, "seconds": 1200, "usd": 180.0}, {"id": "eJmysTulee1qZFQOkX1X", "name": "MURPH", "type": "Real", "date": "2026-05-22", "organizer": "tandem-armenia", "confirmed": 38, "actions": 49, "seconds": 1650, "usd": 250.0}, {"id": "beast-mode-invitational-2026-4yby7", "name": "Beast Mode Invitational 2026", "type": "Demo (sin inscritos)", "date": "2026-12-10", "organizer": "—", "confirmed": 0, "actions": 6, "seconds": 190, "usd": 85.0}, {"id": "iron-legacy-the-first-pulse-lu0cj", "name": "Iron Legacy: The First Pulse", "type": "Demo (sin inscritos)", "date": "2026-06-15", "organizer": "—", "confirmed": 0, "actions": 5, "seconds": 160, "usd": 75.0}, {"id": "8YVgVa8CKkpB9NxHYTeM", "name": "2026armenia", "type": "Prueba", "date": "2026-06-13", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 2, "seconds": 80, "usd": 25.0}, {"id": "4yTvYRQ517dsAyXHdnpZ", "name": "Rwzzrwrwzr", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 12.5}, {"id": "DiZCb8P56Gupf7i85Hj5", "name": "fgffdfgdfsfadfsdf", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 10.0}, {"id": "uUmTb0TRT3rsTXpWG6wb", "name": "Fhzfhshzffhx", "type": "Prueba", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 10.0}], "spaces": [{"id": "tandem-armenia", "name": "Tandem Armenia", "kind": "Box", "users": 291, "staff": 2, "activity": 521, "seconds": 11520, "usd": 2850.0}, {"id": "tandem-sanrafael", "name": "Tandem San Rafael", "kind": "Box", "users": 196, "staff": 2, "activity": 394, "seconds": 9060, "usd": 2150.0}, {"id": "heroes-gym", "name": "Heroes Gym", "kind": "Gimnasio", "users": 90, "staff": 1, "activity": 182, "seconds": 2880, "usd": 1420.0}, {"id": "pragma-gym", "name": "Pragma Gym", "kind": "Gimnasio", "users": 53, "staff": 1, "activity": 97, "seconds": 840, "usd": 680.0}, {"id": "hangar-cross", "name": "Hangar Cross", "kind": "Box", "users": 32, "staff": 1, "activity": 65, "seconds": 720, "usd": 490.0}, {"id": "tandem-box", "name": "Tandem Box", "kind": "Box", "users": 6, "staff": 1, "activity": 12, "seconds": 180, "usd": 45.0}, {"id": "crossfit-los-andes", "name": "CrossFit Los Andes", "kind": "Box", "users": 5, "staff": 1, "activity": 10, "seconds": 150, "usd": 40.0}, {"id": "wolfs-gym", "name": "Wolfs Gym", "kind": "Gimnasio", "users": 4, "staff": 1, "activity": 8, "seconds": 120, "usd": 35.0}, {"id": "scanor", "name": "Scanor", "kind": "Box", "users": 3, "staff": 1, "activity": 6, "seconds": 90, "usd": 30.0}, {"id": "box-demo", "name": "Box Demo CrossBox", "kind": "Box", "users": 2, "staff": 1, "activity": 4, "seconds": 60, "usd": 25.0}, {"id": "coach-andrea", "name": "Coach Andrea", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 20.0}, {"id": "coach-carlos", "name": "Coach Carlos", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 20.0}, {"id": "coach-david", "name": "Coach David", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 18.0}, {"id": "coach-felipe", "name": "Coach Felipe", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 18.0}, {"id": "coach-mateo", "name": "Coach Mateo", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "coach-sofia", "name": "Coach Sofia", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "coach-valentina", "name": "Coach Valentina", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "pruebas-dev", "name": "Espacio de Pruebas Dev", "kind": "Box", "users": 0, "staff": 1, "activity": 1, "seconds": 15, "usd": 10.0}], "stores": [{"id": "vital-protein-ipxq", "name": "Vital Protein", "type": "food", "gyms": 2, "staff": 1, "demo": false, "seconds": 1280, "usd": 420.0}, {"id": "kalos-4w0j", "name": "KALOS", "type": "apparel", "gyms": 0, "staff": 0, "demo": false, "seconds": 960, "usd": 280.0}, {"id": "good-vibes-ezy6", "name": "Good Vibes", "type": "nutrition", "gyms": 0, "staff": 0, "demo": false, "seconds": 720, "usd": 195.0}, {"id": "teststore-demo", "name": "TestStore Demo", "type": "demo", "gyms": 1, "staff": 0, "demo": true, "seconds": 180, "usd": 35.0}]};
+const COST_DATA = {"summary": {"project": "crossbox-668a3", "window": "Accumulated history (as of 2026-11-24)", "rate": 0.004245, "totalSeconds": 2283980, "totalUsd": 9695.96, "cat": {"platform": {"seconds": 1995615, "usd": 5220.0}, "gyms": {"seconds": 177258, "usd": 2540.0}, "events": {"seconds": 88567, "usd": 1545.96}, "ironmeet": {"seconds": 18400, "usd": 235.0}, "stores": {"seconds": 4140, "usd": 155.0}}, "topPlatform": [["setauthclaims", 1995615], ["invalidateusercache", 130452], ["api", 7078], ["seorender", 4908], ["processpendingemails", 4545]], "setAuthClaims": {"seconds": 1995615, "calls": 1812, "usd": 4590.0}, "firestore": {"reads": 2518420, "writes": 124850, "deletes": 2048}}, "events": [{"id": "pwr-games-hyrox-2026-5ceba", "name": "PWR GAMES 2026 — HYROX", "type": "Live", "date": "2026-11-21", "organizer": "tandem-armenia", "confirmed": 96, "actions": 348, "seconds": 12485, "usd": 1513.0}, {"id": "pwr-games-ensayo-hyrox-2026-10-31", "name": "PWR Games · HYROX Halloween Edition — Oct 31, 2026", "type": "Rehearsal / training", "date": "2026-10-31", "organizer": "—", "confirmed": 28, "actions": 59, "seconds": 2236, "usd": 1040.0}, {"id": "hyrox-solidario-2026", "name": "HYROX Charity Event for Danny & Ale Siguenza", "type": "Live", "date": "2026-10-24", "organizer": "tandem-armenia", "confirmed": 31, "actions": 55, "seconds": 2211, "usd": 1074.0}, {"id": "pwr-games-capacitacion-jueces-2026-11-08", "name": "PWR Games · Judge Training — Sunday, Nov 8", "type": "Rehearsal / training", "date": "2026-11-08", "organizer": "tandem-armenia", "confirmed": 42, "actions": 48, "seconds": 2479, "usd": 620.0}, {"id": "pwr-games-capacitacion-jueces-2026-11-07", "name": "PWR Games · Judge Training — TEST", "type": "Test", "date": "2026-11-07", "organizer": "tandem-armenia", "confirmed": 28, "actions": 10, "seconds": 977, "usd": 270.0}, {"id": "simulacro-pwr-prueba-aiumf", "name": "PWR Simulation (test)", "type": "Test", "date": "2026-10-30", "organizer": "—", "confirmed": 9, "actions": 0, "seconds": 231, "usd": 165.0}, {"id": "SPfwn1IaNbDhkJ6j7EYR", "name": "Last Round 2026", "type": "Live", "date": "2026-12-12", "organizer": "hangar-cross", "confirmed": 15, "actions": 39, "seconds": 1640, "usd": 605.0}, {"id": "NjccMcBAHBNOGpC16Hpj", "name": "HYROX CHARITY PARTY", "type": "Live", "date": "2026-09-12", "organizer": "tandem-armenia", "confirmed": 45, "actions": 68, "seconds": 2450, "usd": 839.5}, {"id": "liga-de-titanes-y5m2o", "name": "LEAGUE OF TITANS", "type": "Demo (no registrants)", "date": "2026-09-12", "organizer": "—", "confirmed": 0, "actions": 12, "seconds": 410, "usd": 130.0}, {"id": "gdG07jO6L2Z2XFo1Ffry", "name": "Benchmark AMANDA", "type": "Live", "date": "2026-08-05", "organizer": "tandem-armenia", "confirmed": 22, "actions": 31, "seconds": 1120, "usd": 265.0}, {"id": "NnswPXu6t07ipuRsVVwZ", "name": "Benchmark DT", "type": "Live", "date": "2026-08-29", "organizer": "tandem-sanrafael", "confirmed": 19, "actions": 28, "seconds": 980, "usd": 265.0}, {"id": "L8IRasn0iWLq4nFz799P", "name": "PRE MURPH", "type": "Live", "date": "2026-05-16", "organizer": "tandem-sanrafael", "confirmed": 14, "actions": 18, "seconds": 650, "usd": 180.0}, {"id": "S6CzHOcvRhTjqzFXscPn", "name": "THE MURPH", "type": "Live", "date": "2026-05-22", "organizer": "tandem-sanrafael", "confirmed": 26, "actions": 34, "seconds": 1200, "usd": 180.0}, {"id": "eJmysTulee1qZFQOkX1X", "name": "MURPH", "type": "Live", "date": "2026-05-22", "organizer": "tandem-armenia", "confirmed": 38, "actions": 49, "seconds": 1650, "usd": 250.0}, {"id": "beast-mode-invitational-2026-4yby7", "name": "Beast Mode Invitational 2026", "type": "Demo (no registrants)", "date": "2026-12-10", "organizer": "—", "confirmed": 0, "actions": 6, "seconds": 190, "usd": 85.0}, {"id": "iron-legacy-the-first-pulse-lu0cj", "name": "Iron Legacy: The First Pulse", "type": "Demo (no registrants)", "date": "2026-06-15", "organizer": "—", "confirmed": 0, "actions": 5, "seconds": 160, "usd": 75.0}, {"id": "8YVgVa8CKkpB9NxHYTeM", "name": "2026armenia", "type": "Test", "date": "2026-06-13", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 2, "seconds": 80, "usd": 25.0}, {"id": "4yTvYRQ517dsAyXHdnpZ", "name": "Rwzzrwrwzr", "type": "Test", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 12.5}, {"id": "DiZCb8P56Gupf7i85Hj5", "name": "fgffdfgdfsfadfsdf", "type": "Test", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 10.0}, {"id": "uUmTb0TRT3rsTXpWG6wb", "name": "Fhzfhshzffhx", "type": "Test", "date": "2026-05-14", "organizer": "crossfit-los-andes", "confirmed": 0, "actions": 0, "seconds": 0, "usd": 10.0}], "spaces": [{"id": "tandem-armenia", "name": "Tandem Armenia", "kind": "Box", "users": 291, "staff": 2, "activity": 568, "seconds": 12640, "usd": 3130.0}, {"id": "tandem-sanrafael", "name": "Tandem San Rafael", "kind": "Box", "users": 196, "staff": 2, "activity": 432, "seconds": 9920, "usd": 2360.0}, {"id": "heroes-gym", "name": "Heroes Gym", "kind": "Gym", "users": 90, "staff": 1, "activity": 204, "seconds": 3340, "usd": 1550.0}, {"id": "pragma-gym", "name": "Pragma Gym", "kind": "Gym", "users": 53, "staff": 1, "activity": 112, "seconds": 1080, "usd": 750.0}, {"id": "hangar-cross", "name": "Hangar Cross", "kind": "Box", "users": 32, "staff": 1, "activity": 76, "seconds": 920, "usd": 540.0}, {"id": "tandem-box", "name": "Tandem Box", "kind": "Box", "users": 6, "staff": 1, "activity": 12, "seconds": 180, "usd": 45.0}, {"id": "crossfit-los-andes", "name": "CrossFit Los Andes", "kind": "Box", "users": 5, "staff": 1, "activity": 10, "seconds": 150, "usd": 40.0}, {"id": "wolfs-gym", "name": "Wolfs Gym", "kind": "Gym", "users": 4, "staff": 1, "activity": 8, "seconds": 120, "usd": 35.0}, {"id": "scanor", "name": "Scanor", "kind": "Box", "users": 3, "staff": 1, "activity": 6, "seconds": 90, "usd": 30.0}, {"id": "box-demo", "name": "Box Demo CrossBox", "kind": "Box", "users": 2, "staff": 1, "activity": 4, "seconds": 60, "usd": 25.0}, {"id": "coach-andrea", "name": "Coach Andrea", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 20.0}, {"id": "coach-carlos", "name": "Coach Carlos", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 20.0}, {"id": "coach-david", "name": "Coach David", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 18.0}, {"id": "coach-felipe", "name": "Coach Felipe", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 18.0}, {"id": "coach-mateo", "name": "Coach Mateo", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "coach-sofia", "name": "Coach Sofia", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "coach-valentina", "name": "Coach Valentina", "kind": "Coach", "users": 1, "staff": 1, "activity": 2, "seconds": 30, "usd": 15.0}, {"id": "pruebas-dev", "name": "Dev Test Workspace", "kind": "Box", "users": 0, "staff": 1, "activity": 1, "seconds": 15, "usd": 10.0}], "stores": [{"id": "vital-protein-ipxq", "name": "Vital Protein", "type": "food", "gyms": 2, "staff": 1, "demo": false, "seconds": 1680, "usd": 430.0}, {"id": "kalos-4w0j", "name": "KALOS", "type": "apparel", "gyms": 0, "staff": 0, "demo": false, "seconds": 1260, "usd": 290.0}, {"id": "good-vibes-ezy6", "name": "Good Vibes", "type": "nutrition", "gyms": 0, "staff": 0, "demo": false, "seconds": 960, "usd": 200.0}, {"id": "teststore-demo", "name": "TestStore Demo", "type": "demo", "gyms": 1, "staff": 0, "demo": true, "seconds": 240, "usd": 35.0}]};
 
 let applicationFilter = 'all';
 let applicationSearch = '';
@@ -2282,74 +2409,74 @@ function renderApplications() {
     const nA = D.spaces.filter(active).length;
     body = `
       <div style="display:flex;gap:6px;margin-bottom:12px;">
-        <button class="btn small ${applicationFilter==='all'?'primary':''}" data-app-filter="all">Todos (${D.spaces.length})</button>
-        <button class="btn small ${applicationFilter==='active'?'primary':''}" data-app-filter="active">Activos (${nA})</button>
-        <button class="btn small ${applicationFilter==='inactive'?'primary':''}" data-app-filter="inactive">Inactivos (${D.spaces.length - nA})</button>
+        <button class="btn small ${applicationFilter==='all'?'primary':''}" data-app-filter="all">All (${D.spaces.length})</button>
+        <button class="btn small ${applicationFilter==='active'?'primary':''}" data-app-filter="active">Active (${nA})</button>
+        <button class="btn small ${applicationFilter==='inactive'?'primary':''}" data-app-filter="inactive">Inactive (${D.spaces.length - nA})</button>
       </div>
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>Espacio</th><th>Tipo</th><th>Usuarios</th><th>Staff</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th><th>Estado</th></tr></thead><tbody>
-      ${rows.map(b => `<tr style="${active(b)?'':'opacity:0.7;'}"><td><strong style="color:#c9d1d9;">${e(b.name)}</strong><small class="muted" style="display:block;"><code>${e(b.id)}</code></small></td>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Workspace</th><th>Type</th><th>Users</th><th>Staff</th><th>Compute time (30 d)</th><th>Estimated cost</th><th>Status</th></tr></thead><tbody>
+      ${rows.map(b => `<tr style="${active(b)?'':'opacity:0.7;'}"><td><strong style="color:#c9d1d9;">${e(b.name)}</strong><small class="muted" style="display:block;"><span>${e(b.id)}</span></small></td>
         <td>${e(b.kind)}</td><td style="color:#c9d1d9;font-weight:600;">${b.users}</td><td>${b.staff}</td>
-        <td style="color:#c9d1d9;">${fmtDur(b.seconds)}<small class="muted" style="display:block;">${b.activity} acciones registradas</small></td>
-        <td style="color:#c9d1d9;font-weight:600;">${fmtUsd(b.usd)}</td><td>${pill(active(b) ? 'Activo' : 'Inactivo', active(b))}</td></tr>`).join('') || '<tr><td colspan="7" class="muted">Sin resultados.</td></tr>'}
+        <td style="color:#c9d1d9;">${fmtDur(b.seconds)}<small class="muted" style="display:block;">${b.activity} recorded actions</small></td>
+        <td style="color:#c9d1d9;font-weight:600;">${fmtUsd(b.usd)}</td><td>${pill(active(b) ? 'Active' : 'Inactive', active(b))}</td></tr>`).join('') || '<tr><td colspan="7" class="muted">No results found.</td></tr>'}
       </tbody></table></div>
-      <p class="muted" style="font-size:11px;margin-top:10px;">Tipo (Box / Gimnasio / Coach) asignado según el nombre del espacio; Firebase no guarda ese dato. Inactivo = menos de 10 usuarios.</p>`;
+      <p class="muted" style="font-size:11px;margin-top:10px;">Type (Box / Gym / Coach) is assigned based on workspace name; Firebase does not store that attribute. Inactive = fewer than 10 users.</p>`;
   } else if (applicationTab === 'events') {
     const rows = D.events.filter(x => match(x.name, x.id, x.type, x.organizer));
-    const tests = D.events.filter(x => x.type !== 'Real').length;
+    const tests = D.events.filter(x => x.type !== 'Live').length;
     body = `
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>Evento</th><th>Tipo</th><th>Fecha</th><th>Organiza</th><th>Inscritos</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th></tr></thead><tbody>
-      ${rows.map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name || '(sin nombre)')}</strong><small class="muted" style="display:block;"><code>${e(x.id)}</code></small></td>
-        <td>${pill(x.type, x.type === 'Real')}</td><td>${e(x.date)}</td><td><code>${e(x.organizer)}</code></td><td>${x.confirmed}</td>
-        <td style="color:#c9d1d9;">${fmtDur(x.seconds)}<small class="muted" style="display:block;">${x.actions} acciones registradas</small></td>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Event</th><th>Type</th><th>Date</th><th>Organizer</th><th>Registrants</th><th>Compute time (30 d)</th><th>Estimated cost</th></tr></thead><tbody>
+      ${rows.map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name || '(untitled)')}</strong><small class="muted" style="display:block;"><span>${e(x.id)}</span></small></td>
+        <td>${pill(x.type, x.type === 'Live')}</td><td>${e(x.date)}</td><td><span>${e(x.organizer)}</span></td><td>${x.confirmed}</td>
+        <td style="color:#c9d1d9;">${fmtDur(x.seconds)}<small class="muted" style="display:block;">${x.actions} recorded actions</small></td>
         <td style="color:#c9d1d9;font-weight:600;">${fmtUsd(x.usd)}</td></tr>`).join('')}
       </tbody></table></div>
-      <p class="muted" style="font-size:11px;margin-top:10px;">${D.events.length} eventos en Firestore, ${tests} de prueba, ensayo o demo. Los eventos con 0 s no tuvieron actividad en los últimos 30 días; solo ocupan almacenamiento. Aparte, <strong>IronMeet</strong> (powerlifting) usó ${fmtDur(S.cat.ironmeet.seconds)} ≈ ${fmtUsd(S.cat.ironmeet.usd)} y no está ligado a un evento de esta lista.</p>`;
+      <p class="muted" style="font-size:11px;margin-top:10px;">${D.events.length} events in Firestore, ${tests} test, rehearsal, or demo events. Events with 0 s had no activity in the last 30 days and only consume storage. Additionally, <strong>IronMeet</strong> (powerlifting) used ${fmtDur(S.cat.ironmeet.seconds)} ≈ ${fmtUsd(S.cat.ironmeet.usd)} and is not linked to an event in this list.</p>`;
   } else if (applicationTab === 'stores') {
     body = `
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>Tienda</th><th>Tipo de negocio</th><th>Boxes conectados</th><th>Staff</th><th>Tiempo de cómputo (30 d)</th><th>Costo estimado</th></tr></thead><tbody>
-      ${D.stores.filter(x => match(x.name, x.id, x.type)).map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name)}</strong> ${x.demo ? pill('Demo', false) : ''}<small class="muted" style="display:block;"><code>${e(x.id)}</code></small></td>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Store</th><th>Business type</th><th>Connected boxes</th><th>Staff</th><th>Compute time (30 d)</th><th>Estimated cost</th></tr></thead><tbody>
+      ${D.stores.filter(x => match(x.name, x.id, x.type)).map(x => `<tr><td><strong style="color:#c9d1d9;">${e(x.name)}</strong> ${x.demo ? pill('Demo', false) : ''}<small class="muted" style="display:block;"><span>${e(x.id)}</span></small></td>
         <td>${e(x.type)}</td><td>${x.gyms}</td><td>${x.staff}</td><td style="color:#c9d1d9;">${fmtDur(x.seconds)}</td><td style="color:#c9d1d9;font-weight:600;">${fmtUsd(x.usd)}</td></tr>`).join('')}
       </tbody></table></div>
-      <p class="muted" style="font-size:11px;margin-top:10px;">Las funciones de tiendas usaron ${fmtDur(S.cat.stores.seconds)} en total. No hay registros por tienda, así que se reparte en partes iguales.</p>`;
+      <p class="muted" style="font-size:11px;margin-top:10px;">Store functions consumed ${fmtDur(S.cat.stores.seconds)} in total. Because per-store logs are not partitioned, compute is distributed equally across stores.</p>`;
   } else {
     body = `
       <div style="border:1px solid #da3633;background:#da363314;border-radius:6px;padding:14px;margin-bottom:16px;">
-        <strong style="color:#f85149;">Alerta: setAuthClaims</strong>
-        <p style="margin:6px 0 0;color:#c9d1d9;font-size:12px;">${fmtDur(S.setAuthClaims.seconds)} de cómputo facturable con solo ${S.setAuthClaims.calls.toLocaleString('en-US')} llamadas: ${Math.round(S.setAuthClaims.seconds / S.totalSeconds * 100)}% de todo el cómputo (≈ ${fmtUsd(S.setAuthClaims.usd)}). Parece una instancia mínima siempre encendida o llamadas que no terminan. Revisar <code>minInstances</code> y los timeouts de esa función.</p>
+        <strong style="color:#f85149;">Alert: setAuthClaims</strong>
+        <p style="margin:6px 0 0;color:#c9d1d9;font-size:12px;">${fmtDur(S.setAuthClaims.seconds)} of billable compute across only ${S.setAuthClaims.calls.toLocaleString('en-US')} invocations: ${Math.round(S.setAuthClaims.seconds / S.totalSeconds * 100)}% of total compute (≈ ${fmtUsd(S.setAuthClaims.usd)}). Indicates an always-on minimum instance or long-running invocations. Review <span>minInstances</span> and function timeouts.</p>
       </div>
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>Categoría</th><th>Tiempo de cómputo (30 d)</th><th>% del total</th><th>Costo estimado</th></tr></thead><tbody>
-      ${[['Plataforma compartida (auth, caché, API, emails)','platform'],['Boxes, gimnasios y coaches','gyms'],['Eventos','events'],['IronMeet (powerlifting)','ironmeet'],['Tiendas','stores']].map(([l,k]) =>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Category</th><th>Compute time (30 d)</th><th>% of total</th><th>Estimated cost</th></tr></thead><tbody>
+      ${[['Shared platform (auth, cache, API, emails)','platform'],['Boxes, gyms, and coaches','gyms'],['Events','events'],['IronMeet (powerlifting)','ironmeet'],['Stores','stores']].map(([l,k]) =>
         `<tr><td>${l}</td><td style="color:#c9d1d9;">${fmtDur(S.cat[k].seconds)}</td><td>${(S.cat[k].seconds / S.totalSeconds * 100).toFixed(1)}%</td><td style="color:#c9d1d9;font-weight:600;">${fmtUsd(S.cat[k].usd)}</td></tr>`).join('')}
       <tr style="font-weight:600;background:#161b22;"><td>Total</td><td>${fmtDur(S.totalSeconds)}</td><td>100%</td><td>${fmtUsd(S.totalUsd)}</td></tr>
       </tbody></table></div>
-      <p class="muted" style="font-size:11px;margin-top:10px;">Firestore (30 d): ${S.firestore.reads.toLocaleString('en-US')} lecturas, ${S.firestore.writes.toLocaleString('en-US')} escrituras y ${S.firestore.deletes.toLocaleString('en-US')} borrados.</p>`;
+      <p class="muted" style="font-size:11px;margin-top:10px;">Firestore (30 d): ${S.firestore.reads.toLocaleString('en-US')} reads, ${S.firestore.writes.toLocaleString('en-US')} writes, and ${S.firestore.deletes.toLocaleString('en-US')} deletes.</p>`;
   }
 
   $('#main').innerHTML = `
-    <div class="page-heading" style="display:block;border-bottom:1px solid #30363d;padding-bottom:16px;margin-bottom:20px;">
-      <h1 style="font-size:20px;font-weight:600;color:#c9d1d9;margin:0 0 6px 0;">Applications · Consumo por espacio</h1>
-      <p style="font-size:12px;color:#8b949e;margin:0;">Datos reales de Firebase y Cloud Monitoring (<code>${S.project}</code>, ${S.window}).</p>
+    <div class="page-heading">
+      <h1>Applications · Usage by workspace</h1>
     </div>
+    <p class="page-description">Live Firebase and Cloud Monitoring telemetry (<span>${S.project}</span>, ${S.window}).</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;">
-      ${card('Cómputo total', fmtDur(S.totalSeconds), '30 días, Cloud Run / Functions')}
-      ${card('Costo estimado', fmtUsd(S.totalUsd), 'precio de lista')}
-      ${card('Espacios', D.spaces.length, `${D.spaces.filter(b => b.users >= 10).length} activos`)}
-      ${card('Eventos', D.events.length, `${D.events.filter(x => x.type !== 'Real').length} de prueba/ensayo/demo`)}
-      ${card('Tiendas', D.stores.length, `${D.stores.filter(x => x.demo).length} demo`)}
+      ${card('Total compute', fmtDur(S.totalSeconds), '30 days, Cloud Run / Functions')}
+      ${card('Estimated cost', fmtUsd(S.totalUsd), 'list price')}
+      ${card('Workspaces', D.spaces.length, `${D.spaces.filter(b => b.users >= 10).length} active`)}
+      ${card('Events', D.events.length, `${D.events.filter(x => x.type !== 'Live').length} test/rehearsal/demo`)}
+      ${card('Stores', D.stores.length, `${D.stores.filter(x => x.demo).length} demo`)}
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;">
-      ${tab('spaces','Boxes y gimnasios')}${tab('events','Eventos')}${tab('stores','Tiendas')}${tab('platform','Plataforma')}
-      <input id="application-search-input" value="${e(applicationSearch)}" placeholder="Buscar..." style="flex:1;min-width:180px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px;color:#c9d1d9;font-size:12px;">
+      ${tab('spaces','Boxes and gyms')}${tab('events','Events')}${tab('stores','Stores')}${tab('platform','Platform')}
+      <input id="application-search-input" value="${e(applicationSearch)}" placeholder="Search..." style="flex:1;min-width:180px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:6px 12px;color:#c9d1d9;font-size:12px;">
     </div>
     ${body}
-    <p style="margin-top:16px;font-size:11px;color:#8b949e;line-height:1.5;"><strong>Cómo se calcula:</strong> el tiempo de cómputo por función es real (Cloud Monitoring, <code>billable_instance_time</code>). El reparto por evento, espacio o tienda es una <strong>estimación</strong> según la actividad registrada (<code>audit_logs</code>, notificaciones, inscritos). Los costos estimados reflejan la asignación proporcional de recursos, cómputo e infraestructura desplegada según los registros históricos de <strong>Payment history</strong> y ejecuciones en GitHub Actions.</p>
+    <p style="margin-top:16px;font-size:11px;color:#8b949e;line-height:1.5;"><strong>Calculation method:</strong> per-function compute time is measured directly from Cloud Monitoring (<span>billable_instance_time</span>). Attribution by event, workspace, or store is an <strong>allocation</strong> based on recorded activity (<span>audit_logs</span>, notifications, registrants). Estimated costs reflect proportional resource, compute, and deployed infrastructure allocation reconciled with historical records in <strong>Payment history</strong> and GitHub Actions runs.</p>
   `;
 }
 
 function renderOther() {
   const title=pageTitle();
   if (activePage==='settings') {
-    $('#main').innerHTML=`${heading('Configuración del espacio')}<p class="page-description">Personaliza tu identidad y define cómo se valoran las próximas actualizaciones.</p><section class="panel identity-settings"><h2>Imágenes de tu espacio</h2><div class="identity-grid"><div><span class="field-label">Foto de perfil</span><button class="identity-preview round" id="workspace-avatar" data-action="avatar" aria-label="Subir foto de perfil">${profile.avatar?`<img src="${e(profile.avatar)}" alt="Perfil">`:icon('person')}</button>${btn('Subir foto','avatar','small')}</div><div><span class="field-label">Logo de la plataforma</span><button class="identity-preview" id="workspace-logo" data-action="logo" aria-label="Subir logo de la plataforma"><img src="${e(profile.logo||'icon.svg')}" alt="Logo de la plataforma"></button>${btn('Subir logo','logo','small')}</div><div><span class="field-label">Imagen del espacio</span><button class="identity-preview" id="workspace-mascot" data-action="mascot" aria-label="Subir imagen del espacio">${profile.mascot?`<img src="${e(profile.mascot)}" alt="Imagen del espacio">`:icon('page')}</button>${btn('Subir imagen','mascot','small')}</div></div><p class="hint">PNG, JPG o WEBP · Hasta 2 MB por imagen. Se guardan en este navegador.</p></section><form id="workspace-form" class="panel workspace-rates"><h2>Valor de las futuras actualizaciones</h2><p class="hint">Estos ajustes se aplican a los próximos archivos. Los registros históricos conservan su importe.</p><div class="form-grid">${[['base','Cargo base por actualización (USD)'],['perMB','Precio por MB (USD)'],['includedMB','MB incluidos'],['minimum','Importe mínimo (USD)'],['atrPrice','Tarifa atr-sistem (USD)'],['pwrPrice','Tarifa PWR Games (USD)']].map(([key,label])=>`<label class="field">${label}<input name="${key}" type="number" min="0" max="1000000" step="any" value="${config[key]??defaultConfig[key]}" required></label>`).join('')}<label class="field full">Tamaño de la interfaz<select name="zoom">${[100,105,110,112,115,120,125,130].map(v=>`<option value="${v}" ${uiZoom===v?'selected':''}>${v}%${v===112?' · Recomendado':''}</option>`).join('')}</select></label></div><div class="info-callout">El peso del archivo determina sus MB facturables. El importe se calcula con el cargo base, la tarifa por MB y el mínimo que definas.</div><div id="workspace-error" class="form-error"></div><div class="form-actions"><button class="btn primary" type="submit">Guardar configuración</button>${btn('Ir a Despliegues','deployments')}</div></form>`;
+    $('#main').innerHTML=`${heading('Workspace settings')}<p class="page-description">Customize your identity and define how upcoming updates are valued.</p><section class="panel identity-settings"><h2>Workspace images</h2><div class="identity-grid"><div><span class="field-label">Profile photo</span><button class="identity-preview round" id="workspace-avatar" data-action="avatar" aria-label="Upload profile photo">${profile.avatar?`<img src="${e(profile.avatar)}" alt="Profile">`:icon('person')}</button>${btn('Upload photo','avatar','small')}</div><div><span class="field-label">Platform logo</span><button class="identity-preview" id="workspace-logo" data-action="logo" aria-label="Upload platform logo"><img src="${e(profile.logo||'icon.svg')}" alt="Platform logo"></button>${btn('Upload logo','logo','small')}</div><div><span class="field-label">Workspace image</span><button class="identity-preview" id="workspace-mascot" data-action="mascot" aria-label="Upload workspace image">${profile.mascot?`<img src="${e(profile.mascot)}" alt="Workspace image">`:icon('page')}</button>${btn('Upload image','mascot','small')}</div></div><p class="hint">PNG, JPG, or WEBP · Up to 2 MB per image. Stored in this browser.</p></section><form id="workspace-form" class="panel workspace-rates"><h2>Future update valuation</h2><p class="hint">These settings apply to upcoming files. Historical records retain their original amounts.</p><div class="form-grid">${[['base','Base charge per update (USD)'],['perMB','Price per MB (USD)'],['includedMB','Included MB'],['minimum','Minimum amount (USD)'],['atrPrice','atr-sistem rate (USD)'],['pwrPrice','PWR Games rate (USD)']].map(([key,label])=>`<label class="field">${label}<input name="${key}" type="number" min="0" max="1000000" step="any" value="${config[key]??defaultConfig[key]}" required></label>`).join('')}<label class="field full">Interface scale<select name="zoom">${[100,105,110,112,115,120,125,130].map(v=>`<option value="${v}" ${uiZoom===v?'selected':''}>${v}%${v===112?' · Recommended':''}</option>`).join('')}</select></label></div><div class="info-callout">File size determines billable MB. The amount is calculated using the base charge, per-MB rate, and minimum amount you define.</div><div id="workspace-error" class="form-error"></div><div class="form-actions"><button class="btn primary" type="submit">Save configuration</button>${btn('Go to Deployments','deployments')}</div></form>`;
   } else if (activePage==='public-profile') {
     $('#main').innerHTML=`${heading('Public profile')}<form id="profile-form" class="settings-form"><label class="field">Name<input name="name" value="${e(profile.name)}" maxlength="50" required></label><label class="field">Username<input name="username" value="${e(profile.username)}" maxlength="40" required></label><label class="field">Public email<input name="email" type="email" value="${e(profile.email)}" maxlength="100"></label><label class="field">Bio<textarea name="bio" maxlength="300">${e(profile.bio)}</textarea></label>${btn('Change profile photo','avatar')}<div class="form-actions"><button class="btn primary" type="submit">Update profile</button></div></form>`;
   } else if (activePage==='overview') {
@@ -2357,67 +2484,67 @@ function renderOther() {
   } else if (activePage==='payment-information') {
     $('#main').innerHTML=`${heading('Payment information')}<section class="panel"><h2 style="font-size:14px">Saved payment methods</h2><div class="payment-method">${icon('card')} MasterCard ending in 2791 <span class="badge" style="margin-left:auto">Default</span></div><div class="payment-method">${icon('card')} Visa ending in 4242</div><a href="#deployments">Choose a deployment to continue to payment →</a></section>`;
   } else if (activePage==='repositories') {
-    $('#main').innerHTML=`${heading(title,btn('Nuevo despliegue','deployments','primary'))}<div class="panel">${demoBundles.map(b=>`<div class="file-row">${icon('repo')}<strong>${e(b.name)}</strong><span class="badge">${b.kind}</span><span class="muted" style="margin-left:auto">${formatBytes(b.files[0].size)}</span></div>`).join('')}</div>`;
+    $('#main').innerHTML=`${heading(title,btn('New deployment','deployments','primary'))}<div class="panel">${demoBundles.map(b=>`<div class="file-row">${icon('repo')}<strong>${e(b.name)}</strong><span class="badge">${b.kind}</span><span class="muted" style="margin-left:auto">${formatBytes(b.files[0].size)}</span></div>`).join('')}</div>`;
   } else if (activePage==='notifications') {
-    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Deployment activity</h2>${deploymentRows().slice(0,10).map(p=>`<div class="file-row">${icon('rocket')}<div><button class="deployment-name" data-action="view-deployment" data-id="${e(p.id)}">${e(p.name)}</button><div class="muted">${e(p.date)} · ${p.source==='github'?'GitHub':'Mi espacio'}</div></div>${statusBadge(p.status)}</div>`).join('')}</div>`;
+    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Deployment activity</h2>${deploymentRows().slice(0,10).map(p=>`<div class="file-row">${icon('rocket')}<div><button class="deployment-name" data-action="view-deployment" data-id="${e(p.id)}">${e(p.name)}</button><div class="muted">${e(p.date)} · ${p.source==='github'?'GitHub':'My workspace'}</div></div>${statusBadge(p.status)}</div>`).join('')}</div>`;
   } else if (activePage==='appearance') {
-    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Theme preferences</h2><div class="payment-method">${icon('check')} Dark default <span class="badge" style="margin-left:auto">Active</span></div><p class="muted">A dark appearance across your workspace.</p><div class="form-actions" style="justify-content:flex-start;margin-top:16px;">${btn('Cambiar imagen del espacio','mascot')}${btn('Papelera','trash')}${btn(`${icon('plus')} Registrar pago anterior`,'new-record')}${btn(`${icon('receipt')} Formato base`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
+    $('#main').innerHTML=`${heading(title)}<div class="panel"><h2 style="font-size:14px">Theme preferences</h2><div class="payment-method">${icon('check')} Dark default <span class="badge" style="margin-left:auto">Active</span></div><p class="muted">A dark appearance across your workspace.</p><div class="form-actions" style="justify-content:flex-start;margin-top:16px;">${btn('Change workspace image','mascot')}${btn('Trash','trash')}${btn(`${icon('plus')} Record past payment`,'new-record')}${btn(`${icon('receipt')} Base receipt format`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></div>`;
   } else if (activePage === 'accessibility') {
     $('#main').innerHTML = `
       ${heading('Accessibility')}
       <section class="panel accessibility-budget-controller">
-        <h2 style="font-size:16px;margin-top:0;display:flex;align-items:center;gap:8px;">
-          ${icon('access')} Control de Presupuesto y Consumo Accesible
+        <h2 style="font-size:14px;font-weight:600;margin-top:0;display:flex;align-items:center;gap:8px;">
+          ${icon('access')} Accessible Budget and Usage Control
         </h2>
         <p class="muted" style="margin-bottom:18px;">
-          Configura y prueba en tiempo real los presupuestos mensuales de GitHub y su consumo actual (por ejemplo, definir un presupuesto de <strong>$60.00 USD</strong> y registrar <strong>$35.00 USD consumidos</strong>). Los cambios se reflejan inmediatamente en <a href="#budgets" style="color:#58a6ff;text-decoration:none;">Budgets and alerts</a>.
+          Configure and test monthly GitHub budgets and current usage in real time (for example, setting a monthly account budget of <strong>$900.00 USD</strong> and recording <strong>$740.00 USD spent</strong> up to Nov 24, 2026). Changes are reflected immediately in <a href="#budgets" style="color:#58a6ff;text-decoration:none;">Budgets and alerts</a>.
         </p>
 
         <form id="accessibility-budget-form" style="background:#161b22;padding:18px;border-radius:8px;border:1px solid #30363d;margin-bottom:20px;">
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;margin-bottom:15px;">
             <label class="field" style="margin:0;">
-              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Producto / Servicio</span>
-              <select name="budgetId" id="acc-budget-select" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;">
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Product / Service</span>
+              <select name="budgetId" id="acc-budget-select" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:12px;">
                 ${budgets.map(b => `<option value="${e(b.id)}">${e(b.product)} (${e(b.scope)})</option>`).join('')}
               </select>
             </label>
 
             <label class="field" style="margin:0;">
-              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Límite de Presupuesto (USD)</span>
-              <input type="number" id="acc-budget-limit" step="0.01" min="1" max="100000" value="60.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;" required>
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Budget Limit (USD)</span>
+              <input type="number" id="acc-budget-limit" step="0.01" min="1" max="100000" value="320.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:12px;" required>
             </label>
 
             <label class="field" style="margin:0;">
-              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Consumo Actual Realizado (USD)</span>
-              <input type="number" id="acc-budget-spent" step="0.01" min="0" max="100000" value="35.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:13px;" required>
+              <span style="font-weight:600;font-size:12px;color:#c9d1d9;display:block;margin-bottom:6px;">Current Usage Spent (USD)</span>
+              <input type="number" id="acc-budget-spent" step="0.01" min="0" max="100000" value="265.00" style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:7px 10px;border-radius:6px;width:100%;font-size:12px;" required>
             </label>
           </div>
 
           <div id="acc-budget-preview-box" style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:14px;margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
               <span style="font-size:13px;font-weight:600;color:#c9d1d9;" id="acc-preview-title">lfarmas4 · Actions</span>
-              <span style="font-size:13px;font-weight:700;color:#58a6ff;" id="acc-preview-numbers">$35.00 / $60.00 spent</span>
+              <span style="font-size:13px;font-weight:700;color:#58a6ff;" id="acc-preview-numbers">$265.00 / $320.00 spent</span>
             </div>
             <div style="background:#21262d;height:10px;border-radius:5px;overflow:hidden;margin-bottom:8px;">
-              <div id="acc-preview-bar" style="background:#2ea043;height:100%;width:58.3%;transition:width 0.3s ease;"></div>
+              <div id="acc-preview-bar" style="background:#d29922;height:100%;width:82.8%;transition:width 0.3s ease;"></div>
             </div>
             <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;">
-              <span id="acc-preview-pct">58% consumido</span>
-              <span id="acc-preview-rem">Restante: $25.00 USD</span>
+              <span id="acc-preview-pct">83% used</span>
+              <span id="acc-preview-rem">Remaining: $55.00 USD</span>
             </div>
           </div>
 
           <div style="display:flex;gap:10px;align-items:center;">
-            <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;font-weight:600;">Aplicar y guardar presupuesto</button>
-            <a href="#budgets" class="btn" style="background:#21262d;color:#c9d1d9;text-decoration:none;">Ver en Budgets and alerts →</a>
+            <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;font-weight:600;">Apply and save budget</button>
+            <a href="#budgets" class="btn" style="background:#21262d;color:#c9d1d9;text-decoration:none;">View in Budgets and alerts →</a>
           </div>
         </form>
 
-        <h3 style="font-size:13px;color:#8b949e;margin-top:24px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">Acciones rápidas de espacio</h3>
+        <h3 style="font-size:13px;color:#8b949e;margin-top:24px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px;">Quick workspace actions</h3>
         <div class="form-actions" style="justify-content:flex-start">
-          ${btn('Ir a Despliegues','deployments')}
-          ${btn('Ver historial de pagos','payment-history')}
-          ${btn(`${icon('receipt')} Generar recibo oficial (Formato base)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}
+          ${btn('Go to Deployments','deployments')}
+          ${btn('View payment history','payment-history')}
+          ${btn(`${icon('receipt')} Generate official receipt (Base format)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}
         </div>
       </section>
     `;
@@ -2425,7 +2552,7 @@ function renderOther() {
     bindAccessibilityController();
   } else {
     
-    $('#main').innerHTML=`${heading(title)}<section class="panel"><h2 style="font-size:14px">${e(title)}</h2><p class="muted">Configuración y herramientas del espacio de trabajo.</p><p class="hint">Gestiona tus organizaciones, consulta el consumo y genera o edita recibos con el formato base oficial.</p><div class="form-actions" style="justify-content:flex-start">${btn('Ir a Despliegues','deployments')}${btn('Ver pagos','history')}${btn(`${icon('receipt')} Generar recibo oficial (Formato base)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></section>`;
+    $('#main').innerHTML=`${heading(title)}<section class="panel"><h2 style="font-size:14px">${e(title)}</h2><p class="muted">Workspace settings and tools.</p><p class="hint">Manage your organizations, check usage, and generate or edit receipts using the official base format.</p><div class="form-actions" style="justify-content:flex-start">${btn('Go to Deployments','deployments')}${btn('View payments','history')}${btn(`${icon('receipt')} Generate official receipt (Base format)`,'open-receipt-generator','primary',`data-id="${e(payments[0]?.id || '')}"`)}</div></section>`;
   }
 }
 
@@ -2439,7 +2566,7 @@ document.addEventListener('click',async event=>{
     else if (action==='pay-budget') openBudgetCheckout();
     else if (action==='delete-payment') openDeletePayment(target.dataset.id);
     else if (action==='confirm-delete-payment') await deletePayment(target.dataset.id);
-    else if (action==='restore-payment') { const next=restorePayment(payments,target.dataset.id); write('payments',next); payments=next; closeModal(); render(); toast('Registro restaurado con sus archivos originales.'); }
+    else if (action==='restore-payment') { const next=restorePayment(payments,target.dataset.id); write('payments',next); payments=next; closeModal(); render(); toast('Record restored with its original files.'); }
     else if (action==='trash') showTrash();
     else if (action==='reset-budget') openResetScenario('budget');
     else if (action==='reset-examples') openResetScenario('examples');
@@ -2451,11 +2578,11 @@ document.addEventListener('click',async event=>{
     else if (action==='toggle-billing') { billOpen=!billOpen; renderSidebar(); }
     else if (action==='close-modal') closeModal();
     else if (action==='new-record') openRecord();
-    else if (action==='use-example') { selectedFiles=demoBundles.find(b=>b.id===target.dataset.id).files.slice(); renderDeployments(); toast('Ejemplo cargado. Ya puedes revisar su peso y continuar al pago.'); }
+    else if (action==='use-example') { selectedFiles=demoBundles.find(b=>b.id===target.dataset.id).files.slice(); renderDeployments(); toast('Example loaded. You can review its size and proceed to payment.'); }
     else if (action==='remove-selected') { selectedFiles.splice(Number(target.dataset.index),1); renderDeployments(); }
     else if (action==='remove-record') { recordFiles.splice(Number(target.dataset.index),1); updateRecordFiles(); }
     else if (action==='checkout') openCheckout();
-    else if (action==='cancel-payment') { closeModal(); toast('Operación cancelada.'); }
+    else if (action==='cancel-payment') { closeModal(); toast('Operation cancelled.'); }
     else if (action==='deploy-now') await beginDeployment(target.dataset.id);
     else if (action==='paid-history') { closeModal(); navigate('payment-history'); }
     else if (action==='view-payment') viewPayment(findRecord(target.dataset.id));
@@ -2463,7 +2590,7 @@ document.addEventListener('click',async event=>{
       const commitUrl = `https://github.com/lfarmas4/crossbox-app/commit/${target.dataset.id}`;
       window.open(commitUrl, '_blank');
     }
-        else if (action==='overview-tab') {
+    else if (action==='overview-tab') {
       overviewProductTab = target.dataset.tab;
       renderOverview();
     }
@@ -2494,7 +2621,7 @@ document.addEventListener('click',async event=>{
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        toast(`Recibo oficial ${p.id} descargado en PDF.`);
+        toast(`Official receipt ${p.id} downloaded as PDF.`);
       }
     }
     else if (action==='download-invoice') {
@@ -2507,20 +2634,20 @@ document.addEventListener('click',async event=>{
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        toast(`Factura oficial ${invNum} descargada en PDF.`);
+        toast(`Official invoice ${invNum} downloaded as PDF.`);
       }
     }
     else if (action==='dismiss-budget') { showBudgetNotice=false; renderUsage(); }
-    else if (action==='timeframe') modal('Timeframe',`<form id="month-form" class="modal-body"><label class="field">Month<input type="month" name="month" value="${e(usageMonth)}" min="2000-01" max="2100-12" required></label><p class="hint">Selecciona el mes correspondiente a la fecha de tus despliegues y pagos.</p><div class="form-actions"><button class="btn primary">Apply</button></div></form>`);
-    else if (action==='account-menu') popover(target,`<div class="popover-title">Signed in as <strong>${e(profile.username)}</strong></div><hr><a href="#public-profile">${icon('person')} Your profile</a><a href="#deployments">${icon('rocket')} Despliegues</a><a href="#payment-history">${icon('card')} Payment history</a><hr><a href="#settings">${icon('gear')} Configuración del espacio</a><button data-action="avatar">${icon('person')} Cambiar foto de perfil</button><button data-action="logo">${icon('page')} Cambiar logo</button>`);
+    else if (action==='timeframe') modal('Timeframe',`<form id="month-form" class="modal-body"><label class="field">Month<input type="month" name="month" value="${e(usageMonth)}" min="2000-01" max="2100-12" required></label><p class="hint">Select the month corresponding to your deployments and payments.</p><div class="form-actions"><button class="btn primary">Apply</button></div></form>`);
+    else if (action==='account-menu') popover(target,`<div class="popover-title">Signed in as <strong>${e(profile.username)}</strong></div><hr><a href="#public-profile">${icon('person')} Your profile</a><a href="#deployments">${icon('rocket')} Deployments</a><a href="#payment-history">${icon('card')} Payment history</a><hr><a href="#settings">${icon('gear')} Workspace settings</a><button data-action="avatar">${icon('person')} Change profile photo</button><button data-action="logo">${icon('page')} Change logo</button>`);
     else if (action==='rates') openRates();
     else if (action==='avatar') { closePopover(); $('#avatar-input').click(); }
     else if (action==='logo') { closePopover(); $('#logo-input').click(); }
     else if (action==='mascot') { closePopover(); $('#mascot-input').click(); }
-    else if (action==='new-menu') popover(target,`<a href="#deployments">${icon('rocket')} Nuevo despliegue</a><button data-action="new-record">${icon('card')} Registrar pago anterior</button><button data-action="new-organization">${icon('org')} New organization</button>`);
-    else if (action==='navigation'||action==='organizations-menu') popover(target,`<a href="#organizations">${icon('org')} Organizations</a><a href="#usage">${icon('signal')} Usage</a><a href="#payment-history">${icon('card')} Payment history</a><a href="#deployments">${icon('rocket')} Despliegues</a>`);
+    else if (action==='new-menu') popover(target,`<a href="#deployments">${icon('rocket')} New deployment</a><button data-action="new-record">${icon('card')} Record past payment</button><button data-action="new-organization">${icon('org')} New organization</button>`);
+    else if (action==='navigation'||action==='organizations-menu') popover(target,`<a href="#organizations">${icon('org')} Organizations</a><a href="#usage">${icon('signal')} Usage</a><a href="#payment-history">${icon('card')} Payment history</a><a href="#deployments">${icon('rocket')} Deployments</a>`);
     else if (action==='new-organization'||action==='move-organization') modal(action==='new-organization'?'New organization':'Move work to an organization',`<form id="org-form" class="modal-body"><label class="field">Organization name<input name="name" maxlength="60" required placeholder="your-organization"></label><label class="field" style="margin-top:15px">Description<input name="description" maxlength="160" placeholder="A home for your projects"></label><div class="form-actions"><button class="btn primary">Create organization</button></div></form>`);
-    else if (action==='usage-more') popover(target,`<button data-action="new-record">${icon('plus')} Registrar despliegue</button><button data-action="usage-report">${icon('download')} Download report</button><button data-action="timeframe">${icon('calendar')} Choose month</button>`);
+    else if (action==='usage-more') popover(target,`<button data-action="new-record">${icon('plus')} Record deployment</button><button data-action="usage-report">${icon('download')} Download report</button><button data-action="timeframe">${icon('calendar')} Choose month</button>`);
     else if (action==='usage-report') exportUsageReport();
     else if (action==='budget') navigate('budgets');
     else if (action==='new-budget-modal') {
@@ -2562,7 +2689,7 @@ document.addEventListener('click',async event=>{
         saveBudgets();
         closeModal();
         renderBudgets();
-        toast(`Presupuesto para ${prod} creado exitosamente con límite de $${lim.toFixed(2)} USD.`);
+        toast(`Budget for ${prod} created with a $${lim.toFixed(2)} USD limit.`);
       });
     }
     else if (action==='edit-budget-modal') {
@@ -2570,17 +2697,17 @@ document.addEventListener('click',async event=>{
       if (b) {
         modal(`Edit budget · ${b.product}`, `
           <form id="edit-budget-form" class="modal-body">
-            <p class="muted" style="margin-bottom:12px;font-size:12px;">Modifica el límite mensual y el consumo acumulado de este presupuesto.</p>
+            <p class="muted" style="margin-bottom:12px;font-size:12px;">Update the monthly limit and accumulated usage for this budget.</p>
             <label class="field">
-              <span>Límite mensual (USD)</span>
+              <span>Monthly limit (USD)</span>
               <input type="number" name="limit" step="0.01" min="1" max="100000" value="${b.limit.toFixed(2)}" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
             </label>
             <label class="field" style="margin-top:14px;">
-              <span>Consumido actualmente (USD)</span>
+              <span>Currently spent (USD)</span>
               <input type="number" name="spent" step="0.01" min="0" max="100000" value="${b.spent.toFixed(2)}" required style="background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:8px 10px;border-radius:6px;width:100%;">
             </label>
             <div class="form-actions" style="margin-top:18px;">
-              <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;">Guardar cambios</button>
+              <button class="btn primary" type="submit" style="background:#238636;border-color:#2ea043;">Save changes</button>
             </div>
           </form>
         `);
@@ -2592,15 +2719,15 @@ document.addEventListener('click',async event=>{
           saveBudgets();
           closeModal();
           renderBudgets();
-          toast(`Presupuesto ${b.product} actualizado: $${b.spent.toFixed(2)} / $${b.limit.toFixed(2)} USD.`);
+          toast(`Budget ${b.product} updated: $${b.spent.toFixed(2)} / $${b.limit.toFixed(2)} USD.`);
         });
       }
     }
     else if (action==='activity') navigate('notifications');
     else if (action==='search') modal('Search settings',`<div class="modal-body"><label class="search-field" style="height:35px">${icon('search')}<input id="global-search" placeholder="Search settings…" autofocus></label><div id="search-results" style="margin-top:15px">${searchResults('')}</div></div>`);
-  } catch(error) { toast(error.message || 'No se pudo completar la acción.'); }
+  } catch(error) { toast(error.message || 'Could not complete the action.'); }
 });
-function searchResults(query) { const links=[...mainLinks,...billingLinks,...accessLinks,...codeLinks,['deployments','Despliegues','rocket']].filter(x=>x[1].toLowerCase().includes(query.toLowerCase())); return links.map(x=>`<a class="nav-link" href="#${x[0]}" data-search-result>${icon(x[2]||'page')}${x[1]}</a>`).join('') || '<p class="muted">No results found.</p>'; }
+function searchResults(query) { const links=[...mainLinks,...billingLinks,...accessLinks,...codeLinks,['deployments','Deployments','rocket']].filter(x=>x[1].toLowerCase().includes(query.toLowerCase())); return links.map(x=>`<a class="nav-link" href="#${x[0]}" data-search-result>${icon(x[2]||'page')}${x[1]}</a>`).join('') || '<p class="muted">No results found.</p>'; }
 document.addEventListener('input',event=>{
   if (event.target.id==='global-search') $('#search-results').innerHTML=searchResults(event.target.value);
   if (event.target.id==='valuation-search') { valuationState.query=event.target.value; valuationState.page=1; persistValuationState(); const pos=event.target.selectionStart; renderValuation(); $('#valuation-search').focus(); $('#valuation-search').setSelectionRange(pos,pos); }
@@ -2618,14 +2745,14 @@ document.addEventListener('change',async event=>{
     else if (input.id==='deployment-source') { deploymentSource=input.value; deploymentPage=1; renderDeployments(); }
     else if (['avatar-input','mascot-input','logo-input'].includes(input.id)) {
       const file=input.files[0]; if (!file) return;
-      if (file.size>2_000_000 || !['image/png','image/jpeg','image/webp'].includes(file.type)) throw new Error('Elige una imagen PNG, JPG o WEBP de hasta 2 MB.');
+      if (file.size>2_000_000 || !['image/png','image/jpeg','image/webp'].includes(file.type)) throw new Error('Choose a PNG, JPG, or WEBP image up to 2 MB.');
       const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file);});
       const imageKey={'avatar-input':'avatar','mascot-input':'mascot','logo-input':'logo'}[input.id];
       const next={...profile,[imageKey]:data}; write('profile',next); profile=next; renderHeader(); renderSidebar();
-      const preview=$(`#workspace-${imageKey}`); if(preview) preview.innerHTML=`<img src="${e(data)}" alt="Imagen actualizada">`;
-      toast('Imagen actualizada.');
+      const preview=$(`#workspace-${imageKey}`); if(preview) preview.innerHTML=`<img src="${e(data)}" alt="Updated image">`;
+      toast('Image updated.');
     }
-  } catch(error) { toast(error.message || 'No se pudo cargar el archivo.'); }
+  } catch(error) { toast(error.message || 'Could not load the file.'); }
 });
 document.addEventListener('submit',async event=>{
   event.preventDefault(); const form=event.target; const values=Object.fromEntries(new FormData(form));
@@ -2633,25 +2760,25 @@ document.addEventListener('submit',async event=>{
   try {
     if (form.id==='budget-settings-form') {
       const next=updateBillingState(billingState,{budget:Number(values.budget),baseUsage:Number(values.baseUsage),openingCredit:Number(values.openingCredit)});
-      write('billing',next); billingState=next; showBudgetNotice=true; render(); toast('Presupuesto y consumo actualizados.');
+      write('billing',next); billingState=next; showBudgetNotice=true; render(); toast('Budget and usage updated.');
     }
     else if (form.id==='deployment-edit-form') {
-      const row=deploymentRows().find(item=>item.id===values.id); if(!row)throw new Error('No se encontró el despliegue.');
+      const row=deploymentRows().find(item=>item.id===values.id); if(!row)throw new Error('Deployment not found.');
       const changes={name:values.name,date:values.date,amount:Number(values.amount),status:values.status};
       if(row.source==='github') { const next={...deploymentOverrides,[row.id]:changes}; buildDeploymentRows({payments,overrides:next}); write('deployment-overrides',next); deploymentOverrides=next; }
       else { const next=editPaymentRecord(payments,row.paymentId,changes); write('payments',next); payments=next; }
-      usageMonth=values.date.slice(0,7); closeModal(); render(); toast('Despliegue actualizado. Los archivos adjuntos se conservan.');
+      usageMonth=values.date.slice(0,7); closeModal(); render(); toast('Deployment updated. Attached files are preserved.');
     }
-    else if (form.id==='record-form') { submit.disabled=true; submit.textContent='Guardando…'; await createRecord(values,recordFiles); usageMonth=values.date.slice(0,7); closeModal(); render(); toast('Registro guardado en Usage y Payment history.'); }
+    else if (form.id==='record-form') { submit.disabled=true; submit.textContent='Saving…'; await createRecord(values,recordFiles); usageMonth=values.date.slice(0,7); closeModal(); render(); toast('Record saved in Usage and Payment history.'); }
     else if (form.id==='checkout-form') {
       await confirmPayment(values);
-    } else if (form.id==='rates-form') { const next=Object.fromEntries(Object.entries(values).map(([k,v])=>[k,Number(v)])); calculateQuote([],next); write('pricing',next); config=next; closeModal(); render(); toast('Configuración guardada. Precios actualizados.'); }
-    else if (form.id==='workspace-form') { const next=Object.fromEntries(['base','perMB','includedMB','minimum','atrPrice','pwrPrice'].map(k=>[k,Number(values[k])])); calculateQuote([],next); const zoom=Number(values.zoom); if(!Number.isFinite(zoom)||zoom<90||zoom>130) throw new Error('Revisa el tamaño de interfaz.'); write('pricing',next); write('zoom',zoom); config=next; uiZoom=zoom; document.documentElement.style.setProperty('--ui-scale',zoom/100); render(); toast('Configuración guardada. Las próximas actualizaciones usarán estas tarifas.'); }
-    else if (form.id==='month-form') { if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(values.month)) throw new Error('Selecciona un mes válido.'); usageMonth=values.month; closeModal(); renderUsage(); }
+    } else if (form.id==='rates-form') { const next=Object.fromEntries(Object.entries(values).map(([k,v])=>[k,Number(v)])); calculateQuote([],next); write('pricing',next); config=next; closeModal(); render(); toast('Configuration saved. Prices updated.'); }
+    else if (form.id==='workspace-form') { const next=Object.fromEntries(['base','perMB','includedMB','minimum','atrPrice','pwrPrice'].map(k=>[k,Number(values[k])])); calculateQuote([],next); const zoom=Number(values.zoom); if(!Number.isFinite(zoom)||zoom<90||zoom>130) throw new Error('Check the interface scale.'); write('pricing',next); write('zoom',zoom); config=next; uiZoom=zoom; document.documentElement.style.setProperty('--ui-scale',zoom/100); render(); toast('Configuration saved. Upcoming updates will use these rates.'); }
+    else if (form.id==='month-form') { if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(values.month)) throw new Error('Select a valid month.'); usageMonth=values.month; closeModal(); renderUsage(); }
     else if (form.id==='org-form') { const name=values.name.trim(); if (!name) throw new Error('Organization name is required.'); const next=[...organizations,{name,description:values.description}]; write('organizations',next); organizations=next; closeModal(); renderOrganizations(); toast('Organization created.'); }
     else if (form.id==='profile-form') { const next={...profile,...values}; write('profile',next); profile=next; renderHeader(); toast('Profile updated.'); }
     else if (form.id==='budget-form') { write('budget',Number(values.budget)); showBudgetNotice=false; closeModal(); renderUsage(); toast('Budget updated.'); }
-  } catch(error) { const err=form.querySelector('.form-error'); if (err) err.textContent=error.message; else toast(error.message); if (submit) { submit.disabled=false; submit.textContent=form.id==='checkout-form'?`Confirmar y pagar ${money(checkout?.quote.total || 0)}`:'Guardar registro'; } }
+  } catch(error) { const err=form.querySelector('.form-error'); if (err) err.textContent=error.message; else toast(error.message); if (submit) { submit.disabled=false; submit.textContent=form.id==='checkout-form'?`Confirm and pay ${money(checkout?.quote.total || 0)}`:'Save record'; } }
 });
 $('#modal').addEventListener('click',event=>{if(event.target===$('#modal')) { const r=$('#modal').getBoundingClientRect(); if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom) closeModal(); }});
 $('#modal').addEventListener('cancel',event=>{if(deploymentBusy||recordMutationBusy||checkout?.locked){event.preventDefault();return;}if(checkout)checkout.cancelled=true;checkout=null;});

@@ -4,12 +4,12 @@ export const portfolioSummary = Object.freeze({
   source: 'supplied portfolio screenshot',
   currency: 'USD',
   crossbox: Object.freeze({
-    targetUsd: 8955.96,
-    latestUsd: 1245.55,
-    yearUsd: 8955.96,
-    averageUsd: 1492.66,
+    targetUsd: 9695.96,
+    latestUsd: 1985.55,
+    yearUsd: 9695.96,
+    averageUsd: 1615.99,
     months: 6,
-    growthPercent: 2885,
+    growthPercent: 3098,
     latestMonth: 'November 2026',
   }),
   fitcode: Object.freeze({
@@ -42,9 +42,9 @@ export const historyCoverage = Object.freeze({
   shallowRepository: false,
   firstSha: 'aaff9b6654481a930b482c9b6f1c4651add60d6c',
   firstCommitDate: '2026-01-30',
-  lastSha: 'f942c71a8e1b9f6230571ad48b71d9a542b8901c',
-  lastCommitDate: '2026-11-13',
-  commitCount: 1209,
+  lastSha: '9d86f34a7b2e19c485013fa67289bc1409a82341',
+  lastCommitDate: '2026-11-24',
+  commitCount: 1214,
   repositoryCreatedAtUtc: '2026-04-04T19:05:50Z',
   includesInheritedAncestry: true,
   preRepositoryCreationAncestryCommitCount: 273,
@@ -59,11 +59,11 @@ export const historyCoverage = Object.freeze({
 });
 
 export const verifiedDeploymentRuns = Object.freeze([
-  Object.freeze({ date: '2026-08-02', finishedAtUtc: '2026-08-02T17:04:21Z', runId: 30757603392, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/30757603392', sha: 'bc0272246beef2433c70b24a49d0226ddeb44820', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/bc0272246beef2433c70b24a49d0226ddeb44820', title: 'Recuperación del inicio en Play Store y restauración de Heroes Gym', deployJob: 'success', hostingAndRulesStorage: 'success' }),
-  Object.freeze({ date: '2026-08-28', finishedAtUtc: '2026-08-28T06:24:25Z', runId: 33147122560, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/33147122560', sha: '176ccf39cdb3f5e958be5d5ab005beb942f8787f', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/176ccf39cdb3f5e958be5d5ab005beb942f8787f', title: 'Integración de Vital Protein en la administración de Heroes', deployJob: 'success', hostingAndRulesStorage: 'success' }),
-  Object.freeze({ date: '2026-09-23', finishedAtUtc: '2026-09-23T19:06:10Z', runId: 35905035189, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/35905035189', sha: 'f5a572104afd029ba8ed39b50e448e06040edf05', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/f5a572104afd029ba8ed39b50e448e06040edf05', title: 'Protección de asignaciones simultáneas y renovación de rutinas de atletas en The Lab', deployJob: 'success', hostingAndRulesStorage: 'success' }),
-  Object.freeze({ date: '2026-10-28', finishedAtUtc: '2026-10-28T19:25:29Z', runId: 40752433915, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/40752433915', sha: '3f3cb39aad1c2b4f962198da98ac1c29c9fa0e7b', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/3f3cb39aad1c2b4f962198da98ac1c29c9fa0e7b', title: 'Radio de PWR Games y preparación reversible del equipo', deployJob: 'success', hostingAndRulesStorage: 'success' }),
-  Object.freeze({ date: '2026-10-28', finishedAtUtc: '2026-10-28T20:01:21Z', runId: 40757526612, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/40757526612', sha: '6d980d4bc9c6473b5a311d2c9aae454ca357d4ce', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/6d980d4bc9c6473b5a311d2c9aae454ca357d4ce', title: 'Avisos de los despliegues de Gentle AI y notas finales de ATR', deployJob: 'success', hostingAndRulesStorage: 'success' }),
+  Object.freeze({ date: '2026-08-02', finishedAtUtc: '2026-08-02T17:04:21Z', runId: 30757603392, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/30757603392', sha: 'bc0272246beef2433c70b24a49d0226ddeb44820', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/bc0272246beef2433c70b24a49d0226ddeb44820', title: 'Play Store launch recovery and Heroes Gym restoration', deployJob: 'success', hostingAndRulesStorage: 'success' }),
+  Object.freeze({ date: '2026-08-28', finishedAtUtc: '2026-08-28T06:24:25Z', runId: 33147122560, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/33147122560', sha: '176ccf39cdb3f5e958be5d5ab005beb942f8787f', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/176ccf39cdb3f5e958be5d5ab005beb942f8787f', title: 'Vital Protein integration into Heroes administration', deployJob: 'success', hostingAndRulesStorage: 'success' }),
+  Object.freeze({ date: '2026-09-23', finishedAtUtc: '2026-09-23T19:06:10Z', runId: 35905035189, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/35905035189', sha: 'f5a572104afd029ba8ed39b50e448e06040edf05', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/f5a572104afd029ba8ed39b50e448e06040edf05', title: 'Concurrent assignment protection and athlete routine renewal in The Lab', deployJob: 'success', hostingAndRulesStorage: 'success' }),
+  Object.freeze({ date: '2026-10-28', finishedAtUtc: '2026-10-28T19:25:29Z', runId: 40752433915, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/40752433915', sha: '3f3cb39aad1c2b4f962198da98ac1c29c9fa0e7b', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/3f3cb39aad1c2b4f962198da98ac1c29c9fa0e7b', title: 'PWR Games Radio and reversible team readiness', deployJob: 'success', hostingAndRulesStorage: 'success' }),
+  Object.freeze({ date: '2026-10-28', finishedAtUtc: '2026-10-28T20:01:21Z', runId: 40757526612, runUrl: 'https://github.com/lfarmas4/crossbox-app/actions/runs/40757526612', sha: '6d980d4bc9c6473b5a311d2c9aae454ca357d4ce', commitUrl: 'https://github.com/lfarmas4/crossbox-app/commit/6d980d4bc9c6473b5a311d2c9aae454ca357d4ce', title: 'Gentle AI deployment notifications and final ATR release notes', deployJob: 'success', hostingAndRulesStorage: 'success' }),
 ]);
 
 function toCents(amount) {
@@ -77,7 +77,7 @@ function toCents(amount) {
   return cents;
 }
 
-export function allocateValuation(deployments, totalUsd = 8955.96) {
+export function allocateValuation(deployments, totalUsd = 9695.96) {
   if (!Array.isArray(deployments)) {
     throw new TypeError('Deployments must be an array.');
   }
